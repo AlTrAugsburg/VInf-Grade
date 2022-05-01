@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>VInf Grade - 404</title>
+    <link rel="stylesheet" href="beercss/beercss.min.css">
+    <link rel="stylesheet" href="myTheme.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="beercss/beercss.min.js" charset="utf-8"></script>
+  </head>
+  <body class="is-dark">
+    <header class="padding primary">
+      <div class="row no-wrap middle-align">
+        <div class="col min">
+          <button id="back" data-ui="#info">
+            <i>info</i>
+          </button>
+        </div>
+        <div class="col">
+          <h5 class="no-margin center-align" id="headline">VInf Grade</h5>
+        </div>
+        <div class="col min">
+          <button onclick="changeMode()">
+            <i id="lightMode">light_mode</i>
+            <i id="darkMode">dark_mode</i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="absolute center middle">
+      <h3 class="center-align">404 - Site not found</h3>
+      <p class="center-align">Seite wurde nicht gefunden.</p>
+      <div class="center-align">
+        <a class="button" href="index.html"><i>home</i>&nbsp;Zur Startseite zurück</a>
+      </div>
+    </div>
+
+    <div id="cookieBanner" class="bottom center">
+      <article class="top-round">
+        <h5>Cookiehinweis</h5>
+        <div>
+          <p>Wir verwenden technisch notwendige Cookies für den Cookiehnweis und das Thema der Seite. Ersteres löscht sich nach 24 Stunden, zweiteres bleibt 7 Tage erhalten.</p>
+          <p>Logindaten bleiben nur für diese Sitzung bestehen.</p>
+        </div>
+        <nav>
+           <button onclick="closeCookieBanner();">Schließen</button>
+         </nav>
+      </article>
+    </div>
+
+    <div class="modal" id="info">
+      <h5>Über</h5>
+      <p>Diese Anwendung ist von einem Verwaltungsinformatiker des Jahrgangs 2019/2022 geschrieben/betreut und aktuell auf diesem Stand. Sollte es eine neue Punkteverteilung geben, gerne ein Issue mit dem entsprechenden Dokument eröffnen. Dann wird es sich darum schnellstmöglich gekümmert.</p>
+      <p>Diese Anwendung nutzt Material Icons von Google Fonts und das CSS-Framework Beercss, cheers 🍺
+      <nav>
+        <button data-ui="#info">Schließen</button>
+        <a href="#" class="button"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="responsive"><span>Zum Projekt</span></a>
+      </nav>
+    </div>
+
+    <script src="./script.js" type="module" charset="utf-8"></script>
+  </body>
+</html>
