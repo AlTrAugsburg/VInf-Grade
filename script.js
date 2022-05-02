@@ -4,6 +4,8 @@ import Grades from "./classes/Grades.js"
 const cookieHandler = new CookieHandler();
 const grades = new Grades();
 
+let userAtForm = false;
+
 if(!cookieHandler.getCookieBanner()){
   //Cookiebanner wurde dem Nutzer noch nicht gezeigt
   document.getElementById("cookieBanner").style.visibility = "visible";
@@ -42,6 +44,8 @@ window.getGrades = function () {
 }
 
 window.manuellGrades = function () {
+  userAtForm = true;
+  ui("#userinfo");
   grades.manuellGrades();
 }
 
@@ -127,6 +131,49 @@ window.checkGrade = function (id) {
 
 window.grades = grades;
 
+window.generateLink = function () {
+  //Warten, damit Daten entsprechend in die Map eingetragen werden können
+  setTimeout(function () {
+    generateLinkNow();
+  }, 10);
+}
+
+function generateLinkNow() {
+  ui("#generatedLink");
+  document.getElementById("dataLink").value = window.location.origin + window.location.pathname + "?grades=" + grades.grades;
+}
+
+window.closeUserInfo = function (){
+  grades.focusAll();
+  ui("#userinfo");
+}
+
+window.copyLink = function () {
+  navigator.clipboard.writeText(window.location.origin + window.location.pathname + "?grades=" + grades.grades).then(function() {
+    ui("#copySuccess", 3000);
+  }, function(err) {
+    console.error('Async: Could not copy text: ', err);
+  });
+
+}
+
+window.onbeforeunload = function(){
+  if(userAtForm){
+    // TODO: Entkommentieren vor dem Push!!!
+    return 'Achtung! Eingegebene Daten werden nicht gespeichert! Zum sichern bitte den Teilungslink kopieren.';
+  }
+};
+
 ui();
 
 ui('#start');
+
+//Schauen, ob Daten über die URL mitgegeben wurden
+if(window.location.search !== ""){
+  let splittedParam = window.location.search.split("-");
+  //Simple Prüfung, ob die Daten "passen"
+  if(splittedParam[0] === "?grades=" && splittedParam.length == 40){
+    splittedParam.shift();
+    grades.import(splittedParam);
+  }
+}

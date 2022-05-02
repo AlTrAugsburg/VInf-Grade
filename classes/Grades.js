@@ -15,6 +15,10 @@ export default class Grades{
     }
     let grade6 = finalGrades[Math.floor(sum/10000)-1];
     let grade15 = Math.round((sum/10000) * 100) / 100;
+    if(grade15 < 5){
+      alert("Endnote kleiner 5 Notenpunkten, damit durchgefallen.")
+      return;
+    }
     document.getElementById("endgrade").textContent = grade6 + " (" + grade15 + ")";
   }
 
@@ -65,6 +69,71 @@ export default class Grades{
     else {
       console.warn("Something went wrong. garde('" + number + "', '" + grade + "')");
     }
+  }
+
+  get grades(){
+    let returnValue = "";
+    this.#gradesMap.forEach((value) => {returnValue = returnValue + "-" + value.toString();});
+    return returnValue;
+  }
+
+  toString(){
+    let returnValue = "";
+    this.#gradesMap.forEach((value) => {returnValue = returnValue + value.toString() + "-";});
+    returnValue = returnValue.slice(0, -1);
+    return returnValue;
+  }
+
+  import(array){
+    //Pürfen, ob alle Daten ok sind
+    let dataRightFormat = 0;
+    for (var i = 0; i < array.length; i++) {
+      if(!isNaN(array[i]) && array[i]!==""){
+        let n = Number(array[i]);
+        //Schauen, ob die Zahl eine gültige Note ist (Einzelprüfung später)
+        if(n > 0 && n < 16){
+          array[i] = n;
+          dataRightFormat++;
+        }
+      }
+    }
+    if(dataRightFormat != array.length){
+      console.error("Ungültige Daten im Link! Daten werden nicht übernommen");
+      return;
+    }
+    //Daten prüfen, ob man durchfallen durfte, wenn < 5
+    let didNotFail = array.every((value, index) => {
+      if(value < 5){
+        //Schauen, ob man durchfallen durfte
+        return allowedToFail[index];
+      }
+      return true;
+    });
+
+    if(!didNotFail){
+      alert("Mindestens in einem Fach durchgefallen, damit ungültiger Datensatz und nicht geladen.");
+      return;
+    }
+
+    //Daten sind "ok". Werden in die Map eingetragen
+    for (var i = 0; i < array.length; i++) {
+      this.#gradesMap.set(allowedSandFn[i], array[i]);
+    }
+
+    this.#gradesMap.forEach((value, key) => {document.getElementById(key).value = value;});
+
+    ui();
+
+    ui("#calculator");
+    ui("#userinfo");
+
+    this.#calculate();
+
+    alert("Datenimport erfolgreich");
+  }
+
+  focusAll(){
+    this.#gradesMap.forEach((value, key) => {document.getElementById(key).focus();});
   }
 
 }

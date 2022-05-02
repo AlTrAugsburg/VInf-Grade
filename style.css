@@ -7,6 +7,10 @@
   gap: 15rem;
 }
 
+#dataLink{
+  word-break: break-all;
+}
+
 #calculator > form{
   display: flex;
   flex-direction: column;

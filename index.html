@@ -14,7 +14,7 @@
     <header class="small-padding primary">
       <div class="row no-wrap middle-align">
         <div class="col min">
-          <button id="back" data-ui="#info">
+          <button id="back" data-ui="#about">
             <i>info</i>
           </button>
         </div>
@@ -70,7 +70,7 @@
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="I-5" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-5')">
-              <label>Grundlagen der Mathematik </label>
+              <label>Grundlagen der Informatik</label>
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="I-6" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-6')">
@@ -343,7 +343,7 @@
               <h5 class="no-margin">∑&nbsp;&nbsp;&nbsp;<u><b id="endgrade">4,0 (5)</b></u></h5>
             </div>
             <div class="col min">
-              <button class="border"><i>share</i></button>
+              <button class="border" type="button" onclick="generateLink();"><i>share</i></button>
             </div>
           </div>
         </div>
@@ -363,7 +363,7 @@
       </article>
     </div>
 
-    <div class="modal" id="info">
+    <div class="modal" id="about">
       <h5><u>Über</u></h5>
       <p>Diese Anwendung ist von einem Verwaltungsinformatiker des Jahrgangs 2019/2022 geschrieben/betreut und aktuell auf diesem Stand. Sollte es eine neue Punkteverteilung geben, gerne ein Issue mit dem entsprechenden Dokument eröffnen. Dann wird sich darum schnellstmöglich gekümmert.</p>
       <p>Diese Anwendung nutzt Material Icons von Google Fonts und das CSS-Framework Beercss, cheers 🍺
@@ -372,9 +372,39 @@
       <h6><u>Haftung von Links</u></h6>
       <p class="small-text">Diese Seite verlinkt lediglich zum Source Code dieser Seite auf GitHub. Der Link wird nicht regelmäßig auf Korrektheit überprüft, ich mache mir den Inhalt der Seite, auf die der Link zeigt, nicht zu eigen und ich übernehme damit auch keine Haftung für die Inhalte, auf welche er zeigt.</p>
       <nav>
-        <button data-ui="#info">Schließen</button>
+        <button data-ui="#about">Schließen</button>
         <a href="https://github.com/AlTrAugsburg/VInf-Grade" class="button"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="responsive"><span>Zum Projekt</span></a>
       </nav>
+    </div>
+
+    <div class="modal" id="userinfo">
+      <h5><u>Nutzung der Anwendung</u></h5>
+      <p>Mit dieser Webanwendung können Sie als Verwaltungsinformatiker Ihre aktuellen und erwarteten Noten eingeben, um sich die Endnote zum Studium berechnen zu lassen.</p>
+      <p>Ein leeres Formularfeld wird mit der Note 5 interpretiert, welche   meistens notwendig ist um ein Fach zu bestehen.</p>
+      <p>Fehlerhafte Eingaben, z.B. eine Note kleiner 5 bei einem Fach, welches Bestanden werden muss, wird entsprechenden eine Warnungen ausgegeben, sowie das entsprechende Feld markiert.Bei Nicht-Änderung wird mit dem alten Wert gerechnet.</p>
+      <p>Die End- und Zwischennote wird mit dem Wechseln des Formularfeldes automatisch berechnet.</p>
+      <p>Über das "Teilen"-Symbol lässt sich ein Link generieren, welcher die aktuellen, fehlerfreien Daten in der URL verpackt enthält. Mit diesem kann der aktuelle Stand über das Aufrufen des Links gezeigt werden. Jedoch muss bei einer Änderung immer ein neuer Link generiert werden.</p>
+      <p class="error-text"><b>Achtung!</b> Die Daten werden nicht gespeichert! Zum Wiederaufrufen der gleichen Daten, bitte den "Teilen"-Button nutzen.</p>
+      <nav>
+        <button onclick="closeUserInfo();">Schließen</button>
+      </nav>
+    </div>
+
+    <div class="modal large-width" id="generatedLink">
+      <h5><u>Link zu den Daten</u></h5>
+      <p>Der Link mit den aktuellen Daten:</p>
+      <div class="field textarea border">
+        <textarea id="dataLink" value="Link is generating..." readonly></textarea>
+      </div>
+      <nav>
+        <button class="tertiary" onclick="copyLink()">Link kopieren</button>
+        <button data-ui="#generatedLink">Schließen</button>
+      </nav>
+    </div>
+
+    <div class="toast green white-text" id="copySuccess">
+      <i>done</i>
+      <span>Link wurde erfolgreich in die Zwischenablage kopiert.</span>
     </div>
 
     <script src="./script.js" type="module" charset="utf-8"></script>
