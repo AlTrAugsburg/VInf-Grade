@@ -11,6 +11,6 @@ Die Seite verabreitet die Daten nur lokal auf dem Gerät und werden nirgendwo hi
 
 Dieses Projekt wird unter der MIT License geöffnet
 
-Für dieses Projekt wurde Material Icons und Roboto von Google Fonts, sowie Beercss, cheers 🍻 
+Für dieses Projekt wurden Material Icons und Roboto von Google Fonts, sowie das CSS-Framework Beercss genutzt, cheers 🍻 
 
 Lizensen sind in den entsprechenden Ordnern eingestellt.
