@@ -144,7 +144,6 @@ function generateLinkNow() {
 }
 
 window.closeUserInfo = function (){
-  grades.focusAll();
   ui("#userinfo");
 }
 
@@ -164,10 +163,6 @@ window.onbeforeunload = function(){
   }
 };
 
-ui();
-
-ui('#start');
-
 //Schauen, ob Daten über die URL mitgegeben wurden
 if(window.location.search !== ""){
   let splittedParam = window.location.search.split("-");
@@ -176,4 +171,12 @@ if(window.location.search !== ""){
     splittedParam.shift();
     grades.import(splittedParam);
   }
+  else {
+    ui("#start");
+    ui();
+  }
+}
+else {
+  ui("#start");
+  ui();
 }
