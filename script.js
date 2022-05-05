@@ -47,7 +47,7 @@ window.getGrades = function () {
 
 window.manuellGrades = function () {
   //Warnung beim verlassen soll nur kommen, wenn nicht lokal gespeichert wird
-  if(grades.saveLocal){
+  if(grades.saveLocal&&localStorageHandler.hasGradesMapLocal()){
     if(!confirm("Wenn sie fortfahren, werden alle lokal gespeicherten Daten gelöscht. Fortfahren?")){
       document.getElementById("manuellButton").blur();
       return;
