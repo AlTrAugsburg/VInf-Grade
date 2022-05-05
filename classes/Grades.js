@@ -1,7 +1,7 @@
 const allowedSandFn = ["I-1", "I-2", "I-3", "I-4", "I-5", "I-6", "II-1", "II-2", "II-3", "II-4", "II-5", "II-6", "III-1", "III-2", "III-3", "III-4", "IV-1", "IV-2", "IV-3", "IV-4", "IV-5", "IV-6", "IV-7", "IV-8", "V-1", "V-2", "V-3", "V-4", "V-5", "V-6", "V-7", "V-8", "V-9", "VI-1", "VI-2", "VI-3", "VI-4", "VI-5", "VI-P"];
 const allowedToFail = [false, false, false, false, false, true, false, false, false, false, true, true, false, false, true, true, false, false, false, false, false, true, true, false, false, false, false, true, true, true, false, false, true, true, true, true, true, false, false];
-const percentageEnd = [/*1. Semester*/191, 191, 191, 191, 191, 69, /*2. Semester*/191, 191, 191, 191, 69, 69, /*3. Semester*/286, 286, 52, 52, /*4. Semester*/400, 400, 400, 400, 400, 400, 80, 80, /*5. Semester*/400, 400, 400, 400, 80, 80, 80, 500, 400, /*6. Semester*/400, 400, 400, 100, 400, /*Praxis*/ 400];
-const percentageZW = [/*1. Semester*/733, 733, 733, 734, 734, 267, /*2. Semester*/733, 733, 733, 733, 267, 267, /*3. Semester*/1100, 1100, 200, 200];
+const percentageEnd19_22 = [/*1. Semester*/191, 191, 191, 191, 191, 69, /*2. Semester*/191, 191, 191, 191, 69, 69, /*3. Semester*/286, 286, 52, 52, /*4. Semester*/400, 400, 400, 400, 400, 400, 80, 80, /*5. Semester*/400, 400, 400, 400, 80, 80, 80, 500, 400, /*6. Semester*/400, 400, 400, 100, 400, /*Praxis*/ 400];
+const percentageZW19_22 = [/*1. Semester*/733, 733, 733, 734, 734, 267, /*2. Semester*/733, 733, 733, 733, 267, 267, /*3. Semester*/1100, 1100, 200, 200];
 const finalGrades = ["/", "/", "/", "/", "4,0", "3,7", "3.3", "3,0", "2,7", "2,3", "2,0", "1,7", "1,3", "1,0", "0,7"];
 
 export default class Grades{
@@ -9,11 +9,15 @@ export default class Grades{
   //Wird eine Map mit (S-Fn, N); S == Semester, Fn == Fachnummer, N == Note
   #gradesMap = new Map();
   #localStorage = false;
+  #localStorageHandler;
 
   #calculate = function () {
+    if(this.#localStorage){
+      this.#localStorageHandler.saveGradesMapLocal(this.#gradesMap);
+    }
     let sum = 0;
-    for(let i in percentageZW){
-      sum = sum + (this.#gradesMap.get(allowedSandFn[i]) * percentageZW[i]);
+    for(let i in percentageZW19_22){
+      sum = sum + (this.#gradesMap.get(allowedSandFn[i]) * percentageZW19_22[i]);
     }
     let grade6 = finalGrades[Math.floor(sum/10000)-1];
     let grade15 = Math.round((sum/10000) * 100) / 100;
@@ -24,7 +28,7 @@ export default class Grades{
     document.getElementById("zwgrade").textContent = grade6 + " (" + grade15 + ")";
     sum = 0;
     for(let i in allowedSandFn){
-      sum = sum + (this.#gradesMap.get(allowedSandFn[i]) * percentageEnd[i]);
+      sum = sum + (this.#gradesMap.get(allowedSandFn[i]) * percentageEnd19_22[i]);
     }
     grade6 = finalGrades[Math.floor(sum/10000)-1];
     grade15 = Math.round((sum/10000) * 100) / 100;
@@ -35,20 +39,35 @@ export default class Grades{
     document.getElementById("endgrade").textContent = grade6 + " (" + grade15 + ")";
   }
 
-  loadGrades() {
-    return;
-    //Test
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-           console.log(xhttp.responseText);
-        }
-        else {
-          console.warn(xhtp.responseText);
-        }
-    };
-    xhttp.open("GET", "https://aiv.hfoed.de");
-    xhttp.send();
+  constructor(localStorageHandler){
+    if(localStorageHandler.constructor.name == "LocalStorageHandler"){
+      //Richtige Klasse -> setzen
+      this.#localStorageHandler = localStorageHandler;
+    }
+    else {
+      console.error("LocalStorageHandler wurde nicht an grades Objekt übergeben. Es könnte zu Fehlern kommen");
+    }
+  }
+
+  loadLocalGrades() {
+    if(this.#localStorageHandler.getGradesMapFromLocal()!=null){
+      this.#gradesMap = this.#localStorageHandler.getGradesMapFromLocal();
+      this.#gradesMap.forEach((value, key) => {document.getElementById(key).value = value;});
+
+      //Richtigen Teil der Userinfo zeigen
+      document.getElementById("userinfoNoLocal").classList.add("hidden");
+      document.getElementById("userinfoLocal").classList.remove("hidden");
+      ui("#calculator");
+      ui("#userinfo");
+
+      fixFields();
+
+      this.#calculate();
+
+      alert("Datenimport erfolgreich");
+      return;
+    }
+    console.error("Es sind keine lokalen Daten vorhanden");
   }
 
   manuellGrades(){
@@ -56,8 +75,15 @@ export default class Grades{
     for(let i in allowedSandFn){
       this.#gradesMap.set(allowedSandFn[i], 5);
     }
-
+    if(this.#localStorage){
+      //Richtigen Teil der Userinfo zeigen
+      document.getElementById("userinfoNoLocal").classList.add("hidden");
+      document.getElementById("userinfoLocal").classList.remove("hidden");
+    }
     ui('#calculator');
+    //Felder leeren, wegen caching von Werten, etc.
+    Array.from(document.getElementsByTagName("input")).every((x) => {x.value=""; return true;});
+    fixFields();
   }
 
   checkGrade(number, grade) {
@@ -98,6 +124,8 @@ export default class Grades{
   }
 
   import(array){
+    //Daten werden nur temporär angezeigt und sollen nicht gespeichert werden
+    this.#localStorage = false;
     //Pürfen, ob alle Daten ok sind
     let dataRightFormat = 0;
     for (var i = 0; i < array.length; i++) {
@@ -145,6 +173,14 @@ export default class Grades{
     this.#calculate();
 
     alert("Datenimport erfolgreich");
+  }
+
+  changeSaveLocal(){
+    this.#localStorage = !this.#localStorage;
+  }
+
+  get saveLocal(){
+    return this.#localStorage;
   }
 }
 

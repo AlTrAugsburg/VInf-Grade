@@ -19,7 +19,7 @@
           </button>
         </div>
         <div class="col">
-          <h5 class="no-margin center-align" id="headline">VInf Grade - Beta</h5>
+          <h5 class="no-margin center-align" id="headline"><a href="./index.html">VInf Grade - Beta</a></h5>
         </div>
         <div class="col min">
           <button onclick="changeMode()">
@@ -32,9 +32,12 @@
 
 
 
-    <div id="start" class="page right absolute center middle middle-align button-place">
+    <div id="start" class="page right absolute center middle middle-align button-place ">
       <button class="secondary-container" type="button" id="getButton" onclick="getGrades()"><i>lock</i>&nbsp;Noten holen (In Arbeit)</button>
-      <button type="button" onclick="manuellGrades()">Noten manuell eingeben</button>
+      <button class="hidden" type="button" id="loadFromLocalButton" onclick="loadFromLocal()"><i>save</i>&nbsp;Noten aus Speicher holen</button>
+      <button type="button" onclick="manuellGrades()" id="manuellButton"><i>edit</i>&nbsp;Noten manuell eingeben</button>
+      <button class="hidden" type="button" onclick="manuellGradesTemp()" id="manuellTempButton"><i>edit_off</i>&nbsp;Noten manuell eingeben (Ohne Speichern)</button>
+      <button class="secondary-container" id="changeSaveLocalButton" type="button" onclick="changeSaveLocal()"><i id="saveLocalFalse">close</i><i class="hidden" id="saveLocalTrue">check</i>&nbsp;Noten lokal speichern</button>
     </div>
 
     <div id="calculator" class="page right absolute top large-margin">
@@ -366,13 +369,29 @@
     <div class="modal" id="about">
       <h5><u>Über</u></h5>
       <p>Diese Anwendung ist von einem Verwaltungsinformatiker des Jahrgangs 2019/2022 geschrieben/betreut und aktuell auf diesem Stand. Sollte es eine neue Punkteverteilung geben, gerne ein Issue mit dem entsprechenden Dokument eröffnen. Dann wird sich darum schnellstmöglich gekümmert.</p>
-      <p>Diese Anwendung nutzt Material Icons von Google Fonts und das CSS-Framework Beercss, cheers 🍺
-      <h6><u>Datenschutz</u></h6>
-      <p class="small-text">Die Seite verabreitet die Daten nur lokal auf dem Gerät und werden nirgendwo hingeschickt. Alle Cookies die eingesetzt werden, sind technisch notwendig. Für die Datenschutzerklärung des Hosters, siehe die Datenschutzerklärung von GitHub (Hoster dieser Seite). Bei Fragen gerne eine Issue auf GitHub erstellen. Vollständige Datenschutzerklärung folgt bald.</p>
+      <p>Diese Anwendung nutzt Material Icons und Roboto von Google Fonts und das CSS-Framework Beercss, cheers 🍺 Sie sind alle unter der MIT-Lizenz veröffentlicht, welche sich auf der GitHub Seite dieses Projektes befinden.
       <h6><u>Haftung von Links</u></h6>
-      <p class="small-text">Diese Seite verlinkt lediglich zum Source Code dieser Seite auf GitHub. Der Link wird nicht regelmäßig auf Korrektheit überprüft, ich mache mir den Inhalt der Seite, auf die der Link zeigt, nicht zu eigen und ich übernehme damit auch keine Haftung für die Inhalte, auf welche er zeigt.</p>
-      <nav>
-        <button data-ui="#about">Schließen</button>
+      <p class="">Diese Seite verlinkt lediglich zum Source Code dieser Seite auf GitHub und der Datenschutzerklärung von GitHub. Die beiden Links werden nicht regelmäßig auf Korrektheit überprüft, ich mache mir den Inhalt der Seiten, auf die die Links zeigen, nicht zu eigen und ich übernehme damit auch keine Haftung für die Inhalte, auf welche sie zeigen.</p>
+      <nav class="l">
+        <button data-ui="#about"><i>close</i>&nbsp;Schließen</button>
+        <button type="button" data-ui="#datenschutz"><i>security</i>&nbsp;Datenschutz</button>
+        <button type="button" data-ui="#impressum"><i>contact_page</i>&nbsp;Impressum</button>
+        <a href="https://github.com/AlTrAugsburg/VInf-Grade" class="button"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="responsive"><span>Zum Projekt</span></a>
+      </nav>
+      <nav class="m">
+        <button type="button" data-ui="#datenschutz"><i>security</i>&nbsp;Datenschutz</button>
+        <button type="button" data-ui="#impressum"><i>contact_page</i>&nbsp;Impressum</button>
+        <a href="https://github.com/AlTrAugsburg/VInf-Grade" class="button"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="responsive"><span>Zum Projekt</span></a>
+      </nav>
+      <nav class="m">
+        <button class="responsive" data-ui="#about"><i>close</i>&nbsp;Schließen</button>
+      </nav>
+      <nav class="s">
+        <button type="button" data-ui="#datenschutz"><i>security</i>&nbsp;Datenschutz</button>
+        <button type="button" data-ui="#impressum"><i>contact_page</i>&nbsp;Impressum</button>
+      </nav>
+      <nav class="s">
+        <button data-ui="#about"><i>close</i>&nbsp;Schließen</button>
         <a href="https://github.com/AlTrAugsburg/VInf-Grade" class="button"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="responsive"><span>Zum Projekt</span></a>
       </nav>
     </div>
@@ -384,9 +403,10 @@
       <p>Fehlerhafte Eingaben, z.B. eine Note kleiner 5 bei einem Fach, welches Bestanden werden muss, wird entsprechenden eine Warnungen ausgegeben, sowie das entsprechende Feld markiert.Bei Nicht-Änderung wird mit dem alten Wert gerechnet.</p>
       <p>Die End- und Zwischennote wird mit dem Wechseln des Formularfeldes automatisch berechnet.</p>
       <p>Über das "Teilen"-Symbol lässt sich ein Link generieren, welcher die aktuellen, fehlerfreien Daten in der URL verpackt enthält. Mit diesem kann der aktuelle Stand über das Aufrufen des Links gezeigt werden. Jedoch muss bei einer Änderung immer ein neuer Link generiert werden.</p>
-      <p class="error-text"><b>Achtung!</b> Die Daten werden nicht gespeichert! Zum Wiederaufrufen der gleichen Daten, bitte den "Teilen"-Button nutzen.</p>
+      <p id="userinfoNoLocal" class="error-text"><b>Achtung!</b> Die Daten werden nicht gespeichert! Zum Wiederaufrufen der gleichen Daten, bitte den "Teilen"-Button nutzen.</p>
+      <p class="hidden" id="userinfoLocal">Daten werden beim wegklicken vom Formularfeld während der Klakulation automatisch lokal gespeichert. Diese können bei erneuten Laden der Seite geladen werden, falls gewünscht.</p>
       <nav>
-        <button onclick="closeUserInfo();">Schließen</button>
+        <button onclick="closeUserInfo();"><i>close</i>&nbsp;Schließen</button>
       </nav>
     </div>
 
@@ -398,7 +418,39 @@
       </div>
       <nav>
         <button class="tertiary" onclick="copyLink()">Link kopieren</button>
-        <button data-ui="#generatedLink">Schließen</button>
+        <button data-ui="#generatedLink"><i>close</i>&nbsp;Schließen</button>
+      </nav>
+    </div>
+
+    <div class="modal" id="datenschutz">
+      <h5><u>Datenschutzerklärung</u></h5>
+      <p>Die Seite verabreitet die Daten nur lokal auf dem Gerät und sie werden nirgendwo hingeschickt. Alle Cookies die eingesetzt werden, sind technisch notwendig. Für die Datenschutzerklärung des Hosters, siehe die <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement">Datenschutzerklärung von GitHub</a> (Hoster dieser Seite).</p>
+      <h6><u>Cookies</u></h6>
+      <p>Bei der Nutzung unserer Websites werden Cookies auf Ihrem Endgerät gespeichert. Hierbei handelt es sich um kleine Text-Dateien, die von einer Website an den Browser des Nutzers geschickt und von diesem gespeichert werden. In Cookies können unterschiedliche Angaben gespeichert werden, die von der Stelle, die den Cookie setzt, ausgelesen werden können. Sie enthalten in der Regel eine charakteristische Zeichenfolge (ID), die eine eindeutige Identifizierung des Browsers beim erneuten Aufrufen der Website oder einem Seitenwechsel ermöglicht. Sie sind auch nur für bestimmte Dauer vorhanden.</p>
+      <p>Es werden zwei Cookies gesetzt und gelesen: einmal eines zum Theme, in dem die Seite dargestellt werden soll und zum anderem, ob der Cookiehnweis schon gezeigt und geschlossen wurde oder nicht.</p>
+      <h6><u>Local Storage</u></h6>
+      <p>Der Local Storage ähnelt sehr den Cookies, nur das dieser nie an den Server bei einer Anfrage übermittelt wird, sondern immer Cache des Webbrowsers bleibt. Damit verlassen sie nicht das Endgerät. Auch bleiben diese, solange nicht gelöscht, im Cache des Webbrowser im Gegensatz zu Cookies.</p>
+      <p>Diese Anwendung kann, falls gewünscht, die eingetragen Noten im Local Storage speichern und wieder auslesen. Dies ist optional und ist standardmäßig abgewählt. Dies kann auf der Startseite geändert werden.</p>
+      <h6><u>Noch Fragen?</u></h6>
+      <p>Bei Fragen gerne eine Issue auf GitHub erstellen oder eine Mail an <a class="cyan-text" href="mailto:vma@ladon.xyz">vma@ladon.xyz</a> schreiben.</p>
+      <p>Diese Datenschutzerklärung kann sich noch ändern, falls Funktionen dazukommen oder sich ändern.</p>
+      <nav>
+        <button data-ui="#datenschutz"><i>close</i>&nbsp;Schließen</button>
+      </nav>
+    </div>
+
+    <div class="modal" id="impressum">
+      <h5><u>Impressum</u></h5>
+      <h6>Ansprechpartner:</h6>
+      <p>
+        Albert Traut<br>
+        <a class="cyan-text" href="mailto:vma@ladon.xyz">vma@ladon.xyz</a>
+      </p>
+      <br>
+      <p>Technische Probleme falls möglich, bitte in GitHub als Issue anlegen.</p>
+      <p>Ich freue mich immer über produktives Feedback&nbsp;<i>mood</i></p>
+      <nav>
+        <button data-ui="#impressum"><i>close</i>&nbsp;Schließen</button>
       </nav>
     </div>
 

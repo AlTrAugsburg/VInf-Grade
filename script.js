@@ -1,8 +1,10 @@
 import CookieHandler from "./classes/CookieHandler.js"
+import LocalStorageHandler from "./classes/LocalStorageHandler.js"
 import Grades from "./classes/Grades.js"
 
+const localStorageHandler = new LocalStorageHandler();
 const cookieHandler = new CookieHandler();
-const grades = new Grades();
+const grades = new Grades(localStorageHandler);
 
 let userAtForm = false;
 
@@ -44,9 +46,21 @@ window.getGrades = function () {
 }
 
 window.manuellGrades = function () {
-  userAtForm = true;
+  //Warnung beim verlassen soll nur kommen, wenn nicht lokal gespeichert wird
+  if(grades.saveLocal){
+    if(!confirm("Wenn sie fortfahren, werden alle lokal gespeicherten Daten gelöscht. Fortfahren?")){
+      document.getElementById("manuellButton").blur();
+      return;
+    }
+  }
+  userAtForm = !grades.saveLocal;
   ui("#userinfo");
   grades.manuellGrades();
+}
+
+window.manuellGradesTemp = function () {
+  grades.changeSaveLocal();
+  manuellGrades();
 }
 
 window.clickDetails = function (number) {
@@ -147,18 +161,67 @@ window.closeUserInfo = function (){
   ui("#userinfo");
 }
 
+window.changeSaveLocal = function () {
+  if(grades.saveLocal){
+    //Aktuell sollen Noten lokal gespeichert werden -> jetzt nicht mehr
+    if(!confirm("Sollen die Noten wirklich nicht mehr lokal gespeichert werden? Achtung! Aktuell vorhandene Daten werden unwiederruflich gelöscht!")){
+      //Nutzer möchte Daten nicht verlieren -> nichts machen
+      document.getElementById("changeSaveLocalButton").blur();
+      return;
+    }
+    //Alle(!) Daten löschen aus dem localStorage löschen
+    localStorage.clear();
+    //grades sagen, dass die Änderungen nicht mehr gespeichert werden sollen
+    grades.changeSaveLocal();
+    //Button zum laden lokaler Daten verstecken, falls nicht schon geschehen
+    document.getElementById("loadFromLocalButton").classList.add("hidden");
+    document.getElementById("manuellTempButton").classList.add("hidden");
+    //Jetzt nur noch den Button anpasen
+    document.getElementById("changeSaveLocalButton").classList.add("secondary-container");
+    document.getElementById("changeSaveLocalButton").classList.remove("green");
+    document.getElementById("saveLocalFalse").classList.remove("hidden");
+    document.getElementById("saveLocalTrue").classList.add("hidden");
+  }
+  else {
+    //Noten sollen ab jetzt lokal gespeichert werden
+    //grades sagen, dass Noten lokal gespeichert werden sollen
+    grades.changeSaveLocal();
+    //Jetzt nur noch den Button anpasen
+    document.getElementById("changeSaveLocalButton").classList.remove("secondary-container");
+    document.getElementById("changeSaveLocalButton").classList.add("green");
+    document.getElementById("saveLocalFalse").classList.add("hidden");
+    document.getElementById("saveLocalTrue").classList.remove("hidden");
+  }
+}
+
+//Schauen, ob Daten lokal vorhanden sind
+if(localStorageHandler.hasGradesMapLocal()){
+  //Button zum Laden der Daten zeigen
+  document.getElementById("loadFromLocalButton").classList.remove("hidden");
+  document.getElementById("manuellTempButton").classList.remove("hidden");
+  //grades sagen, dass lokale Daten vorhanden sind
+  grades.changeSaveLocal();
+  //Button der die Speicherung der Daten lokal festlegt macht
+  document.getElementById("changeSaveLocalButton").classList.remove("secondary-container");
+  document.getElementById("changeSaveLocalButton").classList.add("green");
+  document.getElementById("saveLocalFalse").classList.add("hidden");
+  document.getElementById("saveLocalTrue").classList.remove("hidden");
+}
+
+window.loadFromLocal = function () {
+  grades.loadLocalGrades();
+}
+
 window.copyLink = function () {
   navigator.clipboard.writeText(window.location.origin + window.location.pathname + "?grades=" + grades.grades).then(function() {
     ui("#copySuccess", 3000);
   }, function(err) {
     console.error('Async: Could not copy text: ', err);
   });
-
 }
 
 window.onbeforeunload = function(){
   if(userAtForm){
-    // TODO: Entkommentieren vor dem Push!!!
     return 'Achtung! Eingegebene Daten werden nicht gespeichert! Zum sichern bitte den Teilungslink kopieren.';
   }
 };
