@@ -7,6 +7,10 @@
   gap: 15rem;
 }
 
+#start{
+  padding-bottom: 15vh;
+}
+
 #dataLink{
   word-break: break-all;
 }
