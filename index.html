@@ -41,9 +41,242 @@
     </div>
 
     <div id="calculator" class="page right absolute top large-margin">
-      <form>
+      <form class="m l">
+        <div class="tabs">
+          <a id="tabSemI" href="#" tabindex="0" class="active" onclick="clickedTab('tabSemIp')">1. Semester</a>
+          <a id="tabSemII" href="#" tabindex="0" onclick="clickedTab('tabSemIIp')">2. Semester</a>
+          <a id="tabSemIII" href="#" tabindex="0" onclick="clickedTab('tabSemIIIp')">3. Semester</a>
+          <a id="tabSemIV" href="#" tabindex="0" onclick="clickedTab('tabSemIVp')">4. Semster</a>
+          <a id="tabSemV" href="#" tabindex="0" onclick="clickedTab('tabSemVp')">5. Semester</a>
+          <a id="tabSemVI" href="#" tabindex="0" onclick="clickedTab('tabSemVIp')">6. Semester</a>
+        </div>
+
+        <div class="page active" id="tabSemIp">
+          <h5 class="medium-margin no-margin-top underline">1. Semester</h5>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="I-1d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-1d')">
+            <label>Grundlagen der Rechnertechnik</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="I-2d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-2d')">
+            <label>OOP I</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="I-3d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-3d')">
+            <label>Betriebssysteme I</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="I-4d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-4d')">
+            <label>Diskrete Mathematik</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="I-5d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-5d')">
+            <label>Grundlagen der Informatik</label>
+          </div>
+          <div class="field label border small medium-margin no-margin-bottom">
+            <input type="number" max="15" min="0" id="I-6d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-6d')">
+            <label>Englisch (Nebenfach)</label>
+          </div>
+        </div>
+        <div class="page" id="tabSemIIp">
+          <h5 class="medium-margin no-margin-top underline">2. Semester</h5>
+          <div class="field label border small medium-margin no-margin-top">
+            <input type="number" max="15" min="0" id="II-1d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-1d')">
+            <label>Rechnernetzwerke I</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="II-2d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-2d')">
+            <label>Software Engineering I</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="II-3d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-3d')">
+            <label>OOP II</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="II-4d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-4d')">
+            <label>Datenbanken I</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="II-5d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-5d')">
+            <label>Computergestützte GP (Nebenfach)</label>
+          </div>
+          <div class="field label border small medium-margin no-margin-bottom">
+            <input type="number" max="15" min="0" id="II-6d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-6d')">
+            <label>Statistik (Nebenfach)</label>
+          </div>
+        </div>
+        <div class="page" id="tabSemIIIp">
+          <h5 class="medium-margin no-margin-top underline">3. Semester</h5>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="III-1d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-1d')">
+            <label>Verwaltung & Grundgesetz (Zw.-prüfung)</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="III-2d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-2d')">
+            <label>Wirtschaftsprüfung (Zw.-prüfung)</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="III-3d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-3d')">
+            <label>Büro Verwaltung (Nebenprüfung)</label>
+          </div>
+          <div class="field label border small medium-margin no-margin-bottom">
+            <input type="number" max="15" min="0" id="III-4d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-4d')">
+            <label>Privatrecht 1 & 2 (Nebenprüfung)</label>
+          </div>
+        </div>
+        <div class="page" id="tabSemIVp">
+          <h5 class="medium-margin no-margin-top underline">4. Semester</h5>
+          <div class="row no-wrap medium-margin">
+            <div class="col max padding-left-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="IV-1d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-1d')">
+                <label>Rechnernetzwerke II</label>
+              </div>
+            </div>
+            <div class="col max padding-right-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="IV-2d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-2d')">
+                <label>Algodat</label>
+              </div>
+            </div>
+          </div>
+          <div class="row no-wrap medium-margin">
+            <div class="col max padding-left-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="IV-3d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-3d')">
+                <label>Betriebssysteme II</label>
+              </div>
+            </div>
+            <div class="col max padding-right-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="IV-4d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-4d')">
+                <label>WebDev I</label>
+              </div>
+            </div>
+          </div>
+          <div class="row no-wrap medium-margin">
+            <div class="col max padding-left-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="IV-5d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-5d')">
+                <label>Formale Sprachen</label>
+              </div>
+            </div>
+            <div class="col max padding-right-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="IV-6d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-6d')">
+                <label>Geschäftsprozessmodellierung</label>
+              </div>
+            </div>
+          </div>
+          <div class="row no-wrap medium-margin no-margin-bottom">
+            <div class="col max padding-left-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="IV-7d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-7d')">
+                <label>WebDev I (Nebenfach)</label>
+              </div>
+            </div>
+            <div class="col max padding-right-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="IV-8d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-8d')">
+                <label>Betriebssysteme II (Nebenfach)</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page" id="tabSemVp">
+          <h5 class="medium-margin no-margin-top underline">5. Semester</h5>
+          <div class="row no-wrap medium-margin">
+            <div class="col max padding-left-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="V-1d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-1d')">
+                <label>WebDev II</label>
+              </div>
+            </div>
+            <div class="col max padding-right-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="V-2d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-2d')">
+                <label>Software Engineering II</label>
+              </div>
+            </div>
+          </div>
+          <div class="row no-wrap medium-margin">
+            <div class="col max padding-left-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="V-3d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-3d')">
+                <label>C/C++</label>
+              </div>
+            </div>
+            <div class="col max padding-right-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="V-4d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-4d')">
+                <label>Datenbanken II</label>
+              </div>
+            </div>
+          </div>
+          <div class="row no-wrap medium-margin">
+            <div class="col max padding-left-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="V-5d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-5d')">
+                <label>Wahlpflichtfach (Nebenfach)</label>
+              </div>
+            </div>
+            <div class="col max padding-right-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="V-6d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-6d')">
+                <label>Entw.-praktikum (Nebenfach)</label>
+              </div>
+            </div>
+          </div>
+          <div class="row no-wrap medium-margin">
+            <div class="col max padding-left-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="V-7d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-7d')">
+                <label>Seminar (Nebenfach)</label>
+              </div>
+            </div>
+            <div class="col max padding-right-row">
+              <div class="field label border small no-margin">
+                <input type="number" max="15" min="0" id="V-8d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-8d')">
+                <label>Studienarbeit</label>
+              </div>
+            </div>
+          </div>
+          <div class="field label border small medium-margin no-margin-bottom">
+            <input type="number" max="15" min="0" id="V-9d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-9d')">
+            <label>Mündliche Prüfung</label>
+          </div>
+        </div>
+        <div class="page" id="tabSemVIp">
+          <h5 class="medium-margin no-margin-top underline">6. Semester</h5>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="VI-1d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-1d')">
+            <label>Datenschutz (Schlussprüfung)</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="VI-2d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-2d')">
+            <label>Privat- & Internetrecht (Schlussprüfung)</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="VI-3d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-3d')">
+            <label>DV-Anwendungen (Schlussprüfung)</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="VI-4d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-4d')">
+            <label>Wirtschaftsführung (Nebenprüfung)</label>
+          </div>
+          <div class="field label border small medium-margin">
+            <input type="number" max="15" min="0" id="VI-5d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-5d')">
+            <label>Mündliche Prüfung</label>
+          </div>
+          <div class="field label border small medium-margin no-margin-bottom">
+            <input type="number" max="15" min="0" id="VI-Pd" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-Pd')">
+            <label>Praxisbewertung (Durchschnitt)</label>
+          </div>
+        </div>
+      </form>
+      <form class="s">
         <details id="semesterI">
-          <summary id="semesterIsum" class="card border round secondary-container" onclick="clickDetails(1)">
+          <summary id="semesterIsum" class="card border round secondary-container" onfocus="event.target.classList.add('primary-container');event.target.classList.remove('secondary-container')" onblur="event.target.classList.add('secondary-container');event.target.classList.remove('primary-container')" onclick="clickDetails(1)">
             <div class="row no-wrap middle-align">
               <div class="col">
                 <h5 class="no-margin">1. Semester</h5>
@@ -82,7 +315,7 @@
           </div>
         </details>
         <details id="semesterII">
-          <summary id="semesterIIsum" class="card border round secondary-container" onclick="clickDetails(2)">
+          <summary id="semesterIIsum" class="card border round secondary-container" onfocus="event.target.classList.add('primary-container');event.target.classList.remove('secondary-container')" onblur="event.target.classList.add('secondary-container');event.target.classList.remove('primary-container')" onclick="clickDetails(2)">
             <div class="row no-wrap middle-align">
               <div class="col">
                 <h5 class="no-margin">2. Semester</h5>
@@ -112,7 +345,7 @@
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="II-5" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-5')">
-              <label>Computergestützte GP ( Nebenfach)</label>
+              <label>Computergestützte GP (Nebenfach)</label>
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="II-6" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-6')">
@@ -121,7 +354,7 @@
           </div>
         </details>
         <details id="semesterIII">
-          <summary id="semesterIIIsum" class="card border round secondary-container" onclick="clickDetails(3)">
+          <summary id="semesterIIIsum" class="card border round secondary-container" onfocus="event.target.classList.add('primary-container');event.target.classList.remove('secondary-container')" onblur="event.target.classList.add('secondary-container');event.target.classList.remove('primary-container')" onclick="clickDetails(3)">
             <div class="row no-wrap middle-align">
               <div class="col">
                 <h5 class="no-margin">3. Semester</h5>
@@ -134,25 +367,25 @@
           </summary>
           <div class="card border round transparent">
             <div class="field label border small no-margin">
-              <input type="number" max="15" min="0" id="III-1" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-1')">
+              <input type="number" max="15" min="0" id="III-1" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-1')">
               <label>Verwaltung & GG (Zw.-prüfung)</label>
             </div>
             <div class="field label border small no-margin">
-              <input type="number" max="15" min="0" id="III-2" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-2')">
+              <input type="number" max="15" min="0" id="III-2" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-2')">
               <label>Wirtschaftsprüfung (Zw.-prüfung)</label>
             </div>
             <div class="field label border small no-margin">
-              <input type="number" max="15" min="0" id="III-3" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-3')">
+              <input type="number" max="15" min="0" id="III-3" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-3')">
               <label>Büro Verwaltung (Nebenprüfung)</label>
             </div>
             <div class="field label border small no-margin">
-              <input type="number" max="15" min="0" id="III-4" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-4')">
+              <input type="number" max="15" min="0" id="III-4" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-4')">
               <label>Priv 1 & 2 (Nebenprüfung)</label>
             </div>
           </div>
         </details>
         <details id="semesterIV">
-          <summary id="semesterIVsum" class="card border round secondary-container" onclick="clickDetails(4)">
+          <summary id="semesterIVsum" class="card border round secondary-container" onfocus="event.target.classList.add('primary-container');event.target.classList.remove('secondary-container')" onblur="event.target.classList.add('secondary-container');event.target.classList.remove('primary-container')" onclick="clickDetails(4)">
             <div class="row no-wrap middle-align">
               <div class="col">
                 <h5 class="no-margin">4. Semester</h5>
@@ -167,13 +400,13 @@
             <div class="row no-wrap">
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="IV-1" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-1')">
+                  <input type="number" max="15" min="0" id="IV-1" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-1')">
                   <label>Rechnernetzwerke II</label>
                 </div>
               </div>
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="IV-2" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-2')">
+                  <input type="number" max="15" min="0" id="IV-2" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-2')">
                   <label>Algodat</label>
                 </div>
               </div>
@@ -181,13 +414,13 @@
             <div class="row no-wrap">
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="IV-3" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-3')">
+                  <input type="number" max="15" min="0" id="IV-3" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-3')">
                   <label>Betriebssysteme II</label>
                 </div>
               </div>
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="IV-4" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-4')">
+                  <input type="number" max="15" min="0" id="IV-4" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-4')">
                   <label>WebDev I</label>
                 </div>
               </div>
@@ -195,13 +428,13 @@
             <div class="row no-wrap">
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="IV-5" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-5')">
+                  <input type="number" max="15" min="0" id="IV-5" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-5')">
                   <label>Formale Sprachen</label>
                 </div>
               </div>
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="IV-6" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-6')">
+                  <input type="number" max="15" min="0" id="IV-6" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-6')">
                   <label>GP.-modellierung</label>
                 </div>
               </div>
@@ -209,13 +442,13 @@
             <div class="row no-wrap">
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="IV-7" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-7')">
+                  <input type="number" max="15" min="0" id="IV-7" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-7')">
                   <label>WebDev I (Nebenfach)</label>
                 </div>
               </div>
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="IV-8" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-8')">
+                  <input type="number" max="15" min="0" id="IV-8" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-8')">
                   <label>Betriebssysteme II (Nebenfach)</label>
                 </div>
               </div>
@@ -223,7 +456,7 @@
           </div>
         </details>
         <details id="semesterV">
-          <summary id="semesterVsum" class="card border round secondary-container" onclick="clickDetails(5)">
+          <summary id="semesterVsum" class="card border round secondary-container" onfocus="event.target.classList.add('primary-container');event.target.classList.remove('secondary-container')" onblur="event.target.classList.add('secondary-container');event.target.classList.remove('primary-container')" onclick="clickDetails(5)">
             <div class="row no-wrap middle-align">
               <div class="col">
                 <h5 class="no-margin">5. Semester</h5>
@@ -238,13 +471,13 @@
             <div class="row no-wrap">
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="V-1" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-1')">
+                  <input type="number" max="15" min="0" id="V-1" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-1')">
                   <label>WebDev II</label>
                 </div>
               </div>
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="V-2" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-2')">
+                  <input type="number" max="15" min="0" id="V-2" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-2')">
                   <label>Software Engineering II</label>
                 </div>
               </div>
@@ -252,13 +485,13 @@
             <div class="row no-wrap">
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="V-3" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-3')">
+                  <input type="number" max="15" min="0" id="V-3" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-3')">
                   <label>C/C++</label>
                 </div>
               </div>
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="V-4" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-4')">
+                  <input type="number" max="15" min="0" id="V-4" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-4')">
                   <label>Datenbanken II</label>
                 </div>
               </div>
@@ -266,13 +499,13 @@
             <div class="row no-wrap">
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="V-5" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-5')">
+                  <input type="number" max="15" min="0" id="V-5" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-5')">
                   <label>Wahlpflichtfach (Nebenfach)</label>
                 </div>
               </div>
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="V-6" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-6')">
+                  <input type="number" max="15" min="0" id="V-6" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-6')">
                   <label>Entw.-praktikum (Nebenfach)</label>
                 </div>
               </div>
@@ -280,25 +513,25 @@
             <div class="row no-wrap">
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="V-7" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-7')">
+                  <input type="number" max="15" min="0" id="V-7" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-7')">
                   <label>Seminar (Nebenfach)</label>
                 </div>
               </div>
               <div class="col max">
                 <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="V-8" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-8')">
+                  <input type="number" max="15" min="0" id="V-8" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-8')">
                   <label>Studienarbeit</label>
                 </div>
               </div>
             </div>
             <div class="field label border small no-margin">
-              <input type="number" max="15" min="0" id="V-9" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-9')">
+              <input type="number" max="15" min="0" id="V-9" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-9')">
               <label>Mündliche Prüfung</label>
             </div>
           </div>
         </details>
         <details id="semesterVI">
-          <summary id="semesterVIsum" class="card border round secondary-container" onclick="clickDetails(6)">
+          <summary id="semesterVIsum" class="card border round secondary-container" onfocus="event.target.classList.add('primary-container');event.target.classList.remove('secondary-container')" onblur="event.target.classList.add('secondary-container');event.target.classList.remove('primary-container')" onclick="clickDetails(6)">
             <div class="row no-wrap middle-align">
               <div class="col">
                 <h5 class="no-margin">6. Semester</h5>
@@ -311,46 +544,50 @@
           </summary>
           <div class="card border round transparent">
             <div class="field label border small no-margin">
-              <input type="number" max="15" min="0" id="VI-1" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-1')">
+              <input type="number" max="15" min="0" id="VI-1" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-1')">
               <label>Datenschutz (Schlussprüfung)</label>
             </div>
             <div class="field label border small no-margin">
-              <input type="number" max="15" min="0" id="VI-2" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-2')">
+              <input type="number" max="15" min="0" id="VI-2" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-2')">
               <label>Privat- & Internetrecht (Schlussprüfung)</label>
             </div>
             <div class="field label border small no-margin">
-              <input type="number" max="15" min="0" id="VI-3" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-3')">
+              <input type="number" max="15" min="0" id="VI-3" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-3')">
               <label>DV-Anwendungen (Schlussprüfung)</label>
             </div>
             <div class="field label border small no-margin">
-              <input type="number" max="15" min="0" id="VI-4" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-4')">
+              <input type="number" max="15" min="0" id="VI-4" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-4')">
               <label>Wirtschaftsführung (Nebenprüfung)</label>
             </div>
             <div class="field label border small no-margin">
-              <input type="number" max="15" min="0" id="VI-5" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-5')">
+              <input type="number" max="15" min="0" id="VI-5" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-5')">
               <label>Mündliche Prüfung</label>
             </div>
             <div class="field label border small no-margin">
-              <input type="number" max="15" min="0" id="VI-P" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-P')">
+              <input type="number" max="15" min="0" id="VI-P" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-P')">
               <label>Praxisbewertung (Durchschnitt)</label>
             </div>
           </div>
         </details>
+      </form>
 
-        <div class="card border round tertiary-container">
-          <div class="row no-wrap middle-align">
-            <div class="col">
-              <h5 class="no-margin">ZW:&nbsp;&nbsp;<b id="zwgrade">4,0 (5)</b></h5>
-            </div>
-            <div class="col">
-              <h5 class="no-margin">∑&nbsp;&nbsp;&nbsp;<u><b id="endgrade">4,0 (5)</b></u></h5>
-            </div>
-            <div class="col min">
-              <button class="border" type="button" onclick="generateLink();"><i>share</i></button>
-            </div>
+      <div id="hiddenSuperImportantInputfieldContainer" class="card border round tertiary-container medium-margin">
+        <input type="text" id="hiddenSuperImportantInputfield" onfocus="focusHiddenInput(event)" value="I don't care, I love it">
+      </div>
+
+      <div class="card border round tertiary-container">
+        <div class="row no-wrap middle-align">
+          <div class="col">
+            <h5 class="no-margin">ZW:&nbsp;&nbsp;<b id="zwgrade">4,0 (5)</b></h5>
+          </div>
+          <div class="col">
+            <h5 class="no-margin">∑&nbsp;&nbsp;&nbsp;<u><b id="endgrade">4,0 (5)</b></u></h5>
+          </div>
+          <div class="col min">
+            <button class="border" id="shareButton" type="button" onclick="generateLink();"><i>share</i></button>
           </div>
         </div>
-      </form>
+      </div>
     </div>
 
     <div id="cookieBanner" class="bottom center">
@@ -402,11 +639,12 @@
       <p>Ein leeres Formularfeld wird mit der Note 5 interpretiert, welche   meistens notwendig ist um ein Fach zu bestehen.</p>
       <p>Fehlerhafte Eingaben, z.B. eine Note kleiner 5 bei einem Fach, welches Bestanden werden muss, wird entsprechenden eine Warnungen ausgegeben, sowie das entsprechende Feld markiert.Bei Nicht-Änderung wird mit dem alten Wert gerechnet.</p>
       <p>Die End- und Zwischennote wird mit dem Wechseln des Formularfeldes automatisch berechnet.</p>
+      <p>Wenn statt der End- oder Zwischennote "DG!" steht, ist der Schnitt der Punkte kleiner 5 und man ist durchgefallen.</p>
       <p>Über das "Teilen"-Symbol lässt sich ein Link generieren, welcher die aktuellen, fehlerfreien Daten in der URL verpackt enthält. Mit diesem kann der aktuelle Stand über das Aufrufen des Links gezeigt werden. Jedoch muss bei einer Änderung immer ein neuer Link generiert werden.</p>
       <p id="userinfoNoLocal" class="error-text"><b>Achtung!</b> Die Daten werden nicht gespeichert! Zum Wiederaufrufen der gleichen Daten, bitte den "Teilen"-Button nutzen.</p>
       <p class="hidden" id="userinfoLocal">Daten werden beim wegklicken vom Formularfeld während der Klakulation automatisch lokal gespeichert. Diese können bei erneuten Laden der Seite geladen werden, falls gewünscht.</p>
       <nav>
-        <button onclick="closeUserInfo();"><i>close</i>&nbsp;Schließen</button>
+        <button onclick="closeUserInfo();" id="closeUserInfo"><i>close</i>&nbsp;Schließen</button>
       </nav>
     </div>
 

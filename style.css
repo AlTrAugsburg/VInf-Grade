@@ -7,9 +7,54 @@
   gap: 15rem;
 }
 
+.page > .row {
+  min-width: auto;
+}
+
+.page > .row > .col{
+  padding: 0;
+}
+
+.padding-right-row{
+  padding-left: 8rem !important;
+}
+
+.padding-left-row{
+  padding-right: 8rem !important;
+}
+
+a:focus{
+  border-style: dotted;
+  border-color: var(--primary);
+  border-width: 0.5px;
+}
+
 #start{
   padding-bottom: 15vh;
 }
+
+#hiddenSuperImportantInputfieldContainer{
+  position: absolute;
+  z-index: -1;
+}
+
+.no-margin-top{
+  margin-top: 0 !important;
+}
+
+.no-margin-bottom{
+  margin-bottom: 0 !important;
+}
+
+.m .tabs .left-align{
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+/*summary:focus{
+  background-color: #4fd8eb !important;
+  color: #00363d !important;
+}*/
 
 #dataLink{
   word-break: break-all;

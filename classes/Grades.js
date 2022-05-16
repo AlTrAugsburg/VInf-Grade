@@ -2,7 +2,7 @@ const allowedSandFn = ["I-1", "I-2", "I-3", "I-4", "I-5", "I-6", "II-1", "II-2",
 const allowedToFail = [false, false, false, false, false, true, false, false, false, false, true, true, false, false, true, true, false, false, false, false, false, true, true, false, false, false, false, true, true, true, false, false, true, true, true, true, true, true, false];
 const percentageEnd19_22 = [/*1. Semester*/191, 191, 191, 191, 191, 69, /*2. Semester*/191, 191, 191, 191, 69, 69, /*3. Semester*/286, 286, 52, 52, /*4. Semester*/400, 400, 400, 400, 400, 400, 80, 80, /*5. Semester*/400, 400, 400, 400, 80, 80, 80, 500, 400, /*6. Semester*/400, 400, 400, 100, 400, /*Praxis*/ 400];
 const percentageZW19_22 = [/*1. Semester*/733, 733, 733, 734, 734, 267, /*2. Semester*/733, 733, 733, 733, 267, 267, /*3. Semester*/1100, 1100, 200, 200];
-const finalGrades = ["/", "/", "/", "/", "4,0", "3,7", "3.3", "3,0", "2,7", "2,3", "2,0", "1,7", "1,3", "1,0", "0,7"];
+const finalGrades = ["DG!", "DG!", "DG!", "DG!", "4,0", "3,7", "3.3", "3,0", "2,7", "2,3", "2,0", "1,7", "1,3", "1,0", "0,7"];
 
 export default class Grades{
 
@@ -21,10 +21,6 @@ export default class Grades{
     }
     let grade6 = finalGrades[Math.floor(sum/10000)-1];
     let grade15 = Math.round((sum/10000) * 100) / 100;
-    if(grade15 < 5){
-      alert("Zwischennote kleiner 5 Notenpunkten, damit durchgefallen.");
-
-    }
     document.getElementById("zwgrade").textContent = grade6 + " (" + grade15 + ")";
     sum = 0;
     for(let i in allowedSandFn){
@@ -32,10 +28,6 @@ export default class Grades{
     }
     grade6 = finalGrades[Math.floor(sum/10000)-1];
     grade15 = Math.round((sum/10000) * 100) / 100;
-    if(grade15 < 5){
-      alert("Endnote kleiner 5 Notenpunkten, damit durchgefallen.");
-      return;
-    }
     document.getElementById("endgrade").textContent = grade6 + " (" + grade15 + ")";
   }
 
@@ -52,7 +44,7 @@ export default class Grades{
   loadLocalGrades() {
     if(this.#localStorageHandler.getGradesMapFromLocal()!=null){
       this.#gradesMap = this.#localStorageHandler.getGradesMapFromLocal();
-      this.#gradesMap.forEach((value, key) => {document.getElementById(key).value = value;});
+      this.#gradesMap.forEach((value, key) => {document.getElementById(key).value = value;  document.getElementById(key+"d").value = value;});
 
       //Richtigen Teil der Userinfo zeigen
       document.getElementById("userinfoNoLocal").classList.add("hidden");
@@ -87,18 +79,35 @@ export default class Grades{
   }
 
   checkGrade(number, grade) {
+    //Prüfen, ob Desktop oder Mobilelement
+    let desktop;
+    if(number[number.length-1] === "d"){
+      desktop = true;
+      number = number.substring(0, number.length - 1);
+    }
+    else {
+      desktop = false;
+    }
+
     //Prüfen, ob schon vorhanden
     if(this.#gradesMap.has(number)){
       if(grade < 5 && !allowedToFail[allowedSandFn.indexOf(number)]){
         document.getElementById("semester"+number[0]+"sum").classList.add("error");
         document.getElementById(number).parentElement.classList.add("invalid");
-        alert("Du darfst in diesem Fall nicht durchfallen");
+        alert("Du darfst in diesem Fach nicht durchfallen");
         setTimeout(function () {
           document.getElementById(number).focus();
         }, 10);
         document.getElementById("endgrade").classList.add("error");
         return false;
       }
+      if(desktop){
+        document.getElementById(number).value = document.getElementById(number + "d").value;
+      }
+      else {
+        document.getElementById(number + "d").value = document.getElementById(number).value;
+      }
+      ui();
       document.getElementById("semester"+number[0]+"sum").classList.remove("error");
       document.getElementById(number).parentElement.classList.remove("invalid");
       document.getElementById("endgrade").classList.remove("error");
@@ -163,7 +172,7 @@ export default class Grades{
       this.#gradesMap.set(allowedSandFn[i], array[i]);
     }
 
-    this.#gradesMap.forEach((value, key) => {document.getElementById(key).value = value;});
+    this.#gradesMap.forEach((value, key) => {document.getElementById(key).value = value; document.getElementById(key+"d").value = value;});
 
     ui("#calculator");
     ui("#userinfo");
