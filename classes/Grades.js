@@ -1,7 +1,8 @@
 const allowedSandFn = ["I-1", "I-2", "I-3", "I-4", "I-5", "I-6", "II-1", "II-2", "II-3", "II-4", "II-5", "II-6", "III-1", "III-2", "III-3", "III-4", "IV-1", "IV-2", "IV-3", "IV-4", "IV-5", "IV-6", "IV-7", "IV-8", "V-1", "V-2", "V-3", "V-4", "V-5", "V-6", "V-7", "V-8", "V-9", "VI-1", "VI-2", "VI-3", "VI-4", "VI-5", "VI-P"];
-const allowedToFail = [false, false, false, false, false, true, false, false, false, false, true, true, false, false, true, true, false, false, false, false, false, true, true, false, false, false, false, true, true, true, false, false, true, true, true, true, true, true, false];
+const allowedToFail = [false, false, false, false, false, true, false, false, false, false, true, true, true, true, true, true, false, false, false, false, false, true, true, false, false, false, false, true, true, true, false, false, true, true, true, true, true, true, false];
 const percentageEnd19_22 = [/*1. Semester*/191, 191, 191, 191, 191, 69, /*2. Semester*/191, 191, 191, 191, 69, 69, /*3. Semester*/286, 286, 52, 52, /*4. Semester*/400, 400, 400, 400, 400, 400, 80, 80, /*5. Semester*/400, 400, 400, 400, 80, 80, 80, 500, 400, /*6. Semester*/400, 400, 400, 100, 400, /*Praxis*/ 400];
 const percentageZW19_22 = [/*1. Semester*/733, 733, 733, 734, 734, 267, /*2. Semester*/733, 733, 733, 733, 267, 267, /*3. Semester*/1100, 1100, 200, 200];
+const sharedFailRules19_22 = [[5, 10, 11], [12, 13], [22, 23, 28, 29, 30], [33, 34, 35]];
 const finalGrades = ["DG!", "DG!", "DG!", "DG!", "4,0", "3,7", "3.3", "3,0", "2,7", "2,3", "2,0", "1,7", "1,3", "1,0", "0,7"];
 
 export default class Grades{
@@ -100,6 +101,46 @@ export default class Grades{
         }, 10);
         document.getElementById("endgrade").classList.add("error");
         return false;
+      }
+      for (var i = 0; i < sharedFailRules19_22.length; i++) {
+        let sum = 0;
+        for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
+          let valueInput = 0;
+          if(desktop){
+            //Desktopfelder auslesen
+            valueInput = Number(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value);
+            if(isNaN(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value) || document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value === ""){
+              valueInput = 5;
+            }
+          }
+          else {
+            //Mobilegerätfelder auslesen
+            valueInput = Number(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).value);
+            if(isNaN(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).value) || document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).value === ""){
+              valueInput = 5;
+            }
+          }
+          sum = sum + valueInput;
+        }
+        let durchschnitt = sum/sharedFailRules19_22[i].length;
+        if(durchschnitt < 5){
+          for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
+            if(desktop){
+              document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").parentElement.classList.add("invalid");
+            }
+            else {
+              document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).parentElement.classList.add("invalid");
+            }
+          }
+          alert("Du hast in Fächern, wo man weniger als 5 Punkte bekommen kann, nicht den Durchschnitt geschafft und damit würdest du durchfallen. Diese wurden rot markiert und sollten entsprechend angepasst werden.");
+          return;
+        }
+        else {
+          for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
+            document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").parentElement.classList.remove("invalid");
+            document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).parentElement.classList.remove("invalid");
+          }
+        }
       }
       if(desktop){
         document.getElementById(number).value = document.getElementById(number + "d").value;
