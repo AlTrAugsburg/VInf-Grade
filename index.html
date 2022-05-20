@@ -4,7 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>VInf Grade - Beta</title>
+    <title>VInf Grade</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="beercss/beercss.min.css">
     <link rel="stylesheet" href="myTheme.css">
     <link rel="stylesheet" href="style.css">
@@ -19,7 +21,8 @@
           </button>
         </div>
         <div class="col">
-          <h5 class="no-margin center-align" id="headline"><a href="./index.html">VInf Grade - Beta</a></h5>
+          <h5 class="no-margin center-align" id="headline"><a href="./index.html">VInf Grade</a></h5>
+          <p class="no-margin small-text center-align">Version 1.0</p>
         </div>
         <div class="col min">
           <button onclick="changeMode()">
@@ -33,11 +36,12 @@
 
 
     <div id="start" class="page right absolute center middle middle-align button-place ">
-      <button class="secondary-container" type="button" id="getButton" onclick="getGrades()"><i>lock</i>&nbsp;Noten holen (In Arbeit)</button>
+      <button class="secondary-container" type="button" id="getButton" data-ui="#findGrades"><i>find_in_page</i>&nbsp;Noten finden</button>
       <button class="hidden" type="button" id="loadFromLocalButton" onclick="loadFromLocal()"><i>save</i>&nbsp;Noten aus Speicher holen</button>
       <button type="button" onclick="manuellGrades()" id="manuellButton"><i>edit</i>&nbsp;Noten manuell eingeben</button>
       <button class="hidden" type="button" onclick="manuellGradesTemp()" id="manuellTempButton"><i>edit_off</i>&nbsp;Noten manuell eingeben (Ohne Speichern)</button>
       <button class="secondary-container" id="changeSaveLocalButton" type="button" onclick="changeSaveLocal()"><i id="saveLocalFalse">close</i><i class="hidden" id="saveLocalTrue">check</i>&nbsp;Noten lokal speichern</button>
+      <p class="small-text">Aktueller Stand: Jahrgang 2019/2022, 2020/2023</p>
     </div>
 
     <div id="calculator" class="page right absolute top large-margin">
@@ -606,31 +610,74 @@
     <div class="modal" id="about">
       <h5><u>Über</u></h5>
       <p>Diese Anwendung ist von einem Verwaltungsinformatiker des Jahrgangs 2019/2022 geschrieben/betreut und aktuell auf diesem Stand. Sollte es eine neue Punkteverteilung geben, gerne ein Issue mit dem entsprechenden Dokument eröffnen. Dann wird sich darum schnellstmöglich gekümmert.</p>
-      <p>Diese Anwendung nutzt Material Icons und Roboto von Google Fonts und das CSS-Framework Beercss, cheers 🍺 Sie sind alle unter der MIT-Lizenz veröffentlicht, welche sich auf der GitHub Seite dieses Projektes befinden.
+      <p>Diese Anwendung nutzt Material Icons und Roboto von Google Fonts und das CSS-Framework Beercss, cheers 🍺 Sie sind alle unter der MIT-Lizenz veröffentlicht, welche sich auf der GitHub Seite dieses Projektes befinden.</p>
+      <p>Das Icon ist aus dem Assetpack <a class="cyan-text" href="https://kenney.nl/assets/board-game-info">"Board Game Info"</a> von Kenney, welches unter CC0 lizensiert ist.</p>
       <h6><u>Haftung von Links</u></h6>
       <p class="">Diese Seite verlinkt lediglich zum Source Code dieser Seite auf GitHub und der Datenschutzerklärung von GitHub. Die beiden Links werden nicht regelmäßig auf Korrektheit überprüft, ich mache mir den Inhalt der Seiten, auf die die Links zeigen, nicht zu eigen und ich übernehme damit auch keine Haftung für die Inhalte, auf welche sie zeigen.</p>
       <nav class="l">
-        <button data-ui="#about"><i>close</i>&nbsp;Schließen</button>
+        <div class="row no-margin">
+          <div class="col s6">
+            <button class="responsive" data-ui="#datenschutz"><i>security</i>&nbsp;Datenschutz</button>
+          </div>
+          <div class="col s6">
+            <button type="button" class="responsive" data-ui="#impressum"><i>contact_page</i>&nbsp;Impressum</button>
+          </div>
+        </div>
+      </nav>
+      <nav class="l">
+        <div class="row no-margin">
+          <div class="col s3 col-extra-small-padding">
+            <button class="responsive" data-ui="#about"><i>close</i>&nbsp;Schließen</button>
+          </div>
+          <div class="col s3 col-extra-small-padding">
+            <button class="responsive" data-ui="#userinfo"><i>help_outline</i>Nutzerinfo</button>
+          </div>
+          <div class="col s3 col-extra-small-padding">
+            <button class="responsive" data-ui="#berechnung"><i>calculate</i>Berechnung</button>
+          </div>
+          <div class="col s3 col-extra-small-padding">
+            <a href="https://github.com/AlTrAugsburg/VInf-Grade" class="button responsive"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="responsive"><span>Zum Projekt</span></a>
+          </div>
+        </div>
+      </nav>
+      <nav class="m s">
+        <div class="row no-margin">
+          <div class="col s6 col-extra-small-padding no-padding-bottom">
+            <button class="responsive no-margin" type="button" data-ui="#datenschutz"><i>security</i>&nbsp;Datenschutz</button>
+          </div>
+          <div class="col s6 col-extra-small-padding no-padding-bottom">
+            <button class="responsive" type="button" data-ui="#impressum"><i>contact_page</i>&nbsp;Impressum</button>
+          </div>
+        </div>
+      </nav>
+      <nav class="m s">
+        <div class="row no-margin">
+          <div class="col s6  col-extra-small-padding no-padding-bottom">
+            <button class="responsive" data-ui="#userinfo"><i>help_outline</i>Nutzerinfo</button>
+          </div>
+          <div class="col s6  col-extra-small-padding no-padding-bottom">
+            <button class="responsive" data-ui="#berechnung"><i>calculate</i>Berechnung</button>
+          </div>
+        </div>
+      </nav>
+      <nav class="m s">
+        <div class="row no-margin">
+          <div class="col s6 col-extra-small-padding no-padding-bottom">
+            <button class="responsive" data-ui="#about"><i>close</i>&nbsp;Schließen</button>
+          </div>
+          <div class="col s6 col-extra-small-padding no-padding-bottom">
+            <a href="https://github.com/AlTrAugsburg/VInf-Grade" class="button responsive"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="responsive"><span>Zum Projekt</span></a>
+          </div>
+        </div>
+      </nav>
+      <!--<nav class="s">
         <button type="button" data-ui="#datenschutz"><i>security</i>&nbsp;Datenschutz</button>
         <button type="button" data-ui="#impressum"><i>contact_page</i>&nbsp;Impressum</button>
-        <a href="https://github.com/AlTrAugsburg/VInf-Grade" class="button"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="responsive"><span>Zum Projekt</span></a>
-      </nav>
-      <nav class="m">
-        <button type="button" data-ui="#datenschutz"><i>security</i>&nbsp;Datenschutz</button>
-        <button type="button" data-ui="#impressum"><i>contact_page</i>&nbsp;Impressum</button>
-        <a href="https://github.com/AlTrAugsburg/VInf-Grade" class="button"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="responsive"><span>Zum Projekt</span></a>
-      </nav>
-      <nav class="m">
-        <button class="responsive" data-ui="#about"><i>close</i>&nbsp;Schließen</button>
       </nav>
       <nav class="s">
-        <button type="button" data-ui="#datenschutz"><i>security</i>&nbsp;Datenschutz</button>
-        <button type="button" data-ui="#impressum"><i>contact_page</i>&nbsp;Impressum</button>
-      </nav>
-      <nav class="s">
         <button data-ui="#about"><i>close</i>&nbsp;Schließen</button>
         <a href="https://github.com/AlTrAugsburg/VInf-Grade" class="button"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="responsive"><span>Zum Projekt</span></a>
-      </nav>
+      </nav>-->
     </div>
 
     <div class="modal" id="userinfo">
@@ -662,7 +709,7 @@
 
     <div class="modal" id="datenschutz">
       <h5><u>Datenschutzerklärung</u></h5>
-      <p>Die Seite verabreitet die Daten nur lokal auf dem Gerät und sie werden nirgendwo hingeschickt. Alle Cookies die eingesetzt werden, sind technisch notwendig. Für die Datenschutzerklärung des Hosters, siehe die <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement">Datenschutzerklärung von GitHub</a> (Hoster dieser Seite).</p>
+      <p>Die Seite verabreitet die Daten nur lokal auf dem Gerät und sie werden nirgendwo hingeschickt. Alle Cookies die eingesetzt werden, sind technisch notwendig. Für die Datenschutzerklärung des Hosters, siehe die <a class="cyan-text" href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement">Datenschutzerklärung von GitHub</a> (Hoster dieser Seite).</p>
       <h6><u>Cookies</u></h6>
       <p>Bei der Nutzung unserer Websites werden Cookies auf Ihrem Endgerät gespeichert. Hierbei handelt es sich um kleine Text-Dateien, die von einer Website an den Browser des Nutzers geschickt und von diesem gespeichert werden. In Cookies können unterschiedliche Angaben gespeichert werden, die von der Stelle, die den Cookie setzt, ausgelesen werden können. Sie enthalten in der Regel eine charakteristische Zeichenfolge (ID), die eine eindeutige Identifizierung des Browsers beim erneuten Aufrufen der Website oder einem Seitenwechsel ermöglicht. Sie sind auch nur für bestimmte Dauer vorhanden.</p>
       <p>Es werden zwei Cookies gesetzt und gelesen: einmal eines zum Theme, in dem die Seite dargestellt werden soll und zum anderem, ob der Cookiehnweis schon gezeigt und geschlossen wurde oder nicht.</p>
@@ -692,6 +739,27 @@
       </nav>
     </div>
 
+    <div class="modal" id="berechnung">
+      <h5><u>Berechnung</u></h5>
+      <a target="_blank" href="./berechnung.png">
+        <img class="responsive" src="./berechnung.png" alt="Prozentsätze zur Berechnung der Noten">
+      </a>
+      <p>Quelle: Intranet HföD Bayern; Stand: 2022</p>
+      <nav>
+        <button data-ui="#berechnung"><i>close</i>&nbsp;Schließen</button>
+      </nav>
+    </div>
+
+    <div class="modal" id="findGrades">
+      <h5><u>Noten holen</u></h5>
+      <p>Da die HföD keine API-Schnittstelle für die Noten bieten und CORS-Anfragen nicht unterstützt werden, müssen die Noten leider manuell in die Anwendung übertragen werden. Es wäre mit einem PHP-Skript theoretisch möglich, jedoch möchte ich diese Anwendung auf GitHub hosten, damit klar ist, dass die Daten loakl auf dem Gerät des Nutzers bleiben.</p>
+      <p>Deine Noten von der Hochschule findest du aktuell unter <a class="cyan-text" href="https://wwwint.fhvr-aiv.de/de/studium-vi/pruefungen/persoenliche-punkteliste.html">https://wwwint.fhvr-aiv.de/de/studium-vi/pruefungen/persoenliche-punkteliste.html</a>. Melde dich dafür mit deinem Nutzerprofil von der HföD an und die Liste wird dir angezeigt. Übertrage die Noten dann einfach in die entsprechenden Felder im Rechner. Die Noten für das HföD Semester kriegst du mit deinem Zwischen- und Endzeugnis. Die Noten zur Berechnung des Durchschnitts der Praktikumsnote kriegst du nach einem Praktikum mitgeteilt. Wie kann sich von Behörde zu Behörde unterscheiden.</p>
+      <p>Bei Fragen zu deinen Noten, bitte wende dich an die richtige Stelle bei der HföD, ich bin lediglich ein Verwaltungsinformatikstudent und habe keinerlei Einfluss/Entscheidungsgewalt.</p>
+      <nav>
+        <button data-ui="#findGrades"><i>close</i>&nbsp;Schließen</button>
+      </nav>
+    </div>
+
     <div class="toast green white-text" id="copySuccess">
       <i>done</i>
       <span>Link wurde erfolgreich in die Zwischenablage kopiert.</span>
@@ -699,10 +767,45 @@
 
     <div class="page active absolute center middle" id="loader">
       <div class="absolute center middle">
-        <a class="loader large"></a>
+        <i class="loader large"></i>
       </div>
     </div>
 
     <script src="./script.js" type="module" charset="utf-8"></script>
+
+    <noscript>
+      <div class="fullscreen-overlay">
+        <div class="inner-fullscreen-overlay">
+          <h5 class="red-text">Bitte aktiviere JavaScript um die Seite nutzen zu können.</h5>
+          <h5><u><b>Impressum</b></u></h5>
+          <p>Administrator der Webseite:</p>
+          <p>
+            Albert Traut<br>
+            <a class="cyan-text">vma@ladon.xyz</a>
+          </p>
+          <p>Aktueller Build/Source Code der Seite:</p>
+          <p><a class="cyan-text" href="https://github.com/AlTrAugsburg/VInf-Grade">GitHub Projekt AlTrAugsburg/VInf-Grade</a></p>
+          <p>Lizenzen:</p>
+          <p>Diese Anwendung nutzt Material Icons und Roboto von Google Fonts und das CSS-Framework Beercss, cheers 🍺 Sie sind alle unter der MIT-Lizenz veröffentlicht, welche sich auf der GitHub Seite dieses Projektes befinden.</p>
+          <p>Das Icon ist aus dem Assetpack <a class="cyan-text" href="https://kenney.nl/assets/board-game-info">"Board Game Info"</a> von Kenney, welches unter CC0 lizensiert ist.</p>
+          <h5><u><b>Datenschutzerklärung</b></u></h5>
+          <p>Die Seite verabreitet die Daten nur lokal auf dem Gerät und sie werden nirgendwo hingeschickt. Alle Cookies die eingesetzt werden, sind technisch notwendig. Für die Datenschutzerklärung des Hosters, siehe die <a class="cyan-text" href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement">Datenschutzerklärung von GitHub</a> (Hoster dieser Seite).</p>
+          <h6><u>Cookies</u></h6>
+          <p>Bei der Nutzung unserer Websites werden Cookies auf Ihrem Endgerät gespeichert. Hierbei handelt es sich um kleine Text-Dateien, die von einer Website an den Browser des Nutzers geschickt und von diesem gespeichert werden. In Cookies können unterschiedliche Angaben gespeichert werden, die von der Stelle, die den Cookie setzt, ausgelesen werden können. Sie enthalten in der Regel eine charakteristische Zeichenfolge (ID), die eine eindeutige Identifizierung des Browsers beim erneuten Aufrufen der Website oder einem Seitenwechsel ermöglicht. Sie sind auch nur für bestimmte Dauer vorhanden.</p>
+          <p>Es werden zwei Cookies gesetzt und gelesen: einmal eines zum Theme, in dem die Seite dargestellt werden soll und zum anderem, ob der Cookiehnweis schon gezeigt und geschlossen wurde oder nicht.</p>
+          <h6><u>Local Storage</u></h6>
+          <p>Der Local Storage ähnelt sehr den Cookies, nur das dieser nie an den Server bei einer Anfrage übermittelt wird, sondern immer Cache des Webbrowsers bleibt. Damit verlassen sie nicht das Endgerät. Auch bleiben diese, solange nicht gelöscht, im Cache des Webbrowser im Gegensatz zu Cookies.</p>
+          <p>Diese Anwendung kann, falls gewünscht, die eingetragen Noten im Local Storage speichern und wieder auslesen. Dies ist optional und ist standardmäßig abgewählt. Dies kann auf der Startseite geändert werden.</p>
+          <h6><u>Noch Fragen?</u></h6>
+          <p>Bei Fragen gerne eine Issue auf GitHub erstellen oder eine Mail an <a class="cyan-text" href="mailto:vma@ladon.xyz">vma@ladon.xyz</a> schreiben.</p>
+          <p>Diese Datenschutzerklärung kann sich noch ändern, falls Funktionen dazukommen oder sich ändern.</p>
+        </div>
+      </div>
+      <style>
+       header{
+         display: none;
+       }
+      </style>
+    </noscript>
   </body>
 </html>
