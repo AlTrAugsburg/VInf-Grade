@@ -1,10 +1,10 @@
 import CookieHandler from "./classes/CookieHandler.js"
 import LocalStorageHandler from "./classes/LocalStorageHandler.js"
-import Grades from "./classes/Grades.js"
+import NewGrades from "./classes/NewGrades.js"
 
 const localStorageHandler = new LocalStorageHandler();
 const cookieHandler = new CookieHandler();
-const grades = new Grades(localStorageHandler);
+const grades = new NewGrades(localStorageHandler);
 
 const MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 
@@ -159,6 +159,10 @@ window.checkGrade = function (id) {
 }
 
 window.focusHiddenInput = function (event) {
+  if(document.getElementById("alertModal").classList.contains("active")){
+    //AlertModal ist offen -> ignorieren, da alertModal sonst verschwindet!
+    return;
+  }
   document.getElementById('hiddenSuperImportantInputfield').dispatchEvent(new KeyboardEvent('keydown', {'key': 'a'}));
   //Schauen, ob von einem Inputfeld dorthin fokussiert wird => Nächsten Tab öffnen
   if (event.explicitOriginalTarget.tagName === "INPUT") {
@@ -283,6 +287,7 @@ window.clickedTab = function (tabId) {
       document.getElementById(activeTab).classList.remove("active");
       activeTabPage = tabId;
       activeTab = tabId.substring(0, tabId.length - 1);
+      ui();
     }
   }
 }
@@ -397,9 +402,19 @@ if(window.location.search !== ""){
   else {
     ui("#start");
     ui();
+    ui("#startModal");
+    setTimeout(function () {
+      document.activeElement.blur();
+      document.getElementById("startModalButton").focus();
+    }, 50);
   }
 }
 else {
   ui("#start");
   ui();
+  ui("#startModal");
+  setTimeout(function () {
+    document.activeElement.blur();
+    document.getElementById("startModalButton").focus();
+  }, 50);
 }

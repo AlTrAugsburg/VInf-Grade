@@ -22,7 +22,7 @@
         </div>
         <div class="col">
           <h5 class="no-margin center-align" id="headline"><a href="./index.html">VInf Grade</a></h5>
-          <p class="no-margin small-text center-align">Version 1.0</p>
+          <p class="no-margin small-text center-align">Version 1.1 - Beta</p>
         </div>
         <div class="col min">
           <button onclick="changeMode()">
@@ -49,10 +49,10 @@
         <div class="tabs">
           <a id="tabSemI" href="#" tabindex="0" class="active" onclick="clickedTab('tabSemIp')">1. Semester</a>
           <a id="tabSemII" href="#" tabindex="0" onclick="clickedTab('tabSemIIp')">2. Semester</a>
-          <a id="tabSemIII" href="#" tabindex="0" onclick="clickedTab('tabSemIIIp')">3. Semester</a>
+          <a id="tabSemIII" href="#" tabindex="0" onclick="clickedTab('tabSemIIIp')">1. Teilabschnitt</a>
           <a id="tabSemIV" href="#" tabindex="0" onclick="clickedTab('tabSemIVp')">4. Semster</a>
           <a id="tabSemV" href="#" tabindex="0" onclick="clickedTab('tabSemVp')">5. Semester</a>
-          <a id="tabSemVI" href="#" tabindex="0" onclick="clickedTab('tabSemVIp')">6. Semester</a>
+          <a id="tabSemVI" href="#" tabindex="0" onclick="clickedTab('tabSemVIp')">2. Teilabschnitt</a>
         </div>
 
         <div class="page active" id="tabSemIp">
@@ -79,7 +79,7 @@
           </div>
           <div class="field label border small medium-margin no-margin-bottom">
             <input type="number" max="15" min="0" id="I-6d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-6d')">
-            <label>Englisch (Nebenfach)</label>
+            <label>Englisch (sLn)</label>
           </div>
         </div>
         <div class="page" id="tabSemIIp">
@@ -102,30 +102,30 @@
           </div>
           <div class="field label border small medium-margin">
             <input type="number" max="15" min="0" id="II-5d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-5d')">
-            <label>Computergestützte GP (Nebenfach)</label>
+            <label>Computergestützte GP (sLn)</label>
           </div>
           <div class="field label border small medium-margin no-margin-bottom">
             <input type="number" max="15" min="0" id="II-6d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-6d')">
-            <label>Statistik (Nebenfach)</label>
+            <label>Statistik (sLn)</label>
           </div>
         </div>
         <div class="page" id="tabSemIIIp">
           <h5 class="medium-margin no-margin-top underline">3. Semester</h5>
           <div class="field label border small medium-margin">
-            <input type="number" max="15" min="0" id="III-1d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-1d')">
-            <label>Verwaltung & Grundgesetz (Zw.-prüfung)</label>
+            <input type="number" max="15" min="0" id="III-1d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)||event.key == ','" onblur="checkGrade('III-1d')">
+            <label>Verwaltung & Grundgesetz</label>
           </div>
           <div class="field label border small medium-margin">
-            <input type="number" max="15" min="0" id="III-2d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-2d')">
-            <label>Wirtschaftsprüfung (Zw.-prüfung)</label>
+            <input type="number" max="15" min="0" id="III-2d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)||event.key == ','" onblur="checkGrade('III-2d')">
+            <label>Wirtschaftsprüfung</label>
           </div>
           <div class="field label border small medium-margin">
-            <input type="number" max="15" min="0" id="III-3d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-3d')">
-            <label>Büro Verwaltung (Nebenprüfung)</label>
+            <input type="number" max="15" min="0" id="III-3d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)||event.key == ','" onblur="checkGrade('III-3d')">
+            <label>Büro Verwaltung (sLn)</label>
           </div>
           <div class="field label border small medium-margin no-margin-bottom">
-            <input type="number" max="15" min="0" id="III-4d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-4d')">
-            <label>Privatrecht 1 & 2 (Nebenprüfung)</label>
+            <input type="number" max="15" min="0" id="III-4d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)||event.key == ','" onblur="checkGrade('III-4d')">
+            <label>Privatrecht 1 & 2 (sLn)</label>
           </div>
         </div>
         <div class="page" id="tabSemIVp">
@@ -314,7 +314,7 @@
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="I-6" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-6')">
-              <label>Englisch (Nebenfach)</label>
+              <label>Englisch (sLn)</label>
             </div>
           </div>
         </details>
@@ -349,11 +349,11 @@
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="II-5" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-5')">
-              <label>Computergestützte GP (Nebenfach)</label>
+              <label>Computergestützte GP (sLn)</label>
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="II-6" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-6')">
-              <label>Statistik (Nebenfach)</label>
+              <label>Statistik (sLn)</label>
             </div>
           </div>
         </details>
@@ -361,7 +361,7 @@
           <summary id="semesterIIIsum" class="card border round secondary-container" onfocus="event.target.classList.add('primary-container');event.target.classList.remove('secondary-container')" onblur="event.target.classList.add('secondary-container');event.target.classList.remove('primary-container')" onclick="clickDetails(3)">
             <div class="row no-wrap middle-align">
               <div class="col">
-                <h5 class="no-margin">3. Semester</h5>
+                <h5 class="no-margin">1. Teilabschnitt</h5>
               </div>
               <div class="col min">
                 <i id="III-close">more_vert</i>
@@ -372,19 +372,19 @@
           <div class="card border round transparent">
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="III-1" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-1')">
-              <label>Verwaltung & GG (Zw.-prüfung)</label>
+              <label>Verwaltung & GG</label>
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="III-2" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-2')">
-              <label>Wirtschaftsprüfung (Zw.-prüfung)</label>
+              <label>Wirtschaftsprüfung</label>
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="III-3" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-3')">
-              <label>Büro Verwaltung (Nebenprüfung)</label>
+              <label>Büro Verwaltung (sLn)</label>
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="III-4" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('III-4')">
-              <label>Priv 1 & 2 (Nebenprüfung)</label>
+              <label>Priv 1 & 2 (sLn)</label>
             </div>
           </div>
         </details>
@@ -447,13 +447,13 @@
               <div class="col max">
                 <div class="field label border small no-margin">
                   <input type="number" max="15" min="0" id="IV-7" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-7')">
-                  <label>WebDev I (Nebenfach)</label>
+                  <label>WebDev I (sLn)</label>
                 </div>
               </div>
               <div class="col max">
                 <div class="field label border small no-margin">
                   <input type="number" max="15" min="0" id="IV-8" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-8')">
-                  <label>Betriebssysteme II (Nebenfach)</label>
+                  <label>Betriebssysteme II (sLn)</label>
                 </div>
               </div>
             </div>
@@ -504,13 +504,13 @@
               <div class="col max">
                 <div class="field label border small no-margin">
                   <input type="number" max="15" min="0" id="V-5" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-5')">
-                  <label>Wahlpflichtfach (Nebenfach)</label>
+                  <label>Wahlpflichtfach (sLn)</label>
                 </div>
               </div>
               <div class="col max">
                 <div class="field label border small no-margin">
                   <input type="number" max="15" min="0" id="V-6" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-6')">
-                  <label>Entw.-praktikum (Nebenfach)</label>
+                  <label>Entw.-praktikum (sLn)</label>
                 </div>
               </div>
             </div>
@@ -518,7 +518,7 @@
               <div class="col max">
                 <div class="field label border small no-margin">
                   <input type="number" max="15" min="0" id="V-7" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-7')">
-                  <label>Seminar (Nebenfach)</label>
+                  <label>Seminar (sLn)</label>
                 </div>
               </div>
               <div class="col max">
@@ -538,7 +538,7 @@
           <summary id="semesterVIsum" class="card border round secondary-container" onfocus="event.target.classList.add('primary-container');event.target.classList.remove('secondary-container')" onblur="event.target.classList.add('secondary-container');event.target.classList.remove('primary-container')" onclick="clickDetails(6)">
             <div class="row no-wrap middle-align">
               <div class="col">
-                <h5 class="no-margin">6. Semester</h5>
+                <h5 class="no-margin">2. Teilabschnitt</h5>
               </div>
               <div class="col min">
                 <i id="VI-close">more_vert</i>
@@ -549,19 +549,19 @@
           <div class="card border round transparent">
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="VI-1" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-1')">
-              <label>Datenschutz (Schlussprüfung)</label>
+              <label>Datenschutz</label>
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="VI-2" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-2')">
-              <label>Privat- & Internetrecht (Schlussprüfung)</label>
+              <label>Privat- & Internetrecht</label>
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="VI-3" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-3')">
-              <label>DV-Anwendungen (Schlussprüfung)</label>
+              <label>DV-Anwendungen</label>
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="VI-4" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-4')">
-              <label>Wirtschaftsführung (Nebenprüfung)</label>
+              <label>Wirtschaftsführung (sLn)</label>
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="VI-5" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-5')">
@@ -582,10 +582,10 @@
       <div class="card border round tertiary-container">
         <div class="row no-wrap middle-align">
           <div class="col">
-            <h5 class="no-margin">ZW:&nbsp;&nbsp;<b id="zwgrade">4,0 (5)</b></h5>
+            <h5 class="no-margin">ZW:&nbsp;&nbsp;<b id="zwgrade">4 (5)</b></h5>
           </div>
           <div class="col">
-            <h5 class="no-margin">∑&nbsp;&nbsp;&nbsp;<u><b id="endgrade">4,0 (5)</b></u></h5>
+            <h5 class="no-margin">∑&nbsp;&nbsp;&nbsp;<u><b id="endgrade">4 (5)</b></u></h5>
           </div>
           <div class="col min">
             <button class="border" id="shareButton" type="button" onclick="generateLink();"><i>share</i></button>
@@ -608,12 +608,15 @@
     </div>
 
     <div class="modal" id="about">
+      <h5 class="error-text"><u>Achtung!</u></h5>
+      <p class="error-text">Prüfung der Anwendnung durch Studiengangleitung steht aktuell noch aus!</p>
       <h5><u>Über</u></h5>
       <p>Diese Anwendung ist von einem Verwaltungsinformatiker des Jahrgangs 2019/2022 geschrieben/betreut und aktuell auf diesem Stand. Sollte es eine neue Punkteverteilung geben, gerne ein Issue mit dem entsprechenden Dokument eröffnen. Dann wird sich darum schnellstmöglich gekümmert.</p>
+      <p>Alle Regelungen zum Studiengang befinden sich in der <a class="cyan-text" target="_blank" href="https://www.gesetze-bayern.de/Content/Document/BayFachVVI">FachV-VI</a>.</p>
       <p>Diese Anwendung nutzt Material Icons und Roboto von Google Fonts und das CSS-Framework Beercss, cheers 🍺 Sie sind alle unter der MIT-Lizenz veröffentlicht, welche sich auf der GitHub Seite dieses Projektes befinden.</p>
-      <p>Das Icon ist aus dem Assetpack <a class="cyan-text" href="https://kenney.nl/assets/board-game-info">"Board Game Info"</a> von Kenney, welches unter CC0 lizensiert ist.</p>
+      <p>Das Icon ist aus dem Assetpack <a class="cyan-text" target="_blank" href="https://kenney.nl/assets/board-game-info">"Board Game Info"</a> von Kenney, welches unter CC0 lizensiert ist.</p>
       <h6><u>Haftung von Links</u></h6>
-      <p class="">Diese Seite verlinkt lediglich zum Source Code dieser Seite auf GitHub und der Datenschutzerklärung von GitHub. Die beiden Links werden nicht regelmäßig auf Korrektheit überprüft, ich mache mir den Inhalt der Seiten, auf die die Links zeigen, nicht zu eigen und ich übernehme damit auch keine Haftung für die Inhalte, auf welche sie zeigen.</p>
+      <p class="">Diese Seite verlinkt lediglich zum Source Code dieser Seite auf GitHub, der Datenschutzerklärung von GitHub, der Quelle des Icons, der Notenseite im HföD AIV Intranet, sowie der Online Version der FachV-VI. All diese Links werden nicht regelmäßig auf Korrektheit überprüft, ich mache mir den Inhalt der Seiten, auf die die Links zeigen, nicht zu eigen und ich übernehme damit auch keine Haftung für die Inhalte, auf welche sie zeigen.</p>
       <nav class="l">
         <div class="row no-margin">
           <div class="col s6">
@@ -684,9 +687,9 @@
       <h5><u>Nutzung der Anwendung</u></h5>
       <p>Mit dieser Webanwendung können Sie als Verwaltungsinformatiker Ihre aktuellen und erwarteten Noten eingeben, um sich die Endnote zum Studium berechnen zu lassen.</p>
       <p>Ein leeres Formularfeld wird mit der Note 5 interpretiert, welche   meistens notwendig ist um ein Fach zu bestehen.</p>
-      <p>Fehlerhafte Eingaben, z.B. eine Note kleiner 5 bei einem Fach, welches Bestanden werden muss, wird entsprechenden eine Warnungen ausgegeben, sowie das entsprechende Feld markiert.Bei Nicht-Änderung wird mit dem alten Wert gerechnet.</p>
+      <p>Fehlerhafte Eingaben, z.B. eine Note kleiner 5 bei einem Fach, welches Bestanden werden muss, wird entsprechenden eine Warnungen ausgegeben, sowie das entsprechende Feld markiert. Bei Nicht-Änderung wird mit dem alten Wert gerechnet.</p>
       <p>Die End- und Zwischennote wird mit dem Wechseln des Formularfeldes automatisch berechnet.</p>
-      <p>Wenn statt der End- oder Zwischennote "DG!" steht, ist der Schnitt der Punkte kleiner 5 und man ist durchgefallen.</p>
+      <p>sLn ist kurz für studienbegleitender Leistungsnachweis, i.S.d. § 24 FachV-VI</p>
       <p>Über das "Teilen"-Symbol lässt sich ein Link generieren, welcher die aktuellen, fehlerfreien Daten in der URL verpackt enthält. Mit diesem kann der aktuelle Stand über das Aufrufen des Links gezeigt werden. Jedoch muss bei einer Änderung immer ein neuer Link generiert werden.</p>
       <p id="userinfoNoLocal" class="error-text"><b>Achtung!</b> Die Daten werden nicht gespeichert! Zum Wiederaufrufen der gleichen Daten, bitte den "Teilen"-Button nutzen.</p>
       <p class="hidden" id="userinfoLocal">Daten werden beim wegklicken vom Formularfeld während der Klakulation automatisch lokal gespeichert. Diese können bei erneuten Laden der Seite geladen werden, falls gewünscht.</p>
@@ -741,6 +744,7 @@
 
     <div class="modal" id="berechnung">
       <h5><u>Berechnung</u></h5>
+      <p>Siehe dafür u.a. § 26 FachV-VI: <a class="cyan-text" target="_blank" href="https://www.gesetze-bayern.de/Content/Document/BayFachVVI-26">https://www.gesetze-bayern.de/Content/Document/BayFachVVI-26</a></p>
       <a target="_blank" href="./berechnung.png">
         <img class="responsive" src="./berechnung.png" alt="Prozentsätze zur Berechnung der Noten">
       </a>
@@ -752,8 +756,8 @@
 
     <div class="modal" id="findGrades">
       <h5><u>Noten holen</u></h5>
-      <p>Da die HföD keine API-Schnittstelle für die Noten bieten und CORS-Anfragen nicht unterstützt werden, müssen die Noten leider manuell in die Anwendung übertragen werden. Es wäre mit einem PHP-Skript theoretisch möglich, jedoch möchte ich diese Anwendung auf GitHub hosten, damit klar ist, dass die Daten loakl auf dem Gerät des Nutzers bleiben.</p>
-      <p>Deine Noten von der Hochschule findest du aktuell unter <a class="cyan-text" href="https://wwwint.fhvr-aiv.de/de/studium-vi/pruefungen/persoenliche-punkteliste.html">https://wwwint.fhvr-aiv.de/de/studium-vi/pruefungen/persoenliche-punkteliste.html</a>. Melde dich dafür mit deinem Nutzerprofil von der HföD an und die Liste wird dir angezeigt. Übertrage die Noten dann einfach in die entsprechenden Felder im Rechner. Die Noten für das HföD Semester kriegst du mit deinem Zwischen- und Endzeugnis. Die Noten zur Berechnung des Durchschnitts der Praktikumsnote kriegst du nach einem Praktikum mitgeteilt. Wie kann sich von Behörde zu Behörde unterscheiden.</p>
+      <p>Damit deine sensiblen Notendaten über keinen fremden Server laufen sollen, musst du sie leider manuell eintragen.</p>
+      <p>Deine Noten von der Hochschule findest du aktuell unter <a class="cyan-text" target="_blank" href="https://wwwint.fhvr-aiv.de/de/studium-vi/pruefungen/persoenliche-punkteliste.html">https://wwwint.fhvr-aiv.de/de/studium-vi/pruefungen/persoenliche-punkteliste.html</a>. Melde dich dafür mit deinem Nutzerprofil von der HföD an und die Liste wird dir angezeigt. Übertrage die Noten dann einfach in die entsprechenden Felder im Rechner. Die Noten für das HföD Semester kriegst du mit deinem Zwischen- und Endzeugnis. Die Noten zur Berechnung des Durchschnitts der Praktikumsnote kriegst du nach einem Praktikum mitgeteilt. Wie kann sich von Behörde zu Behörde unterscheiden.</p>
       <p>Bei Fragen zu deinen Noten, bitte wende dich an die richtige Stelle bei der HföD, ich bin lediglich ein Verwaltungsinformatikstudent und habe keinerlei Einfluss/Entscheidungsgewalt.</p>
       <nav>
         <button data-ui="#findGrades"><i>close</i>&nbsp;Schließen</button>
@@ -769,6 +773,25 @@
       <div class="absolute center middle">
         <i class="loader large"></i>
       </div>
+    </div>
+
+    <div class="modal" id="alertModal">
+      <h5><u>Achtung!</u></h5>
+      <p id="alertModalMessage">Die Altermeldung landet hier!</p>
+      <nav>
+        <button id="alertModalButton" data-ui="#alertModal"><i>close</i>&nbsp;Schließen</button>
+      </nav>
+    </div>
+
+    <div class="modal" id="startModal">
+      <h5><u>Achtung!</u></h5>
+      <p>Ich habe mich mit meiner Anwendung an die Studiengangsleitung Verwaltungsinformtatik gewandt und wurde gebeten diese Anwendung nicht weiter zu empfehlen aufgrund von Fehlern in der Berechnung und Benennung von Objekten.</p>
+      <p>Ich danke für die schnelle Antwort und die Verbesserungsvorschläge.</p>
+      <p>Diese Kritik habe ich mir zu Herzen genommen, mich genauer mit der aktuell gültigen FachV-VI auseinander gesetzt und versucht alle Fehler zu entfernen und die Verbesserungsvorschläge umzusätzen. Ich habe eine Bitte um erneute Evaluation losgeschickt und lasse fürs erste diese Warnung drin.</p>
+      <p>Deswegen aktuell Nutzung auf eigene Gefahr und ich garantiere nicht die Richtigkeit der Berechnung. Über eine schnelle Freigabe der Anwendung durch die Studiengangsleitung würde ich mich sehr freuen.</p>
+      <nav>
+        <button id="startModalButton" data-ui="#startModal"><i>close</i>&nbsp;Schließen</button>
+      </nav>
     </div>
 
     <script src="./script.js" type="module" charset="utf-8"></script>
@@ -787,7 +810,10 @@
           <p><a class="cyan-text" href="https://github.com/AlTrAugsburg/VInf-Grade">GitHub Projekt AlTrAugsburg/VInf-Grade</a></p>
           <p>Lizenzen:</p>
           <p>Diese Anwendung nutzt Material Icons und Roboto von Google Fonts und das CSS-Framework Beercss, cheers 🍺 Sie sind alle unter der MIT-Lizenz veröffentlicht, welche sich auf der GitHub Seite dieses Projektes befinden.</p>
-          <p>Das Icon ist aus dem Assetpack <a class="cyan-text" href="https://kenney.nl/assets/board-game-info">"Board Game Info"</a> von Kenney, welches unter CC0 lizensiert ist.</p>
+          <p>Das Icon ist aus dem Assetpack <a class="cyan-text" target="_blank" href="https://kenney.nl/assets/board-game-info">"Board Game Info"</a> von Kenney, welches unter CC0 lizensiert ist.</p>
+          <p>Alle Regelungen zum Studiengang befinden sich in der <a class="cyan-text" target="_blank" href="https://www.gesetze-bayern.de/Content/Document/BayFachVVI">FachV-VI</a>.</p>
+          <h6><u>Haftung von Links</u></h6>
+          <p class="">Diese Seite verlinkt lediglich zum Source Code dieser Seite auf GitHub, der Datenschutzerklärung von GitHub, der Quelle des Icons, der Notenseite im HföD AIV Intranet, sowie der Online Version der FachV-VI. All diese Links werden nicht regelmäßig auf Korrektheit überprüft, ich mache mir den Inhalt der Seiten, auf die die Links zeigen, nicht zu eigen und ich übernehme damit auch keine Haftung für die Inhalte, auf welche sie zeigen.</p>
           <h5><u><b>Datenschutzerklärung</b></u></h5>
           <p>Die Seite verabreitet die Daten nur lokal auf dem Gerät und sie werden nirgendwo hingeschickt. Alle Cookies die eingesetzt werden, sind technisch notwendig. Für die Datenschutzerklärung des Hosters, siehe die <a class="cyan-text" href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement">Datenschutzerklärung von GitHub</a> (Hoster dieser Seite).</p>
           <h6><u>Cookies</u></h6>

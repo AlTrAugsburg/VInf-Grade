@@ -76,10 +76,6 @@ a:focus{
   overflow-y: auto;
 }
 
-#getButton{
-  cursor: not-allowed;
-}
-
 #cookieBanner{
   visibility: hidden;
   position: fixed;
