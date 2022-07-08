@@ -46,9 +46,24 @@ a:focus{
   margin-bottom: 0 !important;
 }
 
+.margin-top{
+  margin-top: 4rem !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.margin-right{
+  margin-right: 24rem !important;
+}
+
 .m .tabs .left-align{
   overflow-y: hidden;
   overflow-x: scroll;
+}
+
+.suffix > .joker.active::after{
+  content: "stars"
 }
 
 /*summary:focus{

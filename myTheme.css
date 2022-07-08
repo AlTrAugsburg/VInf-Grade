@@ -1,4 +1,4 @@
-:root{
+:root,body.light{
   --primary: #006874;
   --on-primary: #ffffff;
   --primary-container: #90f1ff;
@@ -29,7 +29,7 @@
   --active: rgba(0,0,0,.1);
 }
 
-.is-dark{
+body.dark{
   --primary: #4fd8eb;
   --on-primary: #00363d;
   --primary-container: #004f59;

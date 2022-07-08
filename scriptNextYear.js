@@ -1,10 +1,10 @@
 import CookieHandler from "./classes/CookieHandler.js"
 import LocalStorageHandler from "./classes/LocalStorageHandler.js"
-import NewGrades from "./classes/NewGrades.js"
+import GradesNextYears from "./classes/GradesNextYears.js"
 
 const localStorageHandler = new LocalStorageHandler();
 const cookieHandler = new CookieHandler();
-const grades = new NewGrades(localStorageHandler);
+const grades = new GradesNextYears(localStorageHandler);
 
 const MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 
@@ -53,7 +53,7 @@ window.getGrades = function () {
 
 window.manuellGrades = function () {
   //Warnung beim verlassen soll nur kommen, wenn nicht lokal gespeichert wird
-  if(grades.saveLocal&&localStorageHandler.hasGradesMapLocal()){
+  if(grades.saveLocal&&localStorageHandler.hasGradesMapLocalN()){
     if(!confirm("Wenn sie fortfahren, werden alle lokal gespeicherten Daten gelöscht. Fortfahren?")){
       document.getElementById("manuellButton").blur();
       return;
@@ -329,7 +329,7 @@ window.changeSaveLocal = function () {
 }
 
 //Schauen, ob Daten lokal vorhanden sind
-if(localStorageHandler.hasGradesMapLocal()){
+if(localStorageHandler.hasGradesMapLocalN()){
   //Button zum Laden der Daten zeigen
   document.getElementById("loadFromLocalButton").classList.remove("hidden");
   document.getElementById("manuellTempButton").classList.remove("hidden");

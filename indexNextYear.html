@@ -21,8 +21,8 @@
           </button>
         </div>
         <div class="col">
-          <h5 class="no-margin center-align" id="headline"><a href="./index.html">VInf Grade</a></h5>
-          <p class="no-margin small-text center-align">Version 1.1 - Beta</p>
+          <h5 class="no-margin center-align" id="headline"><a href="./indexNextYear.html">VInf Grade</a></h5>
+          <p class="no-margin small-text center-align">Version 2.0 - Beta</p>
         </div>
         <div class="col min">
           <button onclick="changeMode()">
@@ -41,8 +41,8 @@
       <button type="button" onclick="manuellGrades()" id="manuellButton"><i>edit</i>&nbsp;Noten manuell eingeben</button>
       <button class="hidden" type="button" onclick="manuellGradesTemp()" id="manuellTempButton"><i>edit_off</i>&nbsp;Noten manuell eingeben (Ohne Speichern)</button>
       <button class="secondary-container" id="changeSaveLocalButton" type="button" onclick="changeSaveLocal()"><i id="saveLocalFalse">close</i><i class="hidden" id="saveLocalTrue">check</i>&nbsp;Noten lokal speichern</button>
-      <p class="small-text">Aktueller Stand: Jahrgang 2019/2022, 2020/2023</p>
-      <a class="button secondary-container" href="indexNextYear.html"><i>autorenew</i>&nbsp;Zum neuen Rechner wechseln (Not final)</a>
+      <p class="small-text">Rechner ab Jahrgang 2021/2024</p>
+      <a class="button secondary-container" href="index.html"><i>autorenew</i>&nbsp;Zum alten Rechner wechseln</a>
     </div>
 
     <div id="calculator" class="page right absolute top large-margin">
@@ -57,61 +57,87 @@
         </div>
 
         <div class="page active" id="tabSemIp">
-          <h5 class="medium-margin no-margin-top underline">1. Semester</h5>
-          <div class="field label border small medium-margin">
+          <div class="row">
+            <div class="col s4">
+              <h5 class="large-margin no-margin-bottom no-margin-top underline min">1. Semester</h5>
+            </div>
+            <div class="col s8">
+              <h5 class="right-align margin-right no-margin-bottom">Joker Zwischenprüfung: <pl id="jokerLeftScope1-1">2</pl>/2</h5>
+            </div>
+          </div>
+          <div class="field label border small suffix medium-margin">
             <input type="number" max="15" min="0" id="I-1d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-1d')">
             <label>Grundlagen der Rechnertechnik</label>
+            <i class="joker"></i>
           </div>
-          <div class="field label border small medium-margin">
+          <div class="field label border small suffix medium-margin">
             <input type="number" max="15" min="0" id="I-2d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-2d')">
             <label>OOP I</label>
+            <i class="joker"></i>
           </div>
-          <div class="field label border small medium-margin">
+          <div class="field label border small suffix medium-margin">
             <input type="number" max="15" min="0" id="I-3d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-3d')">
             <label>Betriebssysteme I</label>
+            <i class="joker"></i>
           </div>
-          <div class="field label border small medium-margin">
+          <div class="field label border small suffix medium-margin">
             <input type="number" max="15" min="0" id="I-4d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-4d')">
             <label>Diskrete Mathematik</label>
+            <i class="joker"></i>
           </div>
-          <div class="field label border small medium-margin">
+          <div class="field label border small suffix medium-margin">
             <input type="number" max="15" min="0" id="I-5d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-5d')">
             <label>Grundlagen der Informatik</label>
+            <i class="joker"></i>
           </div>
-          <div class="field label border small medium-margin no-margin-bottom">
+          <div class="field label border small suffix medium-margin no-margin-bottom">
             <input type="number" max="15" min="0" id="I-6d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-6d')">
-            <label>Englisch (sLn)</label>
+            <label>Englisch</label>
+            <i class="joker"></i>
           </div>
         </div>
         <div class="page" id="tabSemIIp">
-          <h5 class="medium-margin no-margin-top underline">2. Semester</h5>
-          <div class="field label border small medium-margin no-margin-top">
+          <div class="row">
+            <div class="col s4">
+              <h5 class="large-margin no-margin-bottom no-margin-top underline min">2. Semester</h5>
+            </div>
+            <div class="col s8">
+              <h5 class="right-align margin-right no-margin-bottom">Joker Zwischenprüfung: <pl id="jokerLeftScope1-2">2</pl>/2</h5>
+            </div>
+          </div>
+          <div class="field label border small suffix medium-margin">
             <input type="number" max="15" min="0" id="II-1d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-1d')">
             <label>Rechnernetzwerke I</label>
+            <i class="joker"></i>
           </div>
-          <div class="field label border small medium-margin">
+          <div class="field label border small suffix medium-margin">
             <input type="number" max="15" min="0" id="II-2d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-2d')">
             <label>Software Engineering I</label>
+            <i class="joker"></i>
           </div>
-          <div class="field label border small medium-margin">
+          <div class="field label border small suffix medium-margin">
             <input type="number" max="15" min="0" id="II-3d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-3d')">
             <label>OOP II</label>
+            <i class="joker"></i>
           </div>
-          <div class="field label border small medium-margin">
+          <div class="field label border small suffix medium-margin">
             <input type="number" max="15" min="0" id="II-4d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-4d')">
             <label>Datenbanken I</label>
+            <i class="joker"></i>
           </div>
-          <div class="field label border small medium-margin">
+          <div class="field label border small suffix medium-margin">
             <input type="number" max="15" min="0" id="II-5d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-5d')">
-            <label>Computergestützte GP (sLn)</label>
+            <label>Computergestützte GP</label>
+            <i class="joker"></i>
           </div>
-          <div class="field label border small medium-margin no-margin-bottom">
+          <div class="field label border small suffix medium-margin no-margin-bottom">
             <input type="number" max="15" min="0" id="II-6d" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-6d')">
-            <label>Statistik (sLn)</label>
+            <label>Statistik</label>
+            <i class="joker"></i>
           </div>
         </div>
         <div class="page" id="tabSemIIIp">
-          <h5 class="medium-margin no-margin-top underline">3. Semester</h5>
+          <h5 class="medium-margin no-margin-top underline no-margin-bottom">3. Semester</h5>
           <div class="field label border small medium-margin">
             <input type="number" max="15" min="0" id="III-1d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)||event.key == ','" onblur="checkGrade('III-1d')">
             <label>Verwaltung & Grundgesetz</label>
@@ -122,113 +148,119 @@
           </div>
           <div class="field label border small medium-margin">
             <input type="number" max="15" min="0" id="III-3d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)||event.key == ','" onblur="checkGrade('III-3d')">
-            <label>Büro Verwaltung (sLn)</label>
-          </div>
-          <div class="field label border small medium-margin no-margin-bottom">
-            <input type="number" max="15" min="0" id="III-4d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)||event.key == ','" onblur="checkGrade('III-4d')">
-            <label>Privatrecht 1 & 2 (sLn)</label>
+            <label>Büro Verwaltung</label>
           </div>
         </div>
         <div class="page" id="tabSemIVp">
-          <h5 class="medium-margin no-margin-top underline">4. Semester</h5>
+          <div class="row">
+            <div class="col s4">
+              <h5 class="large-margin no-margin-bottom no-margin-top underline min">4. Semester</h5>
+            </div>
+            <div class="col s8">
+              <h5 class="right-align margin-right no-margin-bottom">Joker Qualifikationsprüfung: <pl id="jokerLeftScope2-1">2</pl>/2</h5>
+            </div>
+          </div>
           <div class="row no-wrap medium-margin">
-            <div class="col max padding-left-row">
-              <div class="field label border small no-margin">
+            <div class="col max">
+              <div class="field label border small suffix no-margin">
                 <input type="number" max="15" min="0" id="IV-1d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-1d')">
-                <label>Rechnernetzwerke II</label>
-              </div>
-            </div>
-            <div class="col max padding-right-row">
-              <div class="field label border small no-margin">
-                <input type="number" max="15" min="0" id="IV-2d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-2d')">
-                <label>Algodat</label>
+                <label>Semester 4 Fach 1</label>
+                <i class="joker"></i>
               </div>
             </div>
           </div>
           <div class="row no-wrap medium-margin">
-            <div class="col max padding-left-row">
-              <div class="field label border small no-margin">
-                <input type="number" max="15" min="0" id="IV-3d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-3d')">
-                <label>Betriebssysteme II</label>
-              </div>
-            </div>
-            <div class="col max padding-right-row">
-              <div class="field label border small no-margin">
-                <input type="number" max="15" min="0" id="IV-4d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-4d')">
-                <label>WebDev I</label>
+            <div class="col max">
+              <div class="field label border small suffix no-margin">
+                <input type="number" max="15" min="0" id="IV-2d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-3d')">
+                <label>Semester 4 Fach 2</label>
+                <i class="joker"></i>
               </div>
             </div>
           </div>
           <div class="row no-wrap medium-margin">
-            <div class="col max padding-left-row">
-              <div class="field label border small no-margin">
-                <input type="number" max="15" min="0" id="IV-5d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-5d')">
-                <label>Formale Sprachen</label>
-              </div>
-            </div>
-            <div class="col max padding-right-row">
-              <div class="field label border small no-margin">
-                <input type="number" max="15" min="0" id="IV-6d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-6d')">
-                <label>Geschäftsprozessmodellierung</label>
+            <div class="col max">
+              <div class="field label border small suffix no-margin">
+                <input type="number" max="15" min="0" id="IV-3d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-5d')">
+                <label>Semester 4 Fach 3</label>
+                <i class="joker"></i>
               </div>
             </div>
           </div>
           <div class="row no-wrap medium-margin no-margin-bottom">
-            <div class="col max padding-left-row">
-              <div class="field label border small no-margin">
-                <input type="number" max="15" min="0" id="IV-7d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-7d')">
-                <label>WebDev I (Nebenfach)</label>
+            <div class="col max">
+              <div class="field label border small suffix no-margin">
+                <input type="number" max="15" min="0" id="IV-4d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-7d')">
+                <label>Semester 4 Fach 4</label>
+                <i class="joker"></i>
               </div>
             </div>
-            <div class="col max padding-right-row">
-              <div class="field label border small no-margin">
-                <input type="number" max="15" min="0" id="IV-8d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-8d')">
-                <label>Betriebssysteme II (Nebenfach)</label>
-              </div>
-            </div>
+          </div>
+          <div class="field label border small suffix medium-margin">
+            <input type="number" max="15" min="0" id="IV-5d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)||event.key == ','" onblur="checkGrade('III-3d')">
+            <label>Semester 4 Fach 5</label>
+            <i class="joker"></i>
+          </div>
+          <div class="field label border small suffix medium-margin">
+            <input type="number" max="15" min="0" id="IV-6d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)||event.key == ','" onblur="checkGrade('III-3d')">
+            <label>Semester 4 Fach 6</label>
+            <i class="joker"></i>
           </div>
         </div>
         <div class="page" id="tabSemVp">
-          <h5 class="medium-margin no-margin-top underline">5. Semester</h5>
+          <div class="row">
+            <div class="col s4">
+              <h5 class="large-margin no-margin-bottom no-margin-top underline min">5. Semester</h5>
+            </div>
+            <div class="col s8">
+              <h5 class="right-align margin-right no-margin-bottom">Joker Qualifikationsprüfung: <pl id="jokerLeftScope2-2">2</pl>/2</h5>
+            </div>
+          </div>
           <div class="row no-wrap medium-margin">
             <div class="col max padding-left-row">
-              <div class="field label border small no-margin">
+              <div class="field label border small suffix no-margin">
                 <input type="number" max="15" min="0" id="V-1d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-1d')">
-                <label>WebDev II</label>
+                <label>Semester 5 Fach 1</label>
+                <i class="joker"></i>
               </div>
             </div>
             <div class="col max padding-right-row">
-              <div class="field label border small no-margin">
+              <div class="field label border small suffix no-margin">
                 <input type="number" max="15" min="0" id="V-2d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-2d')">
-                <label>Software Engineering II</label>
+                <label>Semester 5 Fach 2</label>
+                <i class="joker"></i>
               </div>
             </div>
           </div>
           <div class="row no-wrap medium-margin">
             <div class="col max padding-left-row">
-              <div class="field label border small no-margin">
+              <div class="field label border small suffix no-margin">
                 <input type="number" max="15" min="0" id="V-3d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-3d')">
-                <label>C/C++</label>
+                <label>Semester 5 Fach 3</label>
+                <i class="joker"></i>
               </div>
             </div>
             <div class="col max padding-right-row">
-              <div class="field label border small no-margin">
+              <div class="field label border small suffix no-margin">
                 <input type="number" max="15" min="0" id="V-4d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-4d')">
-                <label>Datenbanken II</label>
+                <label>Semester 5 Fach 4</label>
+                <i class="joker"></i>
               </div>
             </div>
           </div>
           <div class="row no-wrap medium-margin">
             <div class="col max padding-left-row">
-              <div class="field label border small no-margin">
+              <div class="field label border small suffix no-margin">
                 <input type="number" max="15" min="0" id="V-5d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-5d')">
-                <label>Wahlpflichtfach (Nebenfach)</label>
+                <label>Wahlpflichtfach</label>
+                <i class="joker"></i>
               </div>
             </div>
             <div class="col max padding-right-row">
-              <div class="field label border small no-margin">
+              <div class="field label border small suffix no-margin">
                 <input type="number" max="15" min="0" id="V-6d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-6d')">
-                <label>Entw.-praktikum (Nebenfach)</label>
+                <label>Semester 5 Fach 6</label>
+                <i class="joker"></i>
               </div>
             </div>
           </div>
@@ -236,13 +268,13 @@
             <div class="col max padding-left-row">
               <div class="field label border small no-margin">
                 <input type="number" max="15" min="0" id="V-7d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-7d')">
-                <label>Seminar (Nebenfach)</label>
+                <label>Seminar(?)//Aktuell ohne Funktion</label>
               </div>
             </div>
             <div class="col max padding-right-row">
               <div class="field label border small no-margin">
                 <input type="number" max="15" min="0" id="V-8d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-8d')">
-                <label>Studienarbeit</label>
+                <label>Hausarbeit</label>
               </div>
             </div>
           </div>
@@ -252,22 +284,22 @@
           </div>
         </div>
         <div class="page" id="tabSemVIp">
-          <h5 class="medium-margin no-margin-top underline">6. Semester</h5>
+          <h5 class="medium-margin no-margin-top no-margin-bottom underline">6. Semester</h5>
           <div class="field label border small medium-margin">
             <input type="number" max="15" min="0" id="VI-1d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-1d')">
-            <label>Datenschutz (Schlussprüfung)</label>
+            <label>Datenschutz</label>
           </div>
           <div class="field label border small medium-margin">
             <input type="number" max="15" min="0" id="VI-2d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-2d')">
-            <label>Privat- & Internetrecht (Schlussprüfung)</label>
+            <label>Privat- & Internetrecht</label>
           </div>
           <div class="field label border small medium-margin">
             <input type="number" max="15" min="0" id="VI-3d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-3d')">
-            <label>DV-Anwendungen (Schlussprüfung)</label>
+            <label>DV-Anwendungen</label>
           </div>
           <div class="field label border small medium-margin">
             <input type="number" max="15" min="0" id="VI-4d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-4d')">
-            <label>Wirtschaftsführung (Nebenprüfung)</label>
+            <label>Wirtschaftsführung </label>
           </div>
           <div class="field label border small medium-margin">
             <input type="number" max="15" min="0" id="VI-5d" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('VI-5d')">
@@ -286,6 +318,9 @@
               <div class="col">
                 <h5 class="no-margin">1. Semester</h5>
               </div>
+              <!--<div class="col min">
+                <h5 class="no-margin primary-text"><p class="no-margin" id="leftoverJokersSemesterI">2</p>/2</h5>
+              </div>-->
               <div class="col min">
                 <i id="I-close">more_vert</i>
                 <i id="I-open" class="hidden">more_horiz</i>
@@ -293,29 +328,35 @@
             </div>
           </summary>
           <div class="card border round transparent">
-            <div class="field label border small no-margin">
+            <div class="field label border small suffix no-margin">
               <input type="number" max="15" min="0" id="I-1" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-1')">
               <label>GdR</label>
+              <i class="joker"></i>
             </div>
-            <div class="field label border small no-margin">
+            <div class="field label border small suffix no-margin">
               <input type="number" max="15" min="0" id="I-2" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-2')">
               <label>OOP I</label>
+              <i class="joker"></i>
             </div>
-            <div class="field label border small no-margin">
+            <div class="field label border small suffix no-margin">
               <input type="number" max="15" min="0" id="I-3" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-3')">
               <label>Betriebssysteme I</label>
+              <i class="joker"></i>
             </div>
-            <div class="field label border small no-margin">
+            <div class="field label border small suffix no-margin">
               <input type="number" max="15" min="0" id="I-4" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-4')">
               <label>Diskrete Mathematik</label>
+              <i class="joker"></i>
             </div>
-            <div class="field label border small no-margin">
+            <div class="field label border small suffix no-margin">
               <input type="number" max="15" min="0" id="I-5" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-5')">
               <label>Grundlagen der Informatik</label>
+              <i class="joker"></i>
             </div>
-            <div class="field label border small no-margin">
+            <div class="field label border small suffix no-margin">
               <input type="number" max="15" min="0" id="I-6" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('I-6')">
-              <label>Englisch (sLn)</label>
+              <label>Englisch</label>
+              <i class="joker"></i>
             </div>
           </div>
         </details>
@@ -325,6 +366,9 @@
               <div class="col">
                 <h5 class="no-margin">2. Semester</h5>
               </div>
+              <!--<div class="col min">
+                <h5 class="no-margin primary-text"><p class="no-margin" id="leftoverJokersSemesterII">2</p>/2</h5>
+              </div>-->
               <div class="col min">
                 <i id="II-close">more_vert</i>
                 <i id="II-open" class="hidden">more_horiz</i>
@@ -332,29 +376,35 @@
             </div>
           </summary>
           <div class="card border round transparent">
-            <div class="field label border small no-margin">
+            <div class="field label border small suffix no-margin">
               <input type="number" max="15" min="0" id="II-1" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-1')">
               <label>Rechnernetzwerke I</label>
+              <i class="joker"></i>
             </div>
-            <div class="field label border small no-margin">
+            <div class="field label border small suffix no-margin">
               <input type="number" max="15" min="0" id="II-2" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-2')">
               <label>Software Engineering I</label>
+              <i class="joker"></i>
             </div>
-            <div class="field label border small no-margin">
+            <div class="field label border small suffix no-margin">
               <input type="number" max="15" min="0" id="II-3" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-3')">
               <label>OOP II</label>
+              <i class="joker"></i>
             </div>
-            <div class="field label border small no-margin">
+            <div class="field label border small suffix no-margin">
               <input type="number" max="15" min="0" id="II-4" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-4')">
               <label>Datenbanken I</label>
+              <i class="joker"></i>
             </div>
-            <div class="field label border small no-margin">
+            <div class="field label border small suffix no-margin">
               <input type="number" max="15" min="0" id="II-5" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-5')">
-              <label>Computergestützte GP (sLn)</label>
+              <label>Computergestützte GP</label>
+              <i class="joker"></i>
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="II-6" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('II-6')">
-              <label>Statistik (sLn)</label>
+              <label>Statistik</label>
+              <i class="joker"></i>
             </div>
           </div>
         </details>
@@ -381,11 +431,7 @@
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="III-3" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)||event.key == ','" onblur="checkGrade('III-3')">
-              <label>Büro Verwaltung (sLn)</label>
-            </div>
-            <div class="field label border small no-margin">
-              <input type="number" max="15" min="0" id="III-4" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)||event.key == ','" onblur="checkGrade('III-4')">
-              <label>Priv 1 & 2 (sLn)</label>
+              <label>Büro Verwaltung</label>
             </div>
           </div>
         </details>
@@ -395,6 +441,9 @@
               <div class="col">
                 <h5 class="no-margin">4. Semester</h5>
               </div>
+              <!--<div class="col min">
+                <h5 class="no-margin tertiary-text"><p class="no-margin" id="leftoverJokersSemesterIV">2</p>/2</h5>
+              </div>-->
               <div class="col min">
                 <i id="IV-close">more_vert</i>
                 <i id="IV-open" class="hidden">more_horiz</i>
@@ -402,61 +451,51 @@
             </div>
           </summary>
           <div class="card border round transparent">
-            <div class="row no-wrap">
-              <div class="col max">
-                <div class="field label border small no-margin">
+            <div class="row no-wrap no-margin">
+              <div class="col max no-padding">
+                <div class="field label border small suffix no-margin">
                   <input type="number" max="15" min="0" id="IV-1" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-1')">
-                  <label>Rechnernetzwerke II</label>
+                  <label>Semester 4 Fach 1</label>
+                  <i class="joker"></i>
                 </div>
               </div>
-              <div class="col max">
-                <div class="field label border small no-margin">
+            </div>
+            <div class="row no-wrap no-margin">
+              <div class="col max no-padding">
+                <div class="field label border small suffix no-margin">
                   <input type="number" max="15" min="0" id="IV-2" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-2')">
-                  <label>Algodat</label>
+                  <label>Semester 4 Fach 2</label>
+                  <i class="joker"></i>
                 </div>
               </div>
             </div>
-            <div class="row no-wrap">
-              <div class="col max">
-                <div class="field label border small no-margin">
+            <div class="row no-wrap no-margin">
+              <div class="col max no-padding">
+                <div class="field label border small suffix no-margin">
                   <input type="number" max="15" min="0" id="IV-3" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-3')">
-                  <label>Betriebssysteme II</label>
+                  <label>Semester 4 Fach 3</label>
+                  <i class="joker"></i>
                 </div>
               </div>
-              <div class="col max">
-                <div class="field label border small no-margin">
+            </div>
+            <div class="row no-wrap no-margin">
+              <div class="col max no-padding">
+                <div class="field label border small suffix no-margin">
                   <input type="number" max="15" min="0" id="IV-4" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-4')">
-                  <label>WebDev I</label>
+                  <label>Semester 4 Fach 4</label>
+                  <i class="joker"></i>
                 </div>
               </div>
             </div>
-            <div class="row no-wrap">
-              <div class="col max">
-                <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="IV-5" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-5')">
-                  <label>Formale Sprachen</label>
-                </div>
-              </div>
-              <div class="col max">
-                <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="IV-6" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-6')">
-                  <label>GP.-modellierung</label>
-                </div>
-              </div>
+            <div class="field label border small suffix no-margin">
+              <input type="number" max="15" min="0" id="IV-5" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-5')">
+              <label>Semester 4 Fach 5</label>
+              <i class="joker"></i>
             </div>
-            <div class="row no-wrap">
-              <div class="col max">
-                <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="IV-7" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-7')">
-                  <label>WebDev I (sLn)</label>
-                </div>
-              </div>
-              <div class="col max">
-                <div class="field label border small no-margin">
-                  <input type="number" max="15" min="0" id="IV-8" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-8')">
-                  <label>Betriebssysteme II (sLn)</label>
-                </div>
-              </div>
+            <div class="field label border small suffix no-margin">
+              <input type="number" max="15" min="0" id="IV-6" onpaste="return false;" ondrop="return false;" onkeypress="return !isNaN(event.key)" onblur="checkGrade('IV-6')">
+              <label>Semester 4 Fach 6</label>
+              <i class="joker"></i>
             </div>
           </div>
         </details>
@@ -466,6 +505,9 @@
               <div class="col">
                 <h5 class="no-margin">5. Semester</h5>
               </div>
+              <!--<div class="col min">
+                <h5 class="no-margin tertiary-text"><p class="no-margin" id="leftoverJokersSemesterV">2</p>/2</h5>
+              </div>-->
               <div class="col min">
                 <i id="V-close">more_vert</i>
                 <i id="V-open" class="hidden">more_horiz</i>
@@ -475,43 +517,49 @@
           <div class="card border round transparent">
             <div class="row no-wrap">
               <div class="col max">
-                <div class="field label border small no-margin">
+                <div class="field label border small suffix no-margin">
                   <input type="number" max="15" min="0" id="V-1" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-1')">
-                  <label>WebDev II</label>
+                  <label>Fach 1</label>
+                  <i class="joker"></i>
                 </div>
               </div>
               <div class="col max">
-                <div class="field label border small no-margin">
+                <div class="field label border small suffix no-margin">
                   <input type="number" max="15" min="0" id="V-2" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-2')">
-                  <label>Software Engineering II</label>
+                  <label>Fach 2</label>
+                  <i class="joker"></i>
                 </div>
               </div>
             </div>
             <div class="row no-wrap">
               <div class="col max">
-                <div class="field label border small no-margin">
+                <div class="field label border small suffix no-margin">
                   <input type="number" max="15" min="0" id="V-3" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-3')">
-                  <label>C/C++</label>
+                  <label>Fach 3</label>
+                  <i class="joker"></i>
                 </div>
               </div>
               <div class="col max">
-                <div class="field label border small no-margin">
+                <div class="field label border small suffix no-margin">
                   <input type="number" max="15" min="0" id="V-4" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-4')">
-                  <label>Datenbanken II</label>
+                  <label>Fach 4</label>
+                  <i class="joker"></i>
                 </div>
               </div>
             </div>
             <div class="row no-wrap">
               <div class="col max">
-                <div class="field label border small no-margin">
+                <div class="field label border small suffix no-margin">
                   <input type="number" max="15" min="0" id="V-5" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-5')">
-                  <label>Wahlpflichtfach (sLn)</label>
+                  <label>Wahlpflichtfach</label>
+                  <i class="joker"></i>
                 </div>
               </div>
               <div class="col max">
-                <div class="field label border small no-margin">
+                <div class="field label border small suffix no-margin">
                   <input type="number" max="15" min="0" id="V-6" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-6')">
-                  <label>Entw.-praktikum (sLn)</label>
+                  <label>Fach 6</label>
+                  <i class="joker"></i>
                 </div>
               </div>
             </div>
@@ -519,7 +567,7 @@
               <div class="col max">
                 <div class="field label border small no-margin">
                   <input type="number" max="15" min="0" id="V-7" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)" onblur="checkGrade('V-7')">
-                  <label>Seminar (sLn)</label>
+                  <label>Seminar(?)</label>
                 </div>
               </div>
               <div class="col max">
@@ -562,7 +610,7 @@
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="VI-4" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)||event.key == ','" onblur="checkGrade('VI-4')">
-              <label>Wirtschaftsführung (sLn)</label>
+              <label>Wirtschaftsführung</label>
             </div>
             <div class="field label border small no-margin">
               <input type="number" max="15" min="0" id="VI-5" onpaste="return false;" ondrop="return false;" onfocus="" onkeypress="return !isNaN(event.key)||event.key == ','" onblur="checkGrade('VI-5')">
@@ -581,12 +629,25 @@
       </div>
 
       <div class="card border round tertiary-container">
-        <div class="row no-wrap middle-align">
+        <div class="row no-wrap middle-align s">
           <div class="col">
-            <h5 class="no-margin">ZW:&nbsp;&nbsp;<b id="zwgrade">4 (5)</b></h5>
+            <p class="no-margin large-text">ZW:&nbsp;&nbsp;<b id="zwgrade">4 (5)</b></p>
+            <p class="margin-top">Joker: <pl id="jokerLeftScope1">2</pl>/2</p>
           </div>
           <div class="col">
-            <h5 class="no-margin">∑&nbsp;&nbsp;&nbsp;<u><b id="endgrade">4 (5)</b></u></h5>
+            <p class="no-margin large-text">∑&nbsp;&nbsp;&nbsp;<u><b id="endgrade">4 (5)</b></u></p>
+            <p class="margin-top">Joker: <pl id="jokerLeftScope2">2</pl>/2</p>
+          </div>
+          <div class="col min">
+            <button class="border" id="shareButton" type="button" onclick="generateLink();"><i>share</i></button>
+          </div>
+        </div>
+        <div class="row no-margin no-wrap middle-align m l">
+          <div class="col">
+            <h5 class="no-margin">ZW:&nbsp;&nbsp;<b id="zwgradeD">4 (5)</b></h5>
+          </div>
+          <div class="col">
+            <h5 class="no-margin">∑&nbsp;&nbsp;&nbsp;<u><b id="endgradeD">4 (5)</b></u></h5>
           </div>
           <div class="col min">
             <button class="border" id="shareButton" type="button" onclick="generateLink();"><i>share</i></button>
@@ -790,12 +851,13 @@
       <p>Ich danke für die schnelle Antwort und die Verbesserungsvorschläge.</p>
       <p>Diese Kritik habe ich mir zu Herzen genommen, mich genauer mit der aktuell gültigen FachV-VI auseinander gesetzt und versucht alle Fehler zu entfernen und die Verbesserungsvorschläge umzusätzen. Ich habe eine Bitte um erneute Evaluation losgeschickt und lasse fürs erste diese Warnung drin.</p>
       <p>Deswegen aktuell Nutzung auf eigene Gefahr und ich garantiere nicht die Richtigkeit der Berechnung. Über eine schnelle Freigabe der Anwendung durch die Studiengangsleitung würde ich mich sehr freuen.</p>
+      <p class="error-text">Bitte beachten: Dieser Teil der Anwendung befindet sich noch in der Entwicklung und ist in keinsterweise final. Bitte aktuell nicht auf die Ergebnisse in diesem Teil verlassen! Auc bitte keine Ergebnisse hier importieren, da die Daten noch nicht unterschieden werden. Ich bitte um Verständnis.</p>
       <nav>
         <button id="startModalButton" data-ui="#startModal"><i>close</i>&nbsp;Schließen</button>
       </nav>
     </div>
 
-    <script src="./script.js" type="module" charset="utf-8"></script>
+    <script src="./scriptNextYear.js" type="module" charset="utf-8"></script>
 
     <noscript>
       <div class="fullscreen-overlay">

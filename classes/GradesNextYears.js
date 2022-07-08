@@ -1,54 +1,53 @@
-//Liste der erlaubten Feldernamen
-const allowedSandFn = ["I-1", "I-2", "I-3", "I-4", "I-5", "I-6", "II-1", "II-2", "II-3", "II-4", "II-5", "II-6", "III-1", "III-2", "III-3", "III-4", "IV-1", "IV-2", "IV-3", "IV-4", "IV-5", "IV-6", "IV-7", "IV-8", "V-1", "V-2", "V-3", "V-4", "V-5", "V-6", "V-7", "V-8", "V-9", "VI-1", "VI-2", "VI-3", "VI-4", "VI-5", "VI-P"];
-//Gibt an, ob man in dem Fach weniger als 5 Punkte haben darf
-const allowedToFail = [false, false, false, false, false, true, false, false, false, false, true, true, true, true, true, true, false, false, false, false, false, false, true, true, false, false, false, false, true, true, true, true, false, true, true, true, true, true, true];
+//Liste der erlaubten Feldernamen (V-7/Seminar entfernen?)
+const allowedSandFn = ["I-1", "I-2", "I-3", "I-4", "I-5", "I-6", "II-1", "II-2", "II-3", "II-4", "II-5", "II-6", "III-1", "III-2", "III-3", "IV-1", "IV-2", "IV-3", "IV-4", "IV-5", "IV-6", "V-1", "V-2", "V-3", "V-4", "V-5", "V-6", /*"V-7",*/ "V-8", "V-9", "VI-1", "VI-2", "VI-3", "VI-4", "VI-5", "VI-P"];
+
+//Bereich für die ersten zwei "Joker"
+const jokerScope1 = ["I-1", "I-2", "I-3", "I-4", "I-5", "I-6", "II-1", "II-2", "II-3", "II-4", "II-5", "II-6"];
+//Bereich für die zweiten zwei "Joker"
+const jokerScope2 = ["IV-1", "IV-2", "IV-3", "IV-4", "IV-5", "IV-6", "V-1", "V-2", "V-3", "V-4", "V-5", "V-6"];
+//Spezielle Regeln für V-8, V-9, VI-5 und VI-P: Man darf dort überall durchfallen, solange Endnote mindestens Noenpunktzahl 5
+//Leistungsnachweise und schriftliche Prüfungen an der HföD, welche man nur mit Durchschnitt von 5 bestehen muss
+const sharedFailRules19_22 = [[12, 13, 14], [29, 30, 31, 32]];
+
 //Wenn Punktzahl kleiner als die Zahl dann Note = Index+1
 const smallerThanFinalGrade = [15.01, 13.5, 11, 8, 5, 2];
-//Leistungsnachweise und schriftliche Prüfungen an der HföD, welche man nur mit Durchschnitt von 5 bestehen muss
-const sharedFailRules19_22 = [[5, 10, 11], [12, 13], [22, 23, 28, 29, 30], [33, 34, 35]];
-//Konstante, welche die Noten gruppiert für die Berechnung der ZW (Index von allowedSandFn)
+
 const gradeGroupsAndFaktorZW = [
   //schriftlichen Prüfungsarbeiten des ersten Teils der Zwischenprüfung
-  [[0, 1, 2, 3, 4, 6, 7, 8, 9], 66],
+  [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 70],
   //schriftlichen Prüfungsarbeiten des zweiten Teils der Zwischenprüfung
-  [[12, 13], 22],
-  //der studienbegleitenden Leistungsnachweise im Grundstudium gemäß § 5 Abs. 2 Nr. 2
-  [[5, 10, 11], 8],
-  //studienbegleitenden Leistungsnachweise des ersten Teilabschnitts gemäß § 5 Abs. 2 Nr. 1
-  [[14, 15], 4]
+  [[12, 13, 14], 30]
 ];
 //Konstante, welche die Noten gruppiert für die Berechnung der Endnote (Index von allowedSandFn)
 const gradeGroupsAndFaktorEnd = [
   //schriftlichen Prüfungsarbeiten des ersten Teils der Qualifikationsprüfung
-  [[16, 17, 18, 19, 20, 21, 24, 25, 26, 27], 40],
+  [[15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], 40],
   //schriftlichen Prüfungsarbeiten des zweiten Teils der Qualifikationsprüfung
-  [[33, 34, 35], 12],
+  [[29, 30, 31, 32], 17],
   //dem jeweils 4fachen des ersten und zweiten Teils der mündlichen Prüfung
-  [[32], 4],
-  [[37], 4],
-  //studienbegleitenden Leistungsnachweise im Hauptstudium gemäß § 5 Abs. 2 Nr. 2
-  [[22, 23, 28, 29, 30], 4],
-  //studienbegleitenden Leistungsnachweise des zweiten Teilabschnitts gemäß § 5 Abs. 2 Nr. 1
-  [[36], 1],
+  [[28], 4],
+  [[33], 4],
   //Praxisbeurteilung
-  [[38], 4],
+  [[34], 4],
   //Hausarbeit
-  [[31], 5],
+  [[27], 5],
   //Faktor der Zwischennote
   26
 ];
 
 //Diese Klasse berechnet die Noten für die Jahrgänge bis 2020/2023
-export default class NewGrades{
-
+export default class GradesNextYears{
   //Wird eine Map mit (S-Fn, N); S == Semester, Fn == Fachnummer, N == Note
   #gradesMap = new Map();
   #localStorage = false;
   #localStorageHandler;
+  //Joker, die noch übrig sind
+  #leftJokersScope1 = 2;
+  #leftJokersScope2 = 2;
 
   #calculate = function () {
     if(this.#localStorage){
-      this.#localStorageHandler.saveGradesMapLocal(this.#gradesMap);
+      this.#localStorageHandler.saveGradesMapLocalN(this.#gradesMap);
     }
     //Berechnung Zwischennote (§ 26 Abs. 3 FachV-VI)
     let sum = 0;
@@ -78,14 +77,17 @@ export default class NewGrades{
 
     //Ausgabe der Zwischennote
     document.getElementById("zwgrade").textContent = zwischennote + " (" + zwischennotenpunkte + ")";
+    document.getElementById("zwgradeD").textContent = zwischennote + " (" + zwischennotenpunkte + ")";
 
     if(zwischennote > 4){
+
       document.getElementById("alertModalMessage").textContent = "Du kannst mit diesen Noten nicht das Studium bestehen, da deine Zwischennotenpunkte schlechter als 5 Notenpunkte ist (§ 26 Abs. 5 Nr. 1 Buchst. c) FachV-VI). Endnote wurde nicht berechnet.";
       if(!document.getElementById("alertModal").classList.contains("active")){
         //Damit das Modal sich nicht wieder sofort schließt
         ui("#alertModal");
       }
       document.getElementById("zwgrade").classList.add("error");
+      document.getElementById("zwgradeD").classList.add("error");
       setTimeout(function () {
         document.activeElement.blur();
         document.getElementById("alertModalButton").focus();
@@ -94,6 +96,7 @@ export default class NewGrades{
     }
     else {
       document.getElementById("zwgrade").classList.remove("error");
+      document.getElementById("zwgradeD").classList.remove("error");
     }
 
     //Berechnung Endnote (§ 26 Abs. 4 FachV-VI)
@@ -126,6 +129,7 @@ export default class NewGrades{
 
     //Ausgabe der Endnote
     document.getElementById("endgrade").textContent = endnote + " (" + endnotenpunkte + ")";
+    document.getElementById("endgradeD").textContent = endnote + " (" + endnotenpunkte + ")";
 
     if(endnote > 4){
       document.getElementById("alertModalMessage").textContent = "Du kannst mit diesen Noten nicht das Studium bestehen, da deine Endnote schlechter als 5 Notenpunkte ist (§ 26 Abs. 5 Nr. 2 Buchst. c) FachV-VI)";
@@ -134,6 +138,7 @@ export default class NewGrades{
         ui("#alertModal");
       }
       document.getElementById("endgrade").classList.add("error");
+      document.getElementById("endgradeD").classList.add("error");
       setTimeout(function () {
         document.activeElement.blur();
         document.getElementById("alertModalButton").focus();
@@ -142,6 +147,7 @@ export default class NewGrades{
     }
     else {
       document.getElementById("endgrade").classList.remove("error");
+      document.getElementById("endgradeD").classList.remove("error");
     }
   }
 
@@ -157,8 +163,8 @@ export default class NewGrades{
 
   //Lädt die lokalen Noten aus dem Speicher
   loadLocalGrades() {
-    if(this.#localStorageHandler.getGradesMapFromLocal()!=null){
-      this.#gradesMap = this.#localStorageHandler.getGradesMapFromLocal();
+    if(this.#localStorageHandler.getGradesMapFromLocalN()!=null){
+      this.#gradesMap = this.#localStorageHandler.getGradesMapFromLocalN();
       this.#gradesMap.forEach((value, key) => {document.getElementById(key).value = value;  document.getElementById(key+"d").value = value;});
 
       //Richtigen Teil der Userinfo zeigen
@@ -208,8 +214,79 @@ export default class NewGrades{
 
     //Prüfen, ob schon vorhanden
     if(this.#gradesMap.has(number)){
-      if(grade < 5 && !allowedToFail[allowedSandFn.indexOf(number)]){
-        //document.getElementById("semester"+number[0]+"sum").classList.add("error");
+      //Schauen, ob eingetragene Note kleiner 5
+      if(grade < 5){
+        //Schauen, zu welchem Jokerscope die Note gehört
+        if(jokerScope1.includes(number)&&!document.getElementById(number).parentElement.children.item(2).classList.contains("active")){
+          //Ist im ersten Scope (1. und 2. Semester) drin
+          if(this.#leftJokersScope1 < 1){
+            //Es sind keine Joker mehr übrig -> Fehlermeldung
+            //document.getElementById("semester"+number[0]+"sum").classList.add("error");
+            document.getElementById(number).parentElement.classList.add("invalid");
+            document.getElementById(number+"d").parentElement.classList.add("invalid");
+            document.getElementById("alertModalMessage").textContent = "Du darfst in diesem Fach nicht durchfallen, da du die Joker für das 1. und 2. Semester schon verbraucht hast.";
+            ui("#alertModal");
+            setTimeout(function () {
+              document.activeElement.blur();
+              document.getElementById("alertModalButton").focus();
+            }, 20);
+            document.getElementById("endgrade").classList.add("error");
+            return false;
+          }
+          else {
+            //Es sind noch Joker da -> Feld makieren und einen Joker abziehen
+            this.#leftJokersScope1--;
+            document.getElementById(number).parentElement.children.item(2).classList.add("active");
+            document.getElementById(number+"d").parentElement.children.item(2).classList.add("active");
+          }
+        }
+        else if (jokerScope2.includes(number)&&!document.getElementById(number).parentElement.children.item(2).classList.contains("active")) {
+          //Ist im zweiten Scope (4. und 5. Semester) drin
+          if(this.#leftJokersScope2 < 1){
+            //Es sind keine Joker mehr übrig -> Fehlermeldung
+            document.getElementById("semester"+number[0]+"sum").classList.add("error");
+            document.getElementById(number).parentElement.classList.add("invalid");
+            document.getElementById(number+"d").parentElement.classList.add("invalid");
+            document.getElementById("alertModalMessage").textContent = "Du darfst in diesem Fach nicht durchfallen, da du die Joker für das 4. und 5. Semester schon verbraucht hast.";
+            ui("#alertModal");
+            setTimeout(function () {
+              document.activeElement.blur();
+              document.getElementById("alertModalButton").focus();
+            }, 20);
+            document.getElementById("endgrade").classList.add("error");
+            return false;
+          }
+          else {
+            //Es sind noch Joker da -> Feld markieren und einen Joker abziehen
+            this.#leftJokersScope2--;
+            document.getElementById(number).parentElement.children.item(2).classList.add("active");
+            document.getElementById(number+"d").parentElement.children.item(2).classList.add("active");
+          }
+        }
+      }
+      else {
+        //Schauen, ob in einem JokerScope
+        if(jokerScope1.includes(number)||jokerScope2.includes(number)){
+          //Note größer 5 -> schauen, ob Joker aktiv
+          if(document.getElementById(number).parentElement.children.item(2).classList.contains("active")){
+            //Joker ist gesetzt -> entfernen
+            document.getElementById(number).parentElement.children.item(2).classList.remove("active");
+            document.getElementById(number+"d").parentElement.children.item(2).classList.remove("active");
+            //Joker wieder verfügbar machen
+            if(jokerScope1.includes(number)){
+              this.#leftJokersScope1++;
+            }
+            else {
+              this.#leftJokersScope2++;
+            }
+          }
+        }
+      }
+
+      setJokerLeft(this.#leftJokersScope1, this.#leftJokersScope2);
+
+      /*if(grade < 5 && !allowedToFail[allowedSandFn.indexOf(number)]){
+        document.getElementById("semester"+number[0]+"sum").classList.add("error");
         document.getElementById(number).parentElement.classList.add("invalid");
         document.getElementById(number+"d").parentElement.classList.add("invalid");
         document.getElementById("alertModalMessage").textContent = "Du darfst in diesem Fach nicht durchfallen, nach § 26 Abs. 5 FachV-VI. Berechnung wird nicht durchgeführt.";
@@ -220,7 +297,54 @@ export default class NewGrades{
         }, 20);
         document.getElementById("endgrade").classList.add("error");
         return false;
+      }*/
+      //Schauen, ob bei 1. und 2. TA mindestens zwei Prüfungen mehr als 5 Notenpunkte jeweils haben
+      for (var i = 0; i < sharedFailRules19_22.length; i++) {
+        let moreThanFivePoints = 0;
+        for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
+          let valueInput = 0;
+          if(desktop){
+            //Desktopfelder auslesen
+            valueInput = Number(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value);
+            if(isNaN(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value) || document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value === ""){
+              valueInput = 5;
+            }
+          }
+          else {
+            //Mobilegerätfelder auslesen
+            valueInput = Number(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).value);
+            if(isNaN(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).value) || document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).value === ""){
+              valueInput = 5;
+            }
+          }
+          if(valueInput > 4){
+            moreThanFivePoints++;
+          }
+        }
+        if(moreThanFivePoints<2){
+          //Abbrechen, da mehr als zwei Prüfungen nicht geschafft
+          for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
+            if(desktop){
+              document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").parentElement.classList.add("invalid");
+            }
+            else {
+              document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).parentElement.classList.add("invalid");
+            }
+          }
+          document.getElementById("alertModalMessage").textContent = "Du hast in einem Teilabschnitt nicht mindestens 2 schriftliche Prüfungen geschafft.";
+          if(!document.getElementById("alertModal").classList.contains("active")){
+            //Damit das Modal sich nicht wieder sofort schließt
+            ui("#alertModal");
+          }
+          document.getElementById("endgrade").classList.add("error");
+          setTimeout(function () {
+            document.activeElement.blur();
+            document.getElementById("alertModalButton").focus();
+          }, 25);
+          return;
+        }
       }
+      //Schauen, ob Durchschnitt bei 1. und 2. TA passt
       for (var i = 0; i < sharedFailRules19_22.length; i++) {
         let sum = 0;
         for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
@@ -263,78 +387,6 @@ export default class NewGrades{
           }, 25);
           return;
         }
-        //Achtung! Bei der vierten Regel mindestens 2 mal mindestens 5 Punkte
-        else if (i==3) {
-          let valueInput1 = 0;
-          let valueInput2 = 0;
-          let valueInput3 = 0;
-          if(desktop){
-            //Desktopfelder auslesen
-            valueInput1 = Number(document.getElementById(allowedSandFn[33]+"d").value);
-            valueInput2 = Number(document.getElementById(allowedSandFn[34]+"d").value);
-            valueInput3 = Number(document.getElementById(allowedSandFn[35]+"d").value);
-            if(isNaN(document.getElementById(allowedSandFn[33]+"d").value) || document.getElementById(allowedSandFn[33]+"d").value === ""){
-              valueInput1 = 5;
-            }
-            if(isNaN(document.getElementById(allowedSandFn[34]+"d").value) || document.getElementById(allowedSandFn[34]+"d").value === ""){
-              valueInput2 = 5;
-            }
-            if(isNaN(document.getElementById(allowedSandFn[35]+"d").value) || document.getElementById(allowedSandFn[35]+"d").value === ""){
-              valueInput3 = 5;
-            }
-          }
-          else {
-            //Mobilegerätfelder auslesen
-            valueInput1 = Number(document.getElementById(allowedSandFn[33]).value);
-            valueInput2 = Number(document.getElementById(allowedSandFn[34]).value);
-            valueInput3 = Number(document.getElementById(allowedSandFn[35]).value);
-            if(isNaN(document.getElementById(allowedSandFn[33]).value) || document.getElementById(allowedSandFn[33]).value === ""){
-              valueInput1 = 5;
-            }
-            if(isNaN(document.getElementById(allowedSandFn[34]).value) || document.getElementById(allowedSandFn[34]).value === ""){
-              valueInput2 = 5;
-            }
-            if(isNaN(document.getElementById(allowedSandFn[35]).value) || document.getElementById(allowedSandFn[35]).value === ""){
-              valueInput3 = 5;
-            }
-          }
-
-          //Schauen, ob mindestens zwei Notenpunkte größer gleich 5
-          if((valueInput1 < 5 && valueInput2 < 5 && valueInput3 > 4) || (valueInput1 < 5 && valueInput2 > 4 && valueInput3 < 5) || (valueInput1 > 4 && valueInput2 < 5 && valueInput3 < 5) || (valueInput1 < 5 && valueInput2 < 5 && valueInput3 < 5)){
-            //In zwei Fächern weniger als 5 Notenpunkte -> nicht geschafft nach § 26 Abs.5 Nr. 2 Buchst. b) FachV-VI
-            for (var j = 0; j < sharedFailRules19_22[3].length; j++) {
-              if(desktop){
-                document.getElementById(allowedSandFn[sharedFailRules19_22[3][j]]+"d").parentElement.classList.add("invalid");
-              }
-              else {
-                document.getElementById(allowedSandFn[sharedFailRules19_22[3][j]]).parentElement.classList.add("invalid");
-              }
-            }
-            document.getElementById("alertModalMessage").textContent = "Du hast in den schriftlichen Prüfungsleistungen des zweiten TA nicht in zwei von drei Prüfungen mindestens 5 Notenpunkte. Damit würdest du nach § 26 Abs.5 Nr. 2 Buchst. b) FachV-VI nicht bestehen.";
-            if(!document.getElementById("alertModal").classList.contains("active")){
-              //Damit das Modal sich nicht wieder sofort schließt
-              ui("#alertModal");
-            }
-            document.getElementById("endgrade").classList.add("error");
-            setTimeout(function () {
-              document.activeElement.blur();
-              document.getElementById("alertModalButton").focus();
-            }, 25);
-            return;
-          }
-          else {
-            //Bedienungen erfüllt -> invalid entfernen falls vorhanden
-            for (var j = 0; j < sharedFailRules19_22[3].length; j++) {
-              if(desktop){
-                document.getElementById(allowedSandFn[sharedFailRules19_22[3][j]]+"d").parentElement.classList.remove("invalid");
-              }
-              else {
-                document.getElementById(allowedSandFn[sharedFailRules19_22[3][j]]).parentElement.classList.remove("invalid");
-              }
-            }
-          }
-
-        }
         else {
           for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
             document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").parentElement.classList.remove("invalid");
@@ -354,6 +406,7 @@ export default class NewGrades{
       ui();
       //document.getElementById("semester"+number[0]+"sum").classList.remove("error");
       document.getElementById(number).parentElement.classList.remove("invalid");
+      document.getElementById(number+"d").parentElement.classList.remove("invalid");
       document.getElementById("endgrade").classList.remove("error");
       this.#gradesMap.set(number, Number(grade));
       this.#calculate();
@@ -450,4 +503,13 @@ function roundTo(n, digits) {
     var multiplicator = Math.pow(10, digits);
     n = parseFloat((n * multiplicator).toFixed(11));
     return Math.floor(n) / multiplicator;
+}
+
+function setJokerLeft(jokerScope1, jokerScope2){
+  document.getElementById("jokerLeftScope1").innerText = jokerScope1;
+  document.getElementById("jokerLeftScope1-1").innerText = jokerScope1;
+  document.getElementById("jokerLeftScope1-2").innerText = jokerScope1;
+  document.getElementById("jokerLeftScope2").innerText = jokerScope2;
+  document.getElementById("jokerLeftScope2-1").innerText = jokerScope2;
+  document.getElementById("jokerLeftScope2-2").innerText = jokerScope2;
 }
