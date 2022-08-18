@@ -46,15 +46,50 @@ a:focus{
   margin-bottom: 0 !important;
 }
 
+.margin-top{
+  margin-top: 4rem !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.margin-right{
+  margin-right: 24rem !important;
+}
+
 .m .tabs .left-align{
   overflow-y: hidden;
   overflow-x: scroll;
+}
+
+.suffix > .joker.active::after{
+  content: "stars"
+}
+
+.flex{
+  display: flex;
 }
 
 /*summary:focus{
   background-color: #4fd8eb !important;
   color: #00363d !important;
 }*/
+
+.checkbox {
+  white-space: break-spaces;
+}
+
+td > .checkbox > input {
+  width: auto;
+}
+
+.no-padding{
+  padding: none !important;
+}
+
+#checklistButton{
+  margin-bottom: 6rem;
+}
 
 #dataLink{
   word-break: break-all;
@@ -94,4 +129,38 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.print{
+  display: none;
+}
+
+/*CSS-Styles für Druck*/
+@media print {
+
+  .print{
+    display: inline;
+  }
+
+  body>*:not(.print) {
+    display: none !important;
+    opacity: 0 !important;
+  }
+  input{
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  td > p > b {
+        vertical-align: baseline;
+  }
+
+  p > .joker.active::after{
+    content: "stars"
+  }
+
+  .bad-value::after{
+    content: " ↯";
+  }
+
 }

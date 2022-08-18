@@ -1,4 +1,4 @@
-:root{
+:root,body.light{
   --primary: #006874;
   --on-primary: #ffffff;
   --primary-container: #90f1ff;
@@ -29,7 +29,7 @@
   --active: rgba(0,0,0,.1);
 }
 
-.is-dark{
+body.dark{
   --primary: #4fd8eb;
   --on-primary: #00363d;
   --primary-container: #004f59;
@@ -69,4 +69,37 @@ body{
   width: 100vw;
   overflow-y: hidden;
   overflow-x: hidden;
+}
+
+@media print {
+  body.dark{
+    --primary: #006874;
+    --on-primary: #ffffff;
+    --primary-container: #90f1ff;
+    --on-primary-container: #001f24;
+    --secondary: #4a6367;
+    --on-secondary: #ffffff;
+    --secondary-container: #cde7ec;
+    --on-secondary-container: #051f23;
+    --tertiary: #525e7d;
+    --on-tertiary: #ffffff;
+    --tertiary-container: #d9e2ff;
+    --on-tertiary-container: #0e1a37;
+    --error: #ba1b1b;
+    --error-container: #ffdad4;
+    --on-error: #ffffff;
+    --on-error-container: #410001;
+    --background: #fbfdfd;
+    --on-background: #191c1d;
+    --surface: #fbfdfd;
+    --on-surface: #191c1d;
+    --surface-variant: #dbe4e6;
+    --on-surface-variant: #3f484a;
+    --outline: #70797b;
+    --inverse-on-surface: #eff1f1;
+    --inverse-surface: #2d3132;
+    --inverse-primary: #4fd8eb;
+    --shadow: #000000;
+    --active: rgba(0,0,0,.1);
+  }
 }

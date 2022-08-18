@@ -1,10 +1,10 @@
 import CookieHandler from "./classes/CookieHandler.js"
 import LocalStorageHandler from "./classes/LocalStorageHandler.js"
-import NewGrades from "./classes/NewGrades.js"
+import GradesNextYears from "./classes/GradesNextYears.js"
 
 const localStorageHandler = new LocalStorageHandler();
 const cookieHandler = new CookieHandler();
-const grades = new NewGrades(localStorageHandler);
+const grades = new GradesNextYears(localStorageHandler);
 
 const MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 
@@ -53,7 +53,7 @@ window.getGrades = function () {
 
 window.manuellGrades = function () {
   //Warnung beim verlassen soll nur kommen, wenn nicht lokal gespeichert wird
-  if(grades.saveLocal&&localStorageHandler.hasGradesMapLocal()){
+  if(grades.saveLocal&&localStorageHandler.hasGradesMapLocalN()){
     if(!confirm("Wenn sie fortfahren, werden alle lokal gespeicherten Daten gelöscht. Fortfahren?")){
       document.getElementById("manuellButton").blur();
       return;
@@ -158,7 +158,9 @@ window.checkGrade = function (id) {
     document.getElementById(id).value = "";
     grade = 5;
   }
-  return grades.checkGrade(id, grade);
+  let returnValue = grades.checkGrade(id, grade);
+  grades.checkChecklist();
+  return returnValue;
 }
 
 window.focusHiddenInput = function (event) {
@@ -272,7 +274,7 @@ window.generateLink = function () {
 
 function generateLinkNow() {
   ui("#generatedLink");
-  document.getElementById("dataLink").value = window.location.origin + window.location.pathname + "?grades=" + grades.grades;
+  document.getElementById("dataLink").value = window.location.origin + window.location.pathname + "?grades=" + grades.grades + "-v2";
 }
 
 window.closeUserInfo = function (){
@@ -329,7 +331,7 @@ window.changeSaveLocal = function () {
 }
 
 //Schauen, ob Daten lokal vorhanden sind
-if(localStorageHandler.hasGradesMapLocal()){
+if(localStorageHandler.hasGradesMapLocalN()){
   //Button zum Laden der Daten zeigen
   document.getElementById("loadFromLocalButton").classList.remove("hidden");
   document.getElementById("manuellTempButton").classList.remove("hidden");
@@ -344,10 +346,12 @@ if(localStorageHandler.hasGradesMapLocal()){
 
 window.loadFromLocal = function () {
   grades.loadLocalGrades();
+  //Infomation zur Speicherung bei Fehlermeldungen anzeigen
+  document.getElementById("savingInfoAlert").classList.remove("hidden");
 }
 
 window.copyLink = function () {
-  navigator.clipboard.writeText(window.location.origin + window.location.pathname + "?grades=" + grades.grades).then(function() {
+  navigator.clipboard.writeText(window.location.origin + window.location.pathname + "?grades=" + grades.grades + "-v2").then(function() {
     ui("#copySuccess", 3000);
   }, function(err) {
     console.error('Async: Could not copy text: ', err);
@@ -394,13 +398,24 @@ window.onresize = function () {
   }
 }
 
+window.printPage = function () {
+  try{
+    window.print();
+  }
+  catch(e){
+    ui("#noPrintToast")
+  }
+}
+
 //Schauen, ob Daten über die URL mitgegeben wurden
 if(window.location.search !== ""){
   let splittedParam = window.location.search.split("-");
   //Simple Prüfung, ob die Daten "passen"
-  if(splittedParam[0] === "?grades=" && splittedParam.length == 40){
+  if(splittedParam[0] === "?grades=" && splittedParam.length == 37 && splittedParam[36] === "v2"){
     splittedParam.shift();
+    splittedParam.pop();
     grades.import(splittedParam);
+
   }
   else {
     ui("#start");

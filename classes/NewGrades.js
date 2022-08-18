@@ -38,6 +38,7 @@ const gradeGroupsAndFaktorEnd = [
   26
 ];
 
+//Diese Klasse berechnet die Noten für die Jahrgänge bis 2020/2023
 export default class NewGrades{
 
   //Wird eine Map mit (S-Fn, N); S == Semester, Fn == Fachnummer, N == Note
@@ -208,7 +209,7 @@ export default class NewGrades{
     //Prüfen, ob schon vorhanden
     if(this.#gradesMap.has(number)){
       if(grade < 5 && !allowedToFail[allowedSandFn.indexOf(number)]){
-        document.getElementById("semester"+number[0]+"sum").classList.add("error");
+        //document.getElementById("semester"+number[0]+"sum").classList.add("error");
         document.getElementById(number).parentElement.classList.add("invalid");
         document.getElementById(number+"d").parentElement.classList.add("invalid");
         document.getElementById("alertModalMessage").textContent = "Du darfst in diesem Fach nicht durchfallen, nach § 26 Abs. 5 FachV-VI. Berechnung wird nicht durchgeführt.";
@@ -351,7 +352,7 @@ export default class NewGrades{
         document.getElementById(number + "d").value = document.getElementById(number).value;
       }
       ui();
-      document.getElementById("semester"+number[0]+"sum").classList.remove("error");
+      //document.getElementById("semester"+number[0]+"sum").classList.remove("error");
       document.getElementById(number).parentElement.classList.remove("invalid");
       document.getElementById("endgrade").classList.remove("error");
       this.#gradesMap.set(number, Number(grade));
