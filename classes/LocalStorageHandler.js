@@ -17,11 +17,11 @@ export default class LocalStorageHandler{
     }
   }
 
-  saveGradesMapLocalN(gradesMap){
+  saveGradesMapLocal(gradesMap){
     //Prüfen, ob Parameter richtige Klase
     if(gradesMap.constructor.name === "Map"){
       //Map in localStorage speichern
-      localStorage.setItem("gradesMapN", JSON.stringify(Object.fromEntries(gradesMap)));
+      localStorage.setItem("gradesMap", JSON.stringify(Object.fromEntries(gradesMap)));
     }
   }
 
