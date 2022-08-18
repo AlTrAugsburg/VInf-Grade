@@ -5,6 +5,9 @@ const allowedSandFn = ["I-1", "I-2", "I-3", "I-4", "I-5", "I-6", "II-1", "II-2",
 const jokerScope1 = ["I-1", "I-2", "I-3", "I-4", "I-5", "I-6", "II-1", "II-2", "II-3", "II-4", "II-5", "II-6"];
 //Bereich für die zweiten zwei "Joker"
 const jokerScope2 = ["IV-1", "IV-2", "IV-3", "IV-4", "IV-5", "IV-6", "V-1", "V-2", "V-3", "V-4", "V-5", "V-6"];
+//Enthält jeweils die Noten des TA Bereichs, die zum Durchschnitt zählen
+const ta1Scope = ["III-1", "III-2", "III-3"];
+const ta2Scope = ["VI-1", "VI-2", "VI-3", "VI-4"];
 //Spezielle Regeln für V-8, V-9, VI-5 und VI-P: Man darf dort überall durchfallen, solange Endnote mindestens Noenpunktzahl 5
 //Leistungsnachweise und schriftliche Prüfungen an der HföD, welche man nur mit Durchschnitt von 5 bestehen muss
 const sharedFailRules19_22 = [[12, 13, 14], [29, 30, 31, 32]];
@@ -78,6 +81,7 @@ export default class GradesNextYears{
     //Ausgabe der Zwischennote
     document.getElementById("zwgrade").textContent = zwischennote + " (" + zwischennotenpunkte + ")";
     document.getElementById("zwgradeD").textContent = zwischennote + " (" + zwischennotenpunkte + ")";
+    document.getElementById("zwgradeP").textContent = zwischennote + " (" + zwischennotenpunkte + ")";
 
     if(zwischennote > 4){
 
@@ -88,6 +92,7 @@ export default class GradesNextYears{
       }
       document.getElementById("zwgrade").classList.add("error");
       document.getElementById("zwgradeD").classList.add("error");
+      document.getElementById("zwgradeP").classList.add("bad-value");
       setTimeout(function () {
         document.activeElement.blur();
         document.getElementById("alertModalButton").focus();
@@ -97,6 +102,7 @@ export default class GradesNextYears{
     else {
       document.getElementById("zwgrade").classList.remove("error");
       document.getElementById("zwgradeD").classList.remove("error");
+      document.getElementById("zwgradeP").classList.remove("bad-value");
     }
 
     //Berechnung Endnote (§ 26 Abs. 4 FachV-VI)
@@ -130,6 +136,7 @@ export default class GradesNextYears{
     //Ausgabe der Endnote
     document.getElementById("endgrade").textContent = endnote + " (" + endnotenpunkte + ")";
     document.getElementById("endgradeD").textContent = endnote + " (" + endnotenpunkte + ")";
+    document.getElementById("endgradeP").textContent = endnote + " (" + endnotenpunkte + ")";
 
     if(endnote > 4){
       document.getElementById("alertModalMessage").textContent = "Du kannst mit diesen Noten nicht das Studium bestehen, da deine Endnote schlechter als 5 Notenpunkte ist (§ 26 Abs. 5 Nr. 2 Buchst. c) FachV-VI)";
@@ -139,6 +146,7 @@ export default class GradesNextYears{
       }
       document.getElementById("endgrade").classList.add("error");
       document.getElementById("endgradeD").classList.add("error");
+      document.getElementById("endgradeP").classList.add("bad-value");
       setTimeout(function () {
         document.activeElement.blur();
         document.getElementById("alertModalButton").focus();
@@ -148,6 +156,7 @@ export default class GradesNextYears{
     else {
       document.getElementById("endgrade").classList.remove("error");
       document.getElementById("endgradeD").classList.remove("error");
+      document.getElementById("endgradeP").classList.remove("bad-value");
     }
   }
 
@@ -161,11 +170,336 @@ export default class GradesNextYears{
     }
   }
 
+  //Prüft die Bedienungnen in der Checkliste und trägt das Ergebniss entsprechend ein
+  checkChecklist(){
+    //0. Herausfinden, welches Foumlar aktiv ist
+    var isMobile = false;
+    if(window.innerWidth < 600){
+      isMobile = true;
+    }
+    //1. Check: alle Felder gefüllt?
+    var allInputsFilled = true;
+    for (var i in allowedSandFn) {
+      var input = allowedSandFn[i]
+      if (!isMobile) {
+        //Desktop -> ein "d" an den Namen anhängen um das richtige Inputfeld zu bekommen
+        input = input + "d"
+      }
+      var content = document.getElementById(input).value;
+      if(isNaN(content)||content === ""){
+        //Feld ist leer -> Anforderung nicht mehr erfüllt
+        allInputsFilled = false;
+      }
+    }
+    //Schauen, ob Bedienung erfüllt, falls ja grüner Hacken, ansonsten rotes Kreuz
+    if(allInputsFilled){
+      //Grüner Hacken zeigen, rotes Kreuz verstecken
+      document.getElementById("check0TrueD").classList.remove("hidden");
+      document.getElementById("check0True").classList.remove("hidden");
+      document.getElementById("check0TrueP").classList.remove("hidden");
+      document.getElementById("check0FalseD").classList.add("hidden");
+      document.getElementById("check0False").classList.add("hidden");
+      document.getElementById("check0FalseP").classList.add("hidden");
+    }
+    else {
+      //Rotes Kreuz zeigen, grünen Hacken verstecken
+      document.getElementById("check0TrueD").classList.add("hidden");
+      document.getElementById("check0True").classList.add("hidden");
+      document.getElementById("check0TrueP").classList.add("hidden");
+      document.getElementById("check0FalseD").classList.remove("hidden");
+      document.getElementById("check0False").classList.remove("hidden");
+      document.getElementById("check0FalseP").classList.remove("hidden");
+    }
+
+    //2. Check: Joker erstes und zweites Semester prüfen
+    if(this.#leftJokersScope1 == 0){
+      //Es kann sein, dass man die Joker überzogen hat
+      let jokerOk = true;
+      for (var i = 0; i < jokerScope1.length; i++) {
+        let id = jokerScope1[i];
+        if(!isMobile){
+          id = id + "d";
+        }
+        var content = document.getElementById(id).value;
+        if(isNaN(content)||content === ""){
+          content = 5;
+        }
+        if(content < 5 && !document.getElementById(id).parentElement.children.item(2).classList.contains("active")){
+          //Joker wurden überzogen
+          jokerOk = false;
+        }
+      }
+      if(jokerOk){
+        //Grüner Hacken zeigen, rotes Kreuz verstecken
+        document.getElementById("check1TrueD").classList.remove("hidden");
+        document.getElementById("check1True").classList.remove("hidden");
+        document.getElementById("check1TrueP").classList.remove("hidden")
+        document.getElementById("check1FalseD").classList.add("hidden");
+        document.getElementById("check1False").classList.add("hidden");
+        document.getElementById("check1FalseP").classList.add("hidden");
+      }
+      else {
+        //Rotes Kreuz zeigen, grünen Hacken verstecken
+        document.getElementById("check1TrueD").classList.add("hidden");
+        document.getElementById("check1True").classList.add("hidden");
+        document.getElementById("check1TrueP").classList.add("hidden");
+        document.getElementById("check1FalseD").classList.remove("hidden");
+        document.getElementById("check1False").classList.remove("hidden");
+        document.getElementById("check1FalseP").classList.remove("hidden");
+      }
+    }
+    else {
+      //Joker sind noch übrig, also passts
+      document.getElementById("check1TrueD").classList.remove("hidden");
+      document.getElementById("check1True").classList.remove("hidden");
+      document.getElementById("check1TrueP").classList.remove("hidden");
+      document.getElementById("check1FalseD").classList.add("hidden");
+      document.getElementById("check1False").classList.add("hidden");
+      document.getElementById("check1FalseP").classList.add("hidden");
+    }
+
+    //Check 3: Im ersten Teilabschnitt maximal in einem Fach durchgefallen
+    let passedTests = 3;
+    for (var i = 12; i < 15; i++) {
+      let id = allowedSandFn[i];
+      if(!isMobile){
+        id = id + "d";
+      }
+      var content = document.getElementById(id).value;
+      if(isNaN(content)||content === ""){
+        content = 5;
+      }
+      if(content < 5){
+        passedTests--;
+      }
+    }
+    if(passedTests < 2){
+      //In mehr als einem Test durchgefallen -> Bedienung nicht erfüllt
+      //Rotes Kreuz zeigen, grünen Hacken verstecken
+      document.getElementById("check2TrueD").classList.add("hidden");
+      document.getElementById("check2True").classList.add("hidden");
+      document.getElementById("check2TrueP").classList.add("hidden");
+      document.getElementById("check2FalseD").classList.remove("hidden");
+      document.getElementById("check2False").classList.remove("hidden");
+      document.getElementById("check2FalseP").classList.remove("hidden");
+    }
+    else {
+      //Bedienung erfüllt
+      //Grüner Hacken zeigen, rotes Kreuz verstecken
+      document.getElementById("check2TrueD").classList.remove("hidden");
+      document.getElementById("check2True").classList.remove("hidden");
+      document.getElementById("check2TrueP").classList.remove("hidden");
+      document.getElementById("check2FalseD").classList.add("hidden");
+      document.getElementById("check2False").classList.add("hidden");
+      document.getElementById("check2FalseP").classList.add("hidden");
+    }
+
+    //4. Check: Im ersten Teilabschnitt mindestens einen Durchschnitt von 5 Punkten
+    let firstTAsum = 0;
+    for (var i = 12; i < 15; i++) {
+      let id = allowedSandFn[i];
+      if(!isMobile){
+        id = id + "d";
+      }
+      var content = document.getElementById(id).value;
+      if(isNaN(content)||content === ""){
+        content = 5;
+      }
+      firstTAsum = firstTAsum + Number(content);
+    }
+    //Durchschnitt berechnen
+    firstTAsum = firstTAsum / 3;
+    if(firstTAsum < 5){
+      //Durchschnitt nicht geschafft -> Check nicht geschafft
+      //Rotes Kreuz zeigen, grünen Hacken verstecken
+      document.getElementById("check3TrueD").classList.add("hidden");
+      document.getElementById("check3True").classList.add("hidden");
+      document.getElementById("check3TrueP").classList.add("hidden");
+      document.getElementById("check3FalseD").classList.remove("hidden");
+      document.getElementById("check3False").classList.remove("hidden");
+      document.getElementById("check3FalseP").classList.remove("hidden");
+    }
+    else {
+      //Bedienung erfüllt
+      //Grüner Hacken zeigen, rotes Kreuz verstecken
+      document.getElementById("check3TrueD").classList.remove("hidden");
+      document.getElementById("check3True").classList.remove("hidden");
+      document.getElementById("check3TrueP").classList.remove("hidden");
+      document.getElementById("check3FalseD").classList.add("hidden");
+      document.getElementById("check3False").classList.add("hidden");
+      document.getElementById("check3FalseP").classList.add("hidden");
+    }
+
+    //Check 5: Joker im 4. und 5. Semester nicht überschritten
+    if(this.#leftJokersScope2 == 0){
+      //Es kann sein, dass man die Joker überzogen hat
+      let jokerOk = true;
+      for (var i = 0; i < jokerScope2.length; i++) {
+        let id = jokerScope2[i];
+        if(!isMobile){
+          id = id + "d";
+        }
+        var content = document.getElementById(id).value;
+        if(isNaN(content)||content === ""){
+          content = 5;
+        }
+        if(content < 5 && !document.getElementById(id).parentElement.children.item(2).classList.contains("active")){
+          //Joker wurden überzogen
+          jokerOk = false;
+        }
+      }
+      if(jokerOk){
+        //Grüner Hacken zeigen, rotes Kreuz verstecken
+        document.getElementById("check4TrueD").classList.remove("hidden");
+        document.getElementById("check4True").classList.remove("hidden");
+        document.getElementById("check4TrueP").classList.remove("hidden");
+        document.getElementById("check4FalseD").classList.add("hidden");
+        document.getElementById("check4False").classList.add("hidden");
+        document.getElementById("check4FalseP").classList.add("hidden");
+      }
+      else {
+        //Rotes Kreuz zeigen, grünen Hacken verstecken
+        document.getElementById("check4TrueD").classList.add("hidden");
+        document.getElementById("check4True").classList.add("hidden");
+        document.getElementById("check4TrueP").classList.add("hidden");
+        document.getElementById("check4FalseD").classList.remove("hidden");
+        document.getElementById("check4False").classList.remove("hidden");
+        document.getElementById("check4FalseP").classList.remove("hidden");
+      }
+    }
+    else {
+      //Joker sind noch übrig, also passts
+      document.getElementById("check4TrueD").classList.remove("hidden");
+      document.getElementById("check4True").classList.remove("hidden");
+      document.getElementById("check4TrueP").classList.remove("hidden");
+      document.getElementById("check4FalseD").classList.add("hidden");
+      document.getElementById("check4False").classList.add("hidden");
+      document.getElementById("check4FalseP").classList.add("hidden");
+    }
+
+    //6. Check: Im 2. TA in maximal zwei Fächern durchgefallen, ausgenommen die mündliche Prüfung
+    passedTests = 4;
+    for (var i = 29; i < 33; i++) {
+      let id = allowedSandFn[i];
+      if(!isMobile){
+        id = id + "d";
+      }
+      var content = document.getElementById(id).value;
+      if(isNaN(content)||content === ""){
+        content = 5;
+      }
+      if(content < 5 ){
+        passedTests--;
+      }
+    }
+    if (passedTests < 2) {
+      //In mehr als zwei Fächern durchgefallen -> Bedienung nicht erfüllt
+      //Rotes Kreuz zeigen, grünen Hacken verstecken
+      document.getElementById("check5TrueD").classList.add("hidden");
+      document.getElementById("check5True").classList.add("hidden");
+      document.getElementById("check5TrueP").classList.add("hidden");
+      document.getElementById("check5FalseD").classList.remove("hidden");
+      document.getElementById("check5False").classList.remove("hidden");
+      document.getElementById("check5FalseP").classList.remove("hidden");
+    }
+    else {
+      //Bedienung erfüllt
+      //Grüner Hacken zeigen, rotes Kreuz verstecken
+      document.getElementById("check5TrueD").classList.remove("hidden");
+      document.getElementById("check5True").classList.remove("hidden");
+      document.getElementById("check5TrueP").classList.remove("hidden");
+      document.getElementById("check5FalseD").classList.add("hidden");
+      document.getElementById("check5False").classList.add("hidden");
+      document.getElementById("check5FalseP").classList.add("hidden");
+    }
+
+    //7. Check: Im 2. TA einen Durchschnit von 5 Punkten bei den schriftlichen Prüfungen
+    let secondTAsum = 0;
+    for (var i = 29; i < 33; i++) {
+      let id = allowedSandFn[i];
+      if(!isMobile){
+        id = id + "d";
+      }
+      var content = document.getElementById(id).value;
+      if(isNaN(content)||content === ""){
+        content = 5;
+      }
+      secondTAsum = secondTAsum + Number(content);
+    }
+    //Durchschnitt berechnen
+    secondTAsum = secondTAsum / 4;
+    if(secondTAsum < 5){
+      //Durchschnitt nicht geschafft -> Check nicht geschafft
+      //Rotes Kreuz zeigen, grünen Hacken verstecken
+      document.getElementById("check6TrueD").classList.add("hidden");
+      document.getElementById("check6True").classList.add("hidden");
+      document.getElementById("check6TrueP").classList.add("hidden");
+      document.getElementById("check6FalseD").classList.remove("hidden");
+      document.getElementById("check6False").classList.remove("hidden");
+      document.getElementById("check6FalseP").classList.remove("hidden");
+    }
+    else {
+      //Bedienung erfüllt
+      //Grüner Hacken zeigen, rotes Kreuz verstecken
+      document.getElementById("check6TrueD").classList.remove("hidden");
+      document.getElementById("check6True").classList.remove("hidden");
+      document.getElementById("check6TrueP").classList.remove("hidden");
+      document.getElementById("check6FalseD").classList.add("hidden");
+      document.getElementById("check6False").classList.add("hidden");
+      document.getElementById("check6FalseP").classList.add("hidden");
+    }
+
+  }
+
   //Lädt die lokalen Noten aus dem Speicher
   loadLocalGrades() {
     if(this.#localStorageHandler.getGradesMapFromLocalN()!=null){
       this.#gradesMap = this.#localStorageHandler.getGradesMapFromLocalN();
-      this.#gradesMap.forEach((value, key) => {document.getElementById(key).value = value;  document.getElementById(key+"d").value = value;});
+      this.#gradesMap.forEach((value, key) => {document.getElementById(key).value = value; document.getElementById(key+"d").value = value; document.getElementById(key+"p").textContent = value;});
+
+      //Joker überprüfen
+      //ersten Scope prüfen
+      for (var i = 0; i < jokerScope1.length; i++) {
+        if(document.getElementById(jokerScope1[i]).value < 5){
+          //Joker wird gebraucht
+          if(this.#leftJokersScope1 < 1){
+            //Es sind keine Joker mehr übrig -> Feld rot markieren
+            //document.getElementById("semester"+number[0]+"sum").classList.add("error");
+            document.getElementById(jokerScope1[i]).parentElement.classList.add("invalid");
+            document.getElementById(jokerScope1[i]+"d").parentElement.classList.add("invalid");
+            document.getElementById(jokerScope1[i]+"p").parentElement.classList.add("bad-value");
+          }
+          else {
+            //Es sind noch Joker da -> Feld makieren und einen Joker abziehen
+            this.#leftJokersScope1--;
+            document.getElementById(jokerScope1[i]).parentElement.children.item(2).classList.add("active");
+            document.getElementById(jokerScope1[i]+"d").parentElement.children.item(2).classList.add("active");
+            document.getElementById(jokerScope1[i]+"p").parentElement.children.item(1).classList.add("active");
+          }
+        }
+      }
+      //Zweiten Scope prüfen
+      for (var i = 0; i < jokerScope2.length; i++) {
+        if(document.getElementById(jokerScope2[i]).value < 5){
+          //Joker wird gebraucht
+          if(this.#leftJokersScope2 < 1){
+            //Es sind keine Joker mehr übrig -> Feld rot markieren
+            //document.getElementById("semester"+number[0]+"sum").classList.add("error");
+            document.getElementById(jokerScope2[i]).parentElement.classList.add("invalid");
+            document.getElementById(jokerScope2[i]+"d").parentElement.classList.add("invalid");
+            document.getElementById(jokerScope2[i]+"p").parentElement.classList.add("bad-value");
+          }
+          else {
+            //Es sind noch Joker da -> Feld makieren und einen Joker abziehen
+            this.#leftJokersScope2--;
+            document.getElementById(jokerScope2[i]).parentElement.children.item(2).classList.add("active");
+            document.getElementById(jokerScope2[i]+"d").parentElement.children.item(2).classList.add("active");
+            document.getElementById(jokerScope2[i]+"p").parentElement.children.item(1).classList.add("active");
+          }
+        }
+      }
+      //Anzeige updaten
+      setJokerLeft(this.#leftJokersScope1, this.#leftJokersScope2);
 
       //Richtigen Teil der Userinfo zeigen
       document.getElementById("userinfoNoLocal").classList.add("hidden");
@@ -176,6 +510,9 @@ export default class GradesNextYears{
       fixFields();
 
       this.#calculate();
+
+      //Checkliste aktualisieren
+      this.checkChecklist();
 
       alert("Datenimport erfolgreich");
       return;
@@ -202,6 +539,9 @@ export default class GradesNextYears{
 
   //Funktion wird aufgerufen, wenn von einem Inputfeld wegfokussiert wird
   checkGrade(number, grade) {
+    //Checkliste einfach durchlaufen lassen
+    //checkChecklist();
+    /**/
     //Prüfen, ob Desktop oder Mobilelement
     let desktop;
     if(number[number.length-1] === "d"){
@@ -211,6 +551,7 @@ export default class GradesNextYears{
     else {
       desktop = false;
     }
+    document.getElementById(number + "p").textContent = grade;
 
     //Prüfen, ob schon vorhanden
     if(this.#gradesMap.has(number)){
@@ -224,6 +565,7 @@ export default class GradesNextYears{
             //document.getElementById("semester"+number[0]+"sum").classList.add("error");
             document.getElementById(number).parentElement.classList.add("invalid");
             document.getElementById(number+"d").parentElement.classList.add("invalid");
+            document.getElementById(number+"p").parentElement.classList.add("bad-value");
             document.getElementById("alertModalMessage").textContent = "Du darfst in diesem Fach nicht durchfallen, da du die Joker für das 1. und 2. Semester schon verbraucht hast.";
             ui("#alertModal");
             setTimeout(function () {
@@ -238,6 +580,7 @@ export default class GradesNextYears{
             this.#leftJokersScope1--;
             document.getElementById(number).parentElement.children.item(2).classList.add("active");
             document.getElementById(number+"d").parentElement.children.item(2).classList.add("active");
+            document.getElementById(number+"p").parentElement.children.item(1).classList.add("active");
           }
         }
         else if (jokerScope2.includes(number)&&!document.getElementById(number).parentElement.children.item(2).classList.contains("active")) {
@@ -247,6 +590,7 @@ export default class GradesNextYears{
             document.getElementById("semester"+number[0]+"sum").classList.add("error");
             document.getElementById(number).parentElement.classList.add("invalid");
             document.getElementById(number+"d").parentElement.classList.add("invalid");
+            document.getElementById(number+"p").parentElement.classList.add("bad-value");
             document.getElementById("alertModalMessage").textContent = "Du darfst in diesem Fach nicht durchfallen, da du die Joker für das 4. und 5. Semester schon verbraucht hast.";
             ui("#alertModal");
             setTimeout(function () {
@@ -261,6 +605,7 @@ export default class GradesNextYears{
             this.#leftJokersScope2--;
             document.getElementById(number).parentElement.children.item(2).classList.add("active");
             document.getElementById(number+"d").parentElement.children.item(2).classList.add("active");
+            document.getElementById(number+"p").parentElement.children.item(1).classList.add("active");
           }
         }
       }
@@ -272,6 +617,7 @@ export default class GradesNextYears{
             //Joker ist gesetzt -> entfernen
             document.getElementById(number).parentElement.children.item(2).classList.remove("active");
             document.getElementById(number+"d").parentElement.children.item(2).classList.remove("active");
+            document.getElementById(number+"p").parentElement.children.item(1).classList.remove("active");
             //Joker wieder verfügbar machen
             if(jokerScope1.includes(number)){
               this.#leftJokersScope1++;
@@ -330,6 +676,7 @@ export default class GradesNextYears{
             else {
               document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).parentElement.classList.add("invalid");
             }
+            document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"p").parentElement.classList.add("bad-value");
           }
           document.getElementById("alertModalMessage").textContent = "Du hast in einem Teilabschnitt nicht mindestens 2 schriftliche Prüfungen geschafft.";
           if(!document.getElementById("alertModal").classList.contains("active")){
@@ -347,6 +694,18 @@ export default class GradesNextYears{
       //Schauen, ob Durchschnitt bei 1. und 2. TA passt
       for (var i = 0; i < sharedFailRules19_22.length; i++) {
         let sum = 0;
+        if(i===0){
+          //Wenn nicht ein Feld im 1.TA ausgefüllt wurde -> überspringen
+          if(!ta1Scope.includes(number)){
+            continue;
+          }
+        }
+        if(i===1){
+          //Wenn nicht ein Feld im 2.TA ausgefüllt wurde -> überspringen
+          if(!ta2Scope.includes(number)){
+            continue;
+          }
+        }
         for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
           let valueInput = 0;
           if(desktop){
@@ -374,6 +733,7 @@ export default class GradesNextYears{
             else {
               document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).parentElement.classList.add("invalid");
             }
+            document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"p").parentElement.classList.add("bad-value");
           }
           document.getElementById("alertModalMessage").textContent = "Du hast in Fächern, wo man weniger als 5 Punkte bekommen kann, nicht den Durchschnitt geschafft und damit würdest du durchfallen, nach § 26 Abs. 5 FachV-VI. Diese wurden rot markiert und sollten entsprechend angepasst werden.";
           if(!document.getElementById("alertModal").classList.contains("active")){
@@ -391,6 +751,7 @@ export default class GradesNextYears{
           for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
             document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").parentElement.classList.remove("invalid");
             document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).parentElement.classList.remove("invalid");
+            document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"p").parentElement.classList.remove("bad-value");
           }
         }
       }
@@ -399,14 +760,17 @@ export default class GradesNextYears{
 
       if(desktop){
         document.getElementById(number).value = document.getElementById(number + "d").value;
+        //document.getElementById(number + "p").textContent = document.getElementById(number + "d").value;
       }
       else {
         document.getElementById(number + "d").value = document.getElementById(number).value;
+        //document.getElementById(number + "p").textContent = document.getElementById(number).value;
       }
       ui();
       //document.getElementById("semester"+number[0]+"sum").classList.remove("error");
       document.getElementById(number).parentElement.classList.remove("invalid");
       document.getElementById(number+"d").parentElement.classList.remove("invalid");
+      document.getElementById(number+"p").parentElement.classList.remove("bad-value");
       document.getElementById("endgrade").classList.remove("error");
       this.#gradesMap.set(number, Number(grade));
       this.#calculate();
@@ -447,28 +811,128 @@ export default class GradesNextYears{
       console.error("Ungültige Daten im Link! Daten werden nicht übernommen");
       return;
     }
-    //Daten prüfen, ob man durchfallen durfte, wenn < 5
-    let didNotFail = array.every((value, index) => {
-      if(value < 5){
-        //Schauen, ob man durchfallen durfte
-        return allowedToFail[index];
-      }
-      return true;
-    });
 
-    if(!didNotFail){
-      alert("Mindestens in einem Fach durchgefallen, damit ungültiger Datensatz und nicht geladen.");
-      ui("#start");
-      ui();
-      return;
-    }
-
-    //Daten sind "ok". Werden in die Map eingetragen
+    //Daten eintragen in Map und die Felder
     for (var i = 0; i < array.length; i++) {
       this.#gradesMap.set(allowedSandFn[i], array[i]);
     }
 
-    this.#gradesMap.forEach((value, key) => {document.getElementById(key).value = value; document.getElementById(key+"d").value = value;});
+    this.#gradesMap.forEach((value, key) => {document.getElementById(key).value = value; document.getElementById(key+"d").value = value; document.getElementById(key + "p").textContent = value;});
+
+    //Joker überprüfen
+    //ersten Scope prüfen
+    for (var i = 0; i < jokerScope1.length; i++) {
+      if(document.getElementById(jokerScope1[i]).value < 5){
+        //Joker wird gebraucht
+        if(this.#leftJokersScope1 < 1){
+          //Es sind keine Joker mehr übrig -> Feld rot markieren
+          //document.getElementById("semester"+number[0]+"sum").classList.add("error");
+          document.getElementById(jokerScope1[i]).parentElement.classList.add("invalid");
+          document.getElementById(jokerScope1[i]+"d").parentElement.classList.add("invalid");
+          document.getElementById(jokerScope1[i]+"p").parentElement.classList.add("bad-value");
+        }
+        else {
+          //Es sind noch Joker da -> Feld makieren und einen Joker abziehen
+          this.#leftJokersScope1--;
+          document.getElementById(jokerScope1[i]).parentElement.children.item(2).classList.add("active");
+          document.getElementById(jokerScope1[i]+"d").parentElement.children.item(2).classList.add("active");
+          document.getElementById(jokerScope1[i]+"p").parentElement.children.item(1).classList.add("active");
+        }
+      }
+    }
+    //Zweiten Scope prüfen
+    for (var i = 0; i < jokerScope2.length; i++) {
+      if(document.getElementById(jokerScope2[i]).value < 5){
+        //Joker wird gebraucht
+        if(this.#leftJokersScope2 < 1){
+          //Es sind keine Joker mehr übrig -> Feld rot markieren
+          //document.getElementById("semester"+number[0]+"sum").classList.add("error");
+          document.getElementById(jokerScope2[i]).parentElement.classList.add("invalid");
+          document.getElementById(jokerScope2[i]+"d").parentElement.classList.add("invalid");
+          document.getElementById(jokerScope2[i]+"p").parentElement.classList.add("bad-value");
+        }
+        else {
+          //Es sind noch Joker da -> Feld makieren und einen Joker abziehen
+          this.#leftJokersScope2--;
+          document.getElementById(jokerScope2[i]).parentElement.children.item(2).classList.add("active");
+          document.getElementById(jokerScope2[i]+"d").parentElement.children.item(2).classList.add("active");
+          document.getElementById(jokerScope2[i]+"p").parentElement.children.item(1).classList.add("active");
+        }
+      }
+    }
+    //Anzeige updaten
+    setJokerLeft(this.#leftJokersScope1, this.#leftJokersScope2);
+
+    //Durchfallen bei 1. und 2. TA schauen
+    for (var i = 0; i < sharedFailRules19_22.length; i++) {
+      let moreThanFivePoints = 0;
+      for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
+        let valueInput = 0;
+        //Desktopfelder auslesen
+        valueInput = Number(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value);
+        if(isNaN(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value) || document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value === ""){
+          valueInput = 5;
+        }
+        if(valueInput > 4){
+          moreThanFivePoints++;
+        }
+      }
+      if(moreThanFivePoints<2){
+        //Abbrechen, da mehr als zwei Prüfungen nicht geschafft
+        for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
+          if(desktop){
+            document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").parentElement.classList.add("invalid");
+          }
+          else {
+            document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).parentElement.classList.add("invalid");
+          }
+          document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"p").parentElement.classList.add("bad-value");
+        }
+        document.getElementById("endgrade").classList.add("error");
+      }
+    }
+
+    //Auch Durchschnit bei 1. und 2. TA schauen
+    for (var i = 0; i < sharedFailRules19_22.length; i++) {
+      let sum = 0;
+      if(i===0){
+        //Wenn nicht ein Feld im 1.TA ausgefüllt wurde -> überspringen
+        if(false){
+          continue;
+        }
+      }
+      if(i===1){
+        //Wenn nicht ein Feld im 2.TA ausgefüllt wurde -> überspringen
+        if(false){
+          continue;
+        }
+      }
+      for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
+        let valueInput = 0;
+        //Desktopfelder auslesen
+        valueInput = Number(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value);
+        if(isNaN(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value) || document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value === ""){
+          valueInput = 5;
+        }
+        sum = sum + valueInput;
+      }
+      let durchschnitt = sum/sharedFailRules19_22[i].length;
+      if(durchschnitt < 5){
+        for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
+          document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").parentElement.classList.add("invalid");
+          document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).parentElement.classList.add("invalid");
+          document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"p").parentElement.classList.add("bad-value");
+        }
+        document.getElementById("endgrade").classList.add("error");
+      }
+      else {
+        for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
+          document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").parentElement.classList.remove("invalid");
+          document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).parentElement.classList.remove("invalid");
+          document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"p").parentElement.classList.remove("bad-value");
+        }
+      }
+    }
 
     ui("#calculator");
     ui("#userinfo");
@@ -476,6 +940,8 @@ export default class GradesNextYears{
     fixFields();
 
     this.#calculate();
+
+    this.checkChecklist();
 
     alert("Datenimport erfolgreich");
   }
@@ -512,4 +978,22 @@ function setJokerLeft(jokerScope1, jokerScope2){
   document.getElementById("jokerLeftScope2").innerText = jokerScope2;
   document.getElementById("jokerLeftScope2-1").innerText = jokerScope2;
   document.getElementById("jokerLeftScope2-2").innerText = jokerScope2;
+  if(Number(jokerScope1)===2){
+    document.getElementById("joker1P").innerText = 0;
+  }
+  else if (Number(jokerScope1)===1) {
+    document.getElementById("joker1P").innerText = 1;
+  }
+  else {
+    document.getElementById("joker1P").innerText = 2;
+  }
+  if(Number(jokerScope2)===2){
+    document.getElementById("joker2P").innerText = 0;
+  }
+  else if (Number(jokerScope2)===1) {
+    document.getElementById("joker2P").innerText = 1;
+  }
+  else {
+    document.getElementById("joker2P").innerText = 2;
+  }
 }
