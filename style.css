@@ -1,5 +1,5 @@
 .hidden{
-  display: none;
+  display: none !important;
 }
 
 .button-place{
@@ -19,14 +19,32 @@
   padding-left: 8rem !important;
 }
 
+.padding-only-right-row{
+  padding-left: 8rem !important;
+  padding-right: 0 !important;
+}
+
 .padding-left-row{
   padding-right: 8rem !important;
+}
+
+.padding-only-left-row{
+  padding-right: 8rem !important;
+  padding-left: 0 !important;
 }
 
 a:focus{
   border-style: dotted;
   border-color: var(--primary);
   border-width: 0.5px;
+}
+
+.col-2 > .field.label {
+  margin-bottom: 4rem !important;
+}
+
+.col-2 > .field.label {
+  margin-bottom: 4rem !important;
 }
 
 #start{
@@ -46,11 +64,26 @@ a:focus{
   margin-bottom: 0 !important;
 }
 
+.no-margin-left{
+  margin-left: 0 !important;
+}
+
+.no-margin-right{
+  margin-right: 0 !important;
+}
+
 .margin-top{
   margin-top: 4rem !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
   margin-bottom: 0 !important;
+}
+
+.margin-bottom{
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 8rem !important;
 }
 
 .margin-right{
@@ -64,6 +97,10 @@ a:focus{
 
 .suffix > .joker.active::after{
   content: "stars"
+}
+
+.suffix > .bolt.active::after{
+  content: "bolt"
 }
 
 .flex{
@@ -152,6 +189,10 @@ input[type=number] {
   }
 
   td > p > b {
+        vertical-align: baseline;
+  }
+
+  td > p > f {
         vertical-align: baseline;
   }
 

@@ -42,6 +42,7 @@ const gradeGroupsAndFaktorEnd = [
 export default class GradesNextYears{
   //Wird eine Map mit (S-Fn, N); S == Semester, Fn == Fachnummer, N == Note
   #gradesMap = new Map();
+  #secondGradesMap = new Map();
   #localStorage = false;
   #localStorageHandler;
   //Joker, die noch übrig sind
@@ -50,8 +51,21 @@ export default class GradesNextYears{
 
   #calculate = function () {
     if(this.#localStorage){
-      this.#localStorageHandler.saveGradesMapLocalN(this.#gradesMap);
+      this.#localStorageHandler.saveGradesMapLocalN(this.#gradesMap, this.#secondGradesMap);
     }
+    let gradesMapCalc = new Map(this.#gradesMap);
+    //Eine Map die secondGradesMap in gradesMap integriert -> höhere Note zählt
+    console.log(this.#secondGradesMap.entries());
+    for (const grade of this.#secondGradesMap.entries()) {
+      console.log(grade);
+      if(this.#gradesMap.get(grade[0]) > this.#secondGradesMap.get(grade[0])){
+        gradesMapCalc.set(grade[0], this.#gradesMap.get(grade[0]));
+      }
+      else{
+        gradesMapCalc.set(grade[0], this.#secondGradesMap.get(grade[0]));
+      }
+    }
+    console.log(gradesMapCalc);
     //Berechnung Zwischennote (§ 26 Abs. 3 FachV-VI)
     let sum = 0;
     //gradeGroupsAndFaktorZW durchiterieren
@@ -60,7 +74,7 @@ export default class GradesNextYears{
       let sumGrades = 0;
       //Die einzelnen Noten zusammenaddieren
       for (var j = 0; j < gradeGroupsAndFaktorZW[i][0].length; j++) {
-        sumGrades = sumGrades + this.#gradesMap.get(allowedSandFn[gradeGroupsAndFaktorZW[i][0][j]]);
+        sumGrades = sumGrades + gradesMapCalc.get(allowedSandFn[gradeGroupsAndFaktorZW[i][0][j]]);
       }
       //Durchschnitt bilden
       let durchschnitt = sumGrades / gradeGroupsAndFaktorZW[i][0].length;
@@ -112,7 +126,7 @@ export default class GradesNextYears{
       let faktor = gradeGroupsAndFaktorEnd[i][1];
       let sumGrades = 0;
       for (var j = 0; j < gradeGroupsAndFaktorEnd[i][0].length; j++) {
-        sumGrades = sumGrades + this.#gradesMap.get(allowedSandFn[gradeGroupsAndFaktorEnd[i][0][j]]);
+        sumGrades = sumGrades + gradesMapCalc.get(allowedSandFn[gradeGroupsAndFaktorEnd[i][0][j]]);
       }
       let durchschnitt = sumGrades / gradeGroupsAndFaktorEnd[i][0].length;
       //Nur zwei Nachkommastellen berücksichtigen, § 25 Abs. 3 Satz 1 FachV-VI
@@ -507,6 +521,43 @@ export default class GradesNextYears{
       ui("#calculator");
       ui("#userinfo");
 
+      if(this.#localStorageHandler.getGradesMapSecondFromLocalN()!=null){
+        this.#secondGradesMap = this.#localStorageHandler.getGradesMapSecondFromLocalN();
+
+        for (const [key, value] of this.#secondGradesMap)  {
+          document.getElementById(key+"d-2").value = value;
+          document.getElementById(key+"-2").value = value;
+          document.getElementById(key + "d-2").parentElement.parentElement.classList.remove("hidden");
+          document.getElementById(key + "-2").parentElement.parentElement.classList.remove("hidden");
+          if(value > 4){
+            //Joker wird nicht gebraucht -> Schauen, welcher Scope, oder ob überhaupt
+            if(jokerScope1.includes(key)){
+              document.getElementById(key+"d").parentElement.children.item(2).classList.remove("active");
+              document.getElementById(key).parentElement.children.item(2).classList.remove("active");
+              document.getElementById(key+"p").parentElement.children.item(1).classList.remove("active");
+              this.#leftJokersScope1++;
+              setJokerLeft(this.#leftJokersScope1, this.#leftJokersScope2);
+            }
+            else if (jokerScope2.includes(key)) {
+              document.getElementById(key+"d").parentElement.children.item(2).classList.remove("active");
+              document.getElementById(key).parentElement.children.item(2).classList.remove("active");
+              document.getElementById(key+"p").parentElement.children.item(1).classList.remove("active");
+              this.#leftJokersScope2++;
+              setJokerLeft(this.#leftJokersScope1, this.#leftJokersScope2);
+            }
+          }
+          else{
+            if(value > Number(document.getElementById(key).value)){
+              //Die Zweitnote ist gößer, als die erste Note, aber Joker wird trotzdem noch benötigt -> bei der zweiten Note den Joker anzeigen
+              document.getElementById(key+"d").parentElement.children.item(2).classList.remove("active");
+              document.getElementById(key).parentElement.children.item(2).classList.remove("active");
+              document.getElementById(key + "d-2").parentElement.children.item(2).classList.add("active");
+              document.getElementById(key + "-2").parentElement.children.item(2).classList.add("active");
+            }
+          }
+        }
+      }
+
       fixFields();
 
       this.#calculate();
@@ -526,6 +577,7 @@ export default class GradesNextYears{
     for(let i in allowedSandFn){
       this.#gradesMap.set(allowedSandFn[i], 5);
     }
+    this.#secondGradesMap = new Map();
     if(this.#localStorage){
       //Richtigen Teil der Userinfo zeigen
       document.getElementById("userinfoNoLocal").classList.add("hidden");
@@ -542,6 +594,17 @@ export default class GradesNextYears{
     //Checkliste einfach durchlaufen lassen
     //checkChecklist();
     /**/
+    let jokerSet = false;
+    //Prüfen, ob Wiederholungsnote
+    let wiederholungsnote;
+    if(number.endsWith("-2")){
+      //Ist eine Wiederholungsnote, Ende von der Id entfernen
+      wiederholungsnote = true;
+      number = number.substring(0, number.length - 2);
+    }
+    else {
+      wiederholungsnote = false;
+    }
     //Prüfen, ob Desktop oder Mobilelement
     let desktop;
     if(number[number.length-1] === "d"){
@@ -555,16 +618,236 @@ export default class GradesNextYears{
 
     //Prüfen, ob schon vorhanden
     if(this.#gradesMap.has(number)){
+      //Schauen, ob die Note schon einen Joker verwendet
+      if(document.getElementById(number).parentElement.item(2).classList.contains("active")){
+        jokerSet = true;
+      }
+      //Erst prüfen, ob Note kleiner 5 und keine Wiederholungsprüfung und damit Wiederholungsnote angezeigt werden soll
+      if(!wiederholungsnote && grade < 5){
+        //Schauen, ob die Felder schon angezeigt werden
+        if(document.getElementById(number + "d-2").parentElement.parentElement.classList.contains("hidden")){
+          //Feld für Wiederholungsnote anzeigen
+          if(!number.startsWith("V-")){
+            //Wenn nicht Teil des fünften Semesters: auch in der mobile Version die Wiederholgunsnote anzeigen
+            document.getElementById(number + "-2").parentElement.parentElement.classList.remove("hidden");
+          }
+          else {
+            //Falls Teil: Disabled auf false setzen
+            document.getElementById(number + "-2").disabled = false;
+          }
+          document.getElementById(number).parentElement.children.item(3).classList.add("active");
+          document.getElementById(number + "d-2").parentElement.parentElement.classList.remove("hidden");
+          document.getElementById(number + "p-2").classList.remove("hidden");
+          document.getElementById(number + "d").parentElement.children.item(3).classList.add("active");
+          //Das Feld zu secondGradesMap hinzfügen und mit dem Standardwert belegen, falls es nicht schon exestiert
+          if(!this.#secondGradesMap.has(number)){
+            this.#secondGradesMap.set(number, 5);
+            document.getElementById(number + "d-2").value = 5;
+            document.getElementById(number + "-2").value = 5;
+          }
+        }
+        else{
+          var blitzBeiErsterNote = false;
+          //Felder werden schon angezeigt, schauen ob der Blitz bei der ersten oder zweiten Note angezeigt werden soll
+          if(wiederholungsnote){
+            if(document.getElementById(number).value < grade){
+              //Wiederholungsnote größer -> Blitz beim ersten Feld
+              document.getElementById(number).parentElement.children.item(3).classList.add("active");
+              document.getElementById(number + "d").parentElement.children.item(3).classList.add("active");
+              document.getElementById(number+"-2").parentElement.children.item(3).classList.remove("active");
+              document.getElementById(number + "d-2").parentElement.children.item(3).classList.remove("active");
+              blitzBeiErsterNote = true;
+            }
+            else {
+              //Wiederholungsnote kleiner -> Blitz beim zweiten Feld
+              document.getElementById(number).parentElement.children.item(3).classList.remove("active");
+              document.getElementById(number + "d").parentElement.children.item(3).classList.remove("active");
+              document.getElementById(number+"-2").parentElement.children.item(3).classList.add("active");
+              document.getElementById(number + "d-2").parentElement.children.item(3).classList.add("active");
+            }
+          }
+          else {
+            if(document.getElementById(number).value < grade){
+              //Wiederholungsnote größer -> Blitz beim ersten Feld
+              document.getElementById(number).parentElement.children.item(3).classList.remove("active");
+              document.getElementById(number + "d").parentElement.children.item(3).classList.remove("active");
+              document.getElementById(number+"-2").parentElement.children.item(3).classList.add("active");
+              document.getElementById(number + "d-2").parentElement.children.item(3).classList.add("active");
+              blitzBeiErsterNote = true;
+            }
+            else {
+              //Wiederholungsnote kleiner -> Blitz beim zweiten Feld
+              document.getElementById(number).parentElement.children.item(3).classList.add("active");
+              document.getElementById(number + "d").parentElement.children.item(3).classList.add("active");
+              document.getElementById(number+"-2").parentElement.children.item(3).classList.remove("active");
+              document.getElementById(number + "d-2").parentElement.children.item(3).classList.remove("active");
+            }
+          }
+          //Schauen, ob ein Joker genutzt werden muss
+          if(this.#secondGradesMap.get(number)<5){
+            //Schauen, ob in einem JokerScope
+            if(jokerScope1.includes(number)){
+              //Schauen, ob noch Joker übrig sind oder schon gesetzt
+              if(this.#leftJokersScope1 < 1 && !jokerSet){
+                //Es sind keine Joker mehr übrig und kein Joker gesetzt -> Fehlermeldung
+                //document.getElementById("semester"+number[0]+"sum").classList.add("error");
+                document.getElementById(number).parentElement.classList.add("invalid");
+                document.getElementById(number+"-2").parentElement.classList.add("invalid");
+                document.getElementById(number+"d").parentElement.classList.add("invalid");
+                document.getElementById(number+"d-2").parentElement.classList.add("invalid");
+                document.getElementById(number+"p").parentElement.classList.add("bad-value");
+                document.getElementById("alertModalMessage").textContent = "Du darfst in diesem Fach nicht durchfallen, da du die Joker für das 1. und 2. Semester schon verbraucht hast.";
+                ui("#alertModal");
+                setTimeout(function () {
+                  document.activeElement.blur();
+                  document.getElementById("alertModalButton").focus();
+                }, 20);
+                document.getElementById("endgrade").classList.add("error");
+                return false;
+              }
+              //Joker noch übrig, schauen, wo eintragen
+              if(document.getElementById(number).value < grade){
+                //Wiederholungsnote größer -> bei der ersten Note den Joker anbringen
+                //Es sind noch Joker da -> Feld makieren und einen Joker abziehen
+                if (!jokerSet) {
+                  this.#leftJokersScope1--;
+                }
+                else {
+                  document.getElementById(number+"p").parentElement.children.item(1).classList.remove("active");
+                  document.getElementById(number+"-2").parentElement.children.item(2).classList.remove("active");
+                  document.getElementById(number+"d-2").parentElement.children.item(2).classList.remove("active");
+                  document.getElementById(number).parentElement.children.item(2).classList.remove("active");
+                  document.getElementById(number+"d").parentElement.children.item(2).classList.remove("active");
+                }
+                if(blitzBeiErsterNote){
+                  //Joker bei der zweiten Note anzeigen
+                  document.getElementById(number+"-2").parentElement.children.item(2).classList.add("active");
+                  document.getElementById(number+"d-2").parentElement.children.item(2).classList.add("active");
+                }
+                else {
+                  //Joker bei der ersten Note anzeigen
+                  document.getElementById(number).parentElement.children.item(2).classList.add("active");
+                  document.getElementById(number+"d").parentElement.children.item(2).classList.add("active");
+                }
+                document.getElementById(number+"p").parentElement.children.item(1).classList.add("active");
+              }
+            }
+            else if (jokerScope2.includes(number)) {
+              //Schauen, ob noch Joker übrig sind oder schon gesetzt
+              if(this.#leftJokersScope2 < 1 && !jokerSet){
+                //Es sind keine Joker mehr übrig oder nicht gesetzt -> Fehlermeldung
+                //document.getElementById("semester"+number[0]+"sum").classList.add("error");
+                document.getElementById(number).parentElement.classList.add("invalid");
+                document.getElementById(number+"-2").parentElement.classList.add("invalid");
+                document.getElementById(number+"d").parentElement.classList.add("invalid");
+                document.getElementById(number+"d-2").parentElement.classList.add("invalid");
+                document.getElementById(number+"p").parentElement.classList.add("bad-value");
+                document.getElementById("alertModalMessage").textContent = "Du darfst in diesem Fach nicht durchfallen, da du die Joker für das 4. und 5. Semester schon verbraucht hast.";
+                ui("#alertModal");
+                setTimeout(function () {
+                  document.activeElement.blur();
+                  document.getElementById("alertModalButton").focus();
+                }, 20);
+                document.getElementById("endgrade").classList.add("error");
+                return false;
+              }
+              //Joker noch übrig, schauen, wo eintragen
+              if (!jokerSet) {
+                this.#leftJokersScope2--;
+              }
+              else {
+                document.getElementById(number+"p").parentElement.children.item(1).classList.remove("active");
+                document.getElementById(number+"-2").parentElement.children.item(2).classList.remove("active");
+                document.getElementById(number+"d-2").parentElement.children.item(2).classList.remove("active");
+                document.getElementById(number).parentElement.children.item(2).classList.remove("active");
+                document.getElementById(number+"d").parentElement.children.item(2).classList.remove("active");
+              }
+              if(blitzBeiErsterNote){
+                //Joker bei der zweiten Note anzeigen
+                document.getElementById(number+"-2").parentElement.children.item(2).classList.add("active");
+                document.getElementById(number+"d-2").parentElement.children.item(2).classList.add("active");
+              }
+              else {
+                //Joker bei der ersten Note anzeigen
+                document.getElementById(number).parentElement.children.item(2).classList.add("active");
+                document.getElementById(number+"d").parentElement.children.item(2).classList.add("active");
+              }
+              document.getElementById(number+"p").parentElement.children.item(1).classList.add("active");
+            }
+            else {
+              //In keinem JokerScope -> Fehler
+              document.getElementById("alertModalMessage").textContent = "Du darfst in diesem Fach nicht durchfallen, da für das Fach keine Joker genutzt werden können. Noten werden nicht berechnet.";
+              ui("#alertModal");
+              setTimeout(function () {
+                document.activeElement.blur();
+                document.getElementById("alertModalButton").focus();
+              }, 20);
+              document.getElementById("endgrade").classList.add("error");
+              return false;
+            }
+          }
+          else {
+            //Kein Joker benötigt -> entfernen
+            document.getElementById(number+"-2").parentElement.children.item(2).classList.remove("active");
+            document.getElementById(number+"d-2").parentElement.children.item(2).classList.remove("active");
+            document.getElementById(number).parentElement.children.item(2).classList.remove("active");
+            document.getElementById(number+"d").parentElement.children.item(2).classList.remove("active");
+            document.getElementById(number+"p").parentElement.children.item(1).classList.remove("active");
+          }
+        }
+      }
+      //Schauen, ob Wiederholungsnote entfernt werden soll
+      else if(!wiederholungsnote && grade > 4){
+        //Schauen, ob die Felder schon versteckt werden
+        if(!document.getElementById(number + "d-2").parentElement.parentElement.classList.contains("hidden")){
+          //Schauen, ob Teil vom 5. Semester
+          if(!number.startsWith("V-")){
+            document.getElementById(number + "-2").parentElement.parentElement.classList.add("hidden");
+          }
+          else {
+            document.getElementById(number + "-2").disabled = true;
+          }
+          document.getElementById(number + "d-2").parentElement.parentElement.classList.add("hidden");
+          document.getElementById(number + "d-2").value = "";
+          document.getElementById(number + "p-2").classList.add("hidden");
+          document.getElementById(number + "p-2").value = "5";
+          document.getElementById(number + "-2").value = "";
+          document.getElementById(number).parentElement.children.item(3).classList.remove("active");
+          document.getElementById(number + "d").parentElement.children.item(3).classList.remove("active");
+          //Feld aus secondGradesMap entfernen
+          this.#secondGradesMap.delete(number);
+          //Schauen, ob Joker noch aktiv
+          if(jokerScope1.includes(number)||jokerScope2.includes(number)){
+            //Note größer 5 -> schauen, ob Joker aktiv
+            if(document.getElementById(number).parentElement.children.item(2).classList.contains("active")){
+              //Joker ist gesetzt -> entfernen
+              document.getElementById(number).parentElement.children.item(2).classList.remove("active");
+              document.getElementById(number+"d").parentElement.children.item(2).classList.remove("active");
+              document.getElementById(number+"d-2").parentElement.children.item(2).classList.remove("active");
+              document.getElementById(number+"p").parentElement.children.item(1).classList.remove("active");
+              //Joker wieder verfügbar machen
+              if(jokerScope1.includes(number)){
+                this.#leftJokersScope1++;
+              }
+              else {
+                this.#leftJokersScope2++;
+              }
+            }
+          }
+        }
+      }
       //Schauen, ob eingetragene Note kleiner 5
-      if(grade < 5){
+      else if(wiederholungsnote && grade < 5){
         //Schauen, zu welchem Jokerscope die Note gehört
-        if(jokerScope1.includes(number)&&!document.getElementById(number).parentElement.children.item(2).classList.contains("active")){
+        if(jokerScope1.includes(number)&&!document.getElementById(number).parentElement.children.item(2).classList.contains("active")&&!document.getElementById(number+"-2").parentElement.children.item(2).classList.contains("active")){
           //Ist im ersten Scope (1. und 2. Semester) drin
           if(this.#leftJokersScope1 < 1){
             //Es sind keine Joker mehr übrig -> Fehlermeldung
             //document.getElementById("semester"+number[0]+"sum").classList.add("error");
             document.getElementById(number).parentElement.classList.add("invalid");
+            document.getElementById(number+"-2").parentElement.classList.add("invalid");
             document.getElementById(number+"d").parentElement.classList.add("invalid");
+            document.getElementById(number+"d-2").parentElement.classList.add("invalid");
             document.getElementById(number+"p").parentElement.classList.add("bad-value");
             document.getElementById("alertModalMessage").textContent = "Du darfst in diesem Fach nicht durchfallen, da du die Joker für das 1. und 2. Semester schon verbraucht hast.";
             ui("#alertModal");
@@ -577,19 +860,38 @@ export default class GradesNextYears{
           }
           else {
             //Es sind noch Joker da -> Feld makieren und einen Joker abziehen
-            this.#leftJokersScope1--;
-            document.getElementById(number).parentElement.children.item(2).classList.add("active");
-            document.getElementById(number+"d").parentElement.children.item(2).classList.add("active");
-            document.getElementById(number+"p").parentElement.children.item(1).classList.add("active");
+            if (!jokerSet) {
+              this.#leftJokersScope1--;
+            }
+            else {
+              document.getElementById(number+"p").parentElement.children.item(1).classList.remove("active");
+              document.getElementById(number+"-2").parentElement.children.item(2).classList.remove("active");
+              document.getElementById(number+"d-2").parentElement.children.item(2).classList.remove("active");
+              document.getElementById(number).parentElement.children.item(2).classList.remove("active");
+              document.getElementById(number+"d").parentElement.children.item(2).classList.remove("active");
+            }
+            if(document.getElementById(number).value < grade){
+              //Wiederholungsnote größer -> bei dem den Joker anbringen
+              document.getElementById(number).parentElement.children.item(2).classList.add("active");
+              document.getElementById(number+"d-2").parentElement.children.item(2).classList.add("active");
+              document.getElementById(number+"p").parentElement.children.item(1).classList.add("active");
+            }
+            else {
+              document.getElementById(number+"-2").parentElement.children.item(2).classList.add("active");
+              document.getElementById(number+"d-2").parentElement.children.item(2).classList.add("active");
+              document.getElementById(number+"p").parentElement.children.item(1).classList.add("active");
+            }
           }
         }
-        else if (jokerScope2.includes(number)&&!document.getElementById(number).parentElement.children.item(2).classList.contains("active")) {
+        else if (jokerScope2.includes(number)&&!document.getElementById(number).parentElement.children.item(2).classList.contains("active")&&!document.getElementById(number+"-2").parentElement.children.item(2).classList.contains("active")) {
           //Ist im zweiten Scope (4. und 5. Semester) drin
           if(this.#leftJokersScope2 < 1){
             //Es sind keine Joker mehr übrig -> Fehlermeldung
             document.getElementById("semester"+number[0]+"sum").classList.add("error");
             document.getElementById(number).parentElement.classList.add("invalid");
+            document.getElementById(number+"-2").parentElement.classList.add("invalid");
             document.getElementById(number+"d").parentElement.classList.add("invalid");
+            document.getElementById(number+"d-2").parentElement.classList.add("invalid");
             document.getElementById(number+"p").parentElement.classList.add("bad-value");
             document.getElementById("alertModalMessage").textContent = "Du darfst in diesem Fach nicht durchfallen, da du die Joker für das 4. und 5. Semester schon verbraucht hast.";
             ui("#alertModal");
@@ -602,10 +904,27 @@ export default class GradesNextYears{
           }
           else {
             //Es sind noch Joker da -> Feld markieren und einen Joker abziehen
-            this.#leftJokersScope2--;
-            document.getElementById(number).parentElement.children.item(2).classList.add("active");
-            document.getElementById(number+"d").parentElement.children.item(2).classList.add("active");
-            document.getElementById(number+"p").parentElement.children.item(1).classList.add("active");
+            if (!jokerSet) {
+              this.#leftJokersScope2--;
+            }
+            else {
+              document.getElementById(number+"p").parentElement.children.item(1).classList.remove("active");
+              document.getElementById(number+"-2").parentElement.children.item(2).classList.remove("active");
+              document.getElementById(number+"d-2").parentElement.children.item(2).classList.remove("active");
+              document.getElementById(number).parentElement.children.item(2).classList.remove("active");
+              document.getElementById(number+"d").parentElement.children.item(2).classList.remove("active");
+            }
+            if(document.getElementById(number).value < grade){
+              //Wiederholungsnote größer -> bei dem den Joker anbringen
+              document.getElementById(number).parentElement.children.item(2).classList.add("active");
+              document.getElementById(number+"d-2").parentElement.children.item(2).classList.add("active");
+              document.getElementById(number+"p").parentElement.children.item(1).classList.add("active");
+            }
+            else {
+              document.getElementById(number+"-2").parentElement.children.item(2).classList.add("active");
+              document.getElementById(number+"d-2").parentElement.children.item(2).classList.add("active");
+              document.getElementById(number+"p").parentElement.children.item(1).classList.add("active");
+            }
           }
         }
       }
@@ -617,6 +936,7 @@ export default class GradesNextYears{
             //Joker ist gesetzt -> entfernen
             document.getElementById(number).parentElement.children.item(2).classList.remove("active");
             document.getElementById(number+"d").parentElement.children.item(2).classList.remove("active");
+            document.getElementById(number+"d-2").parentElement.children.item(2).classList.remove("active");
             document.getElementById(number+"p").parentElement.children.item(1).classList.remove("active");
             //Joker wieder verfügbar machen
             if(jokerScope1.includes(number)){
@@ -649,11 +969,16 @@ export default class GradesNextYears{
         let moreThanFivePoints = 0;
         for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
           let valueInput = 0;
+          let valueInput2 = 0;
           if(desktop){
             //Desktopfelder auslesen
             valueInput = Number(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value);
             if(isNaN(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value) || document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").value === ""){
               valueInput = 5;
+            }
+            valueInput2 = Number(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d-2").value);
+            if(isNaN(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d-2").value) || document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d-2").value === ""){
+              valueInput2 = 5;
             }
           }
           else {
@@ -662,13 +987,17 @@ export default class GradesNextYears{
             if(isNaN(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).value) || document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).value === ""){
               valueInput = 5;
             }
+            valueInput2 = Number(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"-2").value);
+            if(isNaN(document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"-2").value) || document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"-2").value === ""){
+              valueInput2 = 5;
+            }
           }
-          if(valueInput > 4){
+          if(valueInput > 4||(valueInput2 > 4 && !document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]).parentElement.parentElement.classList.contains("hidden"))){
             moreThanFivePoints++;
           }
         }
-        if(moreThanFivePoints<2){
-          //Abbrechen, da mehr als zwei Prüfungen nicht geschafft
+        if(moreThanFivePoints < 2 && !document.getElementById(number).parentElement.parentElement.classList.contains("hidden")){
+          //Abbrechen, da mehr als zwei Prüfungen nicht geschafft und Wiederholungsprüfungen werden schon angezeigt
           for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
             if(desktop){
               document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d").parentElement.classList.add("invalid");
@@ -689,6 +1018,17 @@ export default class GradesNextYears{
             document.getElementById("alertModalButton").focus();
           }, 25);
           return;
+        }
+        else if (moreThanFivePoints < 2 && !document.getElementById(number).parentElement.parentElement.classList.contains("hidden")) {
+          //Wiederholungsfelder werden nicht angezeigt -> anzeigen und mit den 5 Punkten rechnen
+          //Alle Wiederholungsfelder anzeigen
+          for (var j = 0; j < sharedFailRules19_22[i].length; j++) {
+            document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"d-2").parentElement.parentElement.classList.remove("hidden");
+            document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"-2").parentElement.parentElement.classList.remove("hidden");
+            document.getElementById(allowedSandFn[sharedFailRules19_22[i][j]]+"p-2").parentElement.parentElement.classList.remove("hidden");
+            this.#secondGradesMap.set(allowedSandFn[sharedFailRules19_22[i][j]], 5);
+          }
+
         }
       }
       //Schauen, ob Durchschnitt bei 1. und 2. TA passt
@@ -772,7 +1112,12 @@ export default class GradesNextYears{
       document.getElementById(number+"d").parentElement.classList.remove("invalid");
       document.getElementById(number+"p").parentElement.classList.remove("bad-value");
       document.getElementById("endgrade").classList.remove("error");
-      this.#gradesMap.set(number, Number(grade));
+      if(!wiederholungsnote){
+        	this.#gradesMap.set(number, Number(grade));
+      }
+      else {
+        this.#secondGradesMap.set(number, Number(grade));
+      }
       this.#calculate();
     }
     else {

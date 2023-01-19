@@ -29,8 +29,12 @@ export default class LocalStorageHandler{
     return localStorage.getItem("gradesMapN")!=null;
   }
 
+  hasGradesMapSecondLocalN(){
+    return localStorage.getItem("gradesMapSecondN")!=null;
+  }
+
   getGradesMapFromLocalN(){
-    if(this.hasGradesMapLocal()){
+    if(this.hasGradesMapLocalN()){
       //Daten vorhanden -> auslesen
       let gradesMap = localStorage.getItem("gradesMapN");
       gradesMap = JSON.parse(gradesMap);
@@ -42,11 +46,25 @@ export default class LocalStorageHandler{
     }
   }
 
-  saveGradesMapLocalN(gradesMap){
+  getGradesMapSecondFromLocalN(){
+    if(this.hasGradesMapSecondLocalN()){
+      //Daten vorhanden -> auslesen
+      let gradesMap = localStorage.getItem("gradesMapSecondN");
+      gradesMap = JSON.parse(gradesMap);
+      const map = new Map(Object.entries(gradesMap));
+      return map;
+    }
+    else {
+      return null;
+    }
+  }
+
+  saveGradesMapLocalN(gradesMap, gradesMapSecond){
     //Prüfen, ob Parameter richtige Klase
     if(gradesMap.constructor.name === "Map"){
       //Map in localStorage speichern
       localStorage.setItem("gradesMapN", JSON.stringify(Object.fromEntries(gradesMap)));
+      localStorage.setItem("gradesMapSecondN", JSON.stringify(Object.fromEntries(gradesMapSecond)));
     }
   }
 

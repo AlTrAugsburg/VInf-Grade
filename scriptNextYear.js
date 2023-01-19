@@ -407,6 +407,25 @@ window.printPage = function () {
   }
 }
 
+//Funktion um Tabs im 5.Semester Tab im Mobile zu wechseln
+window.vSemesterChangePage = function(page){
+  //Schauen, ob erster Tab versteckt und erster Button geklickt ist
+  if(document.getElementById("V-tab-1").classList.contains("hidden") && page === "V-tab-1"){
+    //Erster Tab anzeigen und zweiten verstecken
+    document.getElementById("V-tab-1").classList.remove("hidden");
+    document.getElementById("V-tab-2").classList.add("hidden");
+    document.getElementById("button-V-tab-1").classList.add("active");
+    document.getElementById("button-V-tab-2").classList.remove("active");
+  }
+  else if(document.getElementById("V-tab-2").classList.contains("hidden") && page === "V-tab-2"){
+    //Zweiten Tab anzeigen und ersten verstecken
+    document.getElementById("V-tab-1").classList.add("hidden");
+    document.getElementById("V-tab-2").classList.remove("hidden");
+    document.getElementById("button-V-tab-1").classList.remove("active");
+    document.getElementById("button-V-tab-2").classList.add("active");
+  }
+}
+
 //Schauen, ob Daten über die URL mitgegeben wurden
 if(window.location.search !== ""){
   let splittedParam = window.location.search.split("-");

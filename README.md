@@ -1,18 +1,20 @@
-# VInf Grade Version 1.1 - Beta
+# VInf Grade Version 1.1 und 2.1 - Final Concept Build (Entwicklung eingestellt)
 Ein Webrechner für Verwaltungsinformatiker um ihre Note zu berechnen. [Zur Seite](https://altraugsburg.github.io/VInf-Grade/)
 
 # Achtung! Bitte lesen!
 
-Nach meiner Anfrage an die Studiengangleitung Verwaltungsinformtatik wurde ich auf Fehler in der Berechnung und der Nutzbarkeit hingewiesen, weswegen ich diese Anwendung nicht weiterempfehlen sollte.
+Die Entwicklung dieses Tools ist von mir, dem Entwickler, zum Janaur 2023 eingestellt worden, da ich aus privaten und beruflichen Gründen nicht mehr wirklich Zeit habe, diese sehr komplex gewordene Anwendung weiterzuentwickeln/reparieren.
 
-Ich danke für die schnelle Antwort und die konstruktive Kritik. Auf diese hin habe ich mich genauer mit der FachV-VI beschäftigt und die Anwendung entsprechend angepasst.
+Hätte ich mehr Unterstützung durch die HföD erhalten, hätte ich dieses finale Update besser getestet und geprüft. Jedoch war dies leider nicht der Fall und ich habe keine Lust Antworten nachzurennen, besonders da ich Besseres zu tun habe.
 
-Damit sollte(!) die Berechnung jetzt korrekt ablaufen, wie in der FachV-VI beschrieben. Jedoch habe ich mich schweren Herzens entschieden, die Anwendung wieder in den Beta-Status zu schieben, damit es zu keiner falschen Kommunikation von meiner Seite kommt. Dieser Zustand wird solange bestehen, bis ich von der Studiengangsleitung ein Ok bekomme. Ich hoffe sehr, dass dies zustande kommen kann und hoffe auf weitere Zusammenarbeit mit ihr.
+Ich würde mich sehr freuen, wenn jemand meine Arbeit fortsetzen würde, vielleicht packe ich das Projekt in ein paar Jahren wieder aus, aber aktuell ist das von meiner Seite nicht geplant.
+
+Dieses Projekt archiviere ich zum 31. Januar 2023. Die Webseite werde ich in einem halben bis ganzen Jahr entfernen.
 
 ## Zur Info
-Ich bin lediglich Verwaltungsinformatikstudent an der HföD in Bayern. Bitte wende dich bei Fragen oder Problemen mit deinen Noten an die entsprechende Stelle bei der HföD.
+Ich bin lediglich ein ehemaliger Verwaltungsinformatikstudent an der HföD in Bayern. Bitte wende dich bei Fragen oder Problemen mit deinen Noten an die entsprechende Stelle bei der HföD und/oder der Hochschule Hof.
 
-### Achtung! Ich garantiere keine Richtigkeit der Berechnung
+### Achtung! Ich garantiere keine Richtigkeit der Berechnung, besonders im neuen Rechner, da nicht ausführlich getestet
 
 # Datenschutz
 
