@@ -1,5 +1,5 @@
 # VInf Grade Version 1.1 und 2.1 - Final Concept Build (Entwicklung eingestellt)
-Ein Webrechner für Verwaltungsinformatiker um ihre Note zu berechnen. [Zur Seite](https://altraugsburg.github.io/VInf-Grade/)
+Ein Webrechner für Verwaltungsinformatiker um ihre Note zu berechnen.
 
 # Achtung! Bitte lesen!
 
